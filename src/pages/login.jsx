@@ -11,9 +11,9 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post("/login", { email, password });
+      const response = await axiosInstance.post("/Login", { email, password });
       localStorage.setItem("authToken", response.data.token);
-      navigate("/home");
+      navigate("/Home");
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
     }

@@ -3,28 +3,32 @@ import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
+import { UserProvider } from "./context/userContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./styles/app.main.scss";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/Login" />} />
+    <UserProvider>
+      {" "}
+      <Routes>
+        <Route path="/" element={<Navigate to="/Login" />} />
 
-      <Route path="/Login" element={<Login />} />
+        <Route path="/Login" element={<Login />} />
 
-      <Route
-        path="/home"
-        element={
-          <PrivateRoute>
-            <Home />
-          </PrivateRoute>
-        }
-      />
+        <Route
+          path="/home"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
 
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </UserProvider>
   );
 }
 

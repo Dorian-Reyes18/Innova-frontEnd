@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axiosInstance from "../axios";
+import { useUser } from "../context/UserContext";
 import LogoInnova from "../assets/LogoInnova.svg";
 import KeyIcon from "../assets/Llave.svg";
 import UserIcon from "../assets/User.svg";
@@ -10,19 +11,51 @@ import BolFoot from "../assets/bolas-foot.svg";
 const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const { setUserData } = useUser();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    if (!userName || !password) {
+      setErrorMessage("Por favor, ingrese su usuario y contraseña.");
+      return;
+    }
+
+    localStorage.removeItem("authToken");
+
     try {
-      const response = await axiosInstance.post("/Login", {
-        userName,
-        password,
-      });
+      console.log("Datos enviados:", { identifier: userName, password });
+
+      const response = await axiosInstance.post(
+        "/auth/local",
+        { identifier: userName, password: password },
+        { headers: { "Content-Type": "application/json" } }
+      );
+
       localStorage.setItem("authToken", response.data.jwt);
+
+      // Guardar los datos del usuario en el contexto
+      setUserData({ jwt: response.data.jwt, user: response.data.user });
+
       navigate("/Home");
     } catch (error) {
-      console.error("Error al iniciar sesión:", error);
+      if (error.response) {
+        const { status, data } = error.response;
+
+        if (status === 400 && data.error.name === "ValidationError") {
+          setErrorMessage("Usuario o contraseña incorrectos.");
+        } else {
+          setErrorMessage(
+            "Ocurrió un error en el servidor. Inténtalo más tarde."
+          );
+        }
+      } else {
+        setErrorMessage(
+          "Error al realizar la solicitud. Verifica tu conexión."
+        );
+      }
     }
   };
 
@@ -36,7 +69,12 @@ const Login = () => {
           <img className="logo" src={LogoInnova} alt="" />
         </div>
         <div className="block">
-          <h4>Sistema Gestor</h4>
+          <h5>Sistema Gestor</h5>
+          {errorMessage && (
+            <p style={{ color: "red", fontWeight: "bold", fontSize: 14 }}>
+              {errorMessage}
+            </p>
+          )}
           <form onSubmit={handleLogin}>
             <div className="inp-group">
               <img src={UserIcon} alt="" />

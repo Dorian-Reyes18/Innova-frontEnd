@@ -1,5 +1,12 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import HomeIcon from "../assets/HomeIcon.svg";
+import UsersIcon from "../assets/UsersIcon.svg";
+import Collapse from "../assets/Collapse.svg";
+import onCollapse from "../assets/onCollapse.svg";
+import InnovaText from "../assets/InnovaStoreText.svg";
+import LogOut from "../assets/LogOut.svg";
+import Logout from "./LogOutButton";
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -11,15 +18,25 @@ const Sidebar = () => {
 
   // Rutas y sus nombres
   const menuItems = [
-    { name: "Home", path: "/" },
-    { name: "Usuarios", path: "/usuarios" },
+    { icon: HomeIcon, name: "Inicio", path: "/Home" },
+    { icon: UsersIcon, name: "Usuarios", path: "/usuarios" },
   ];
 
   return (
     <div className={`sidebar ${collapsed ? "collapsed" : ""}`}>
-      <div className="sidebar-header">
+      <div
+        className={collapsed ? "sidebar-header-collapsed" : "sidebar-header"}
+      >
+        {collapsed ? null : (
+          <img src={InnovaText} alt="InnovaText" className="innovaText" />
+        )}
+
         <button onClick={toggleSidebar} className="toggle-btn">
-          {collapsed ? ">" : "<"}
+          {collapsed ? (
+            <img src={onCollapse} alt="onCollapse" />
+          ) : (
+            <img src={Collapse} alt="collapse" />
+          )}
         </button>
       </div>
       <nav className="sidebar-nav">
@@ -27,12 +44,21 @@ const Sidebar = () => {
           {menuItems.map((item) => (
             <li
               key={item.path}
-              className={location.pathname === item.path ? "active" : ""}
+              className={
+                location.pathname === item.path ? "active" : "item-nav"
+              }
             >
-              <Link to={item.path}>{item.name}</Link>
+              <Link to={item.path}>
+                <img src={item.icon} alt="" />
+
+                {collapsed ? null : item.name}
+              </Link>
             </li>
           ))}
         </ul>
+      </nav>
+      <nav className="sidebar-end">
+        <Logout collapsed={collapsed}/>
       </nav>
     </div>
   );

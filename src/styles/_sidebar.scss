@@ -1,0 +1,134 @@
+.sidebar {
+  width: 250px;
+  color: $color-blanco;
+  background: linear-gradient($color-morado, $color-morado-oscuro);
+  display: grid;
+  grid-template-rows: 75px 63% 15%;
+  gap: 20px;
+  height: 100vh;
+  transition: width 0.2s ease-in-out;
+  -webkit-transition: width 0.2s ease-in-out;
+  -moz-transition: width 0.2s ease-in-out;
+  -ms-transition: width 0.2s ease-in-out;
+  -o-transition: width 0.2s ease-in-out;
+
+  @include media(desktopXXL) {
+    grid-template-rows: 75px 71% 13%;
+  }
+
+  .sidebar-header-collapsed {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    .toggle-btn {
+      background-color: transparent;
+      color: $color-blanco;
+      border: none;
+      padding: 5px;
+      cursor: pointer;
+    }
+  }
+  .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    .innovaText {
+      width: 140px;
+    }
+
+    .toggle-btn {
+      background-color: transparent;
+      color: $color-blanco;
+      border: none;
+      padding: 5px;
+      cursor: pointer;
+    }
+  }
+  .sidebar-nav {
+    padding: 8px 15px;
+    ul {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      gap: 5px;
+
+      li {
+        padding: 10px 20px;
+        border-radius: 23px;
+        -webkit-border-radius: 23px;
+        -moz-border-radius: 23px;
+        -ms-border-radius: 23px;
+        -o-border-radius: 23px;
+        transition: background-color 0.1s;
+        -webkit-transition: background-color 0.1s;
+        -moz-transition: background-color 0.1s;
+        -ms-transition: background-color 0.1s;
+        -o-transition: background-color 0.1s;
+
+        &.active {
+          background-color: $color-morado-hover;
+        }
+
+        &:hover {
+          background-color: $color-morado-hover;
+        }
+
+        a {
+          display: flex;
+          gap: 20px;
+          color: $color-blanco;
+          text-decoration: none;
+          transition: width 0.3s ease-in-out;
+          -webkit-transition: width 0.3s ease-in-out;
+          -moz-transition: width 0.3s ease-in-out;
+          -ms-transition: width 0.3s ease-in-out;
+          -o-transition: width 0.3s ease-in-out;
+
+          img {
+            width: 18px;
+          }
+        }
+      }
+    }
+  }
+  .sidebar-end {
+    padding: 8px 15px;
+    .logout-container {
+      padding: 10px 20px;
+      gap: 20px;
+
+      span {
+        &:hover {
+          font-family: $montserrat-bold;
+        }
+      }
+    }
+    .logout-collapsed {
+      display: flex;
+      justify-content: center;
+      padding: 0;
+      transition: width 0.3s ease-in-out;
+      -webkit-transition: width 0.3s ease-in-out;
+      -moz-transition: width 0.3s ease-in-out;
+      -ms-transition: width 0.3s ease-in-out;
+      -o-transition: width 0.3s ease-in-out;
+    }
+  }
+}
+.collapsed {
+  width: 70px;
+  .sidebar-nav {
+    padding: 0;
+    ul {
+      li {
+        a {
+          justify-content: center;
+        }
+      }
+    }
+  }
+}

@@ -1,16 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import HomeIcon from "../assets/HomeIcon.svg";
 import UsersIcon from "../assets/UsersIcon.svg";
 import Collapse from "../assets/Collapse.svg";
 import onCollapse from "../assets/onCollapse.svg";
 import InnovaText from "../assets/InnovaStoreText.svg";
-import LogOut from "../assets/LogOut.svg";
 import Logout from "./LogOutButton";
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const location = useLocation();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    if (windowWidth < 992) {
+      setCollapsed(true);
+    }
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
@@ -39,27 +53,31 @@ const Sidebar = () => {
           )}
         </button>
       </div>
-      <nav className="sidebar-nav">
-        <ul>
-          {menuItems.map((item) => (
-            <li
-              key={item.path}
-              className={
-                location.pathname === item.path ? "active" : "item-nav"
-              }
-            >
-              <Link to={item.path}>
-                <img src={item.icon} alt="" />
+      {windowWidth < 992 && collapsed ? null : (
+        <div className="sidebar-content">
+          <nav className={"sidebar-nav"}>
+            <ul>
+              {menuItems.map((item) => (
+                <li
+                  key={item.path}
+                  className={
+                    location.pathname === item.path ? "active" : "item-nav"
+                  }
+                >
+                  <Link to={item.path}>
+                    <img src={item.icon} alt="" />
 
-                {collapsed ? null : item.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <nav className="sidebar-end">
-        <Logout collapsed={collapsed}/>
-      </nav>
+                    {collapsed ? null : item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <nav className="sidebar-end">
+            <Logout collapsed={collapsed} />
+          </nav>
+        </div>
+      )}
     </div>
   );
 };

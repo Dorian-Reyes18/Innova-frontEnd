@@ -3,7 +3,7 @@
   color: $color-blanco;
   background: linear-gradient($color-morado, $color-morado-oscuro);
   display: grid;
-  grid-template-rows: 75px 63% 15%;
+  grid-template-rows: 75px 82%;
   gap: 20px;
   height: 100vh;
   transition: width 0.2s ease-in-out;
@@ -13,7 +13,23 @@
   -o-transition: width 0.2s ease-in-out;
 
   @include media(desktopXXL) {
-    grid-template-rows: 75px 71% 13%;
+    grid-template-rows: 75px 87%;
+  }
+
+  @include media(mobile) {
+    width: 320px;
+    position: absolute;
+    height: fit-content;
+    border-bottom-right-radius: 16px;
+    gap: 0;
+  }
+
+  @include media(tablet) {
+    width: 350px;
+    position: absolute;
+    height: fit-content;
+    border-bottom-right-radius: 16px;
+    gap: 0;
   }
 
   .sidebar-header-collapsed {
@@ -48,85 +64,128 @@
       cursor: pointer;
     }
   }
-  .sidebar-nav {
-    padding: 8px 15px;
-    ul {
-      list-style: none;
-      padding: 0;
-      display: grid;
-      gap: 5px;
+  .sidebar-content {
+    display: grid;
+    grid-template-rows: 86% 8%;
+    padding: 10px 15px;
 
-      li {
-        padding: 10px 20px;
-        border-radius: 23px;
-        -webkit-border-radius: 23px;
-        -moz-border-radius: 23px;
-        -ms-border-radius: 23px;
-        -o-border-radius: 23px;
-        transition: background-color 0.1s;
-        -webkit-transition: background-color 0.1s;
-        -moz-transition: background-color 0.1s;
-        -ms-transition: background-color 0.1s;
-        -o-transition: background-color 0.1s;
+    @include media(desktopXXL) {
+      grid-template-rows: 93% 8%;
+    }
+    @include media(mobile) {
+      display: flex;
+      flex-direction: column;
+    }
+    @include media(tablet) {
+      display: flex;
+      flex-direction: column;
+    }
 
-        &.active {
-          background-color: $color-morado-hover;
-        }
+    .sidebar-nav {
+      padding: 8px 0;
 
-        &:hover {
-          background-color: $color-morado-hover;
-        }
+      @include media(mobile) {
+        padding: 25px 15px;
+      }
 
-        a {
-          display: flex;
-          gap: 20px;
-          color: $color-blanco;
-          text-decoration: none;
-          transition: width 0.3s ease-in-out;
-          -webkit-transition: width 0.3s ease-in-out;
-          -moz-transition: width 0.3s ease-in-out;
-          -ms-transition: width 0.3s ease-in-out;
-          -o-transition: width 0.3s ease-in-out;
+      @include media(tablet) {
+        padding: 25px 15px;
+      }
 
-          img {
-            width: 18px;
+      ul {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        gap: 5px;
+
+        li {
+          padding: 10px 20px;
+          border-radius: 23px;
+          -webkit-border-radius: 23px;
+          -moz-border-radius: 23px;
+          -ms-border-radius: 23px;
+          -o-border-radius: 23px;
+          transition: background-color 0.1s;
+          -webkit-transition: background-color 0.1s;
+          -moz-transition: background-color 0.1s;
+          -ms-transition: background-color 0.1s;
+          -o-transition: background-color 0.1s;
+
+          &.active {
+            background-color: $color-morado-hover;
+
+            @include media(mobile) {
+              background: $color-morado-oscuro;
+            }
+
+            @include media(tablet) {
+              background: $color-morado-oscuro;
+            }
+          }
+
+          &:hover {
+            background-color: $color-morado-hover;
+          }
+
+          a {
+            display: flex;
+            gap: 20px;
+            color: $color-blanco;
+            text-decoration: none;
+            transition: width 0.3s ease-in-out;
+            -webkit-transition: width 0.3s ease-in-out;
+            -moz-transition: width 0.3s ease-in-out;
+            -ms-transition: width 0.3s ease-in-out;
+            -o-transition: width 0.3s ease-in-out;
+
+            img {
+              width: 18px;
+            }
           }
         }
       }
     }
-  }
-  .sidebar-end {
-    padding: 8px 15px;
-    .logout-container {
-      padding: 10px 20px;
-      gap: 20px;
+    .sidebar-end {
+      height: fit-content;
 
-      span {
-        &:hover {
-          font-family: $montserrat-bold;
+      @include media(mobile) {
+        margin-top: 40px;
+      }
+      .logout-container {
+        padding: 10px 20px;
+        gap: 20px;
+
+        span {
+          &:hover {
+            font-family: $montserrat-bold;
+          }
         }
       }
-    }
-    .logout-collapsed {
-      display: flex;
-      justify-content: center;
-      padding: 0;
-      transition: width 0.3s ease-in-out;
-      -webkit-transition: width 0.3s ease-in-out;
-      -moz-transition: width 0.3s ease-in-out;
-      -ms-transition: width 0.3s ease-in-out;
-      -o-transition: width 0.3s ease-in-out;
+      .logout-collapsed {
+        display: flex;
+        justify-content: center;
+        padding: 0;
+        transition: width 0.3s ease-in-out;
+        -webkit-transition: width 0.3s ease-in-out;
+        -moz-transition: width 0.3s ease-in-out;
+        -ms-transition: width 0.3s ease-in-out;
+        -o-transition: width 0.3s ease-in-out;
+      }
     }
   }
 }
 .collapsed {
   width: 70px;
-  .sidebar-nav {
+
+  .sidebar-content {
     padding: 0;
-    ul {
-      li {
-        a {
-          justify-content: center;
+    .sidebar-nav {
+      padding: 0;
+      ul {
+        li {
+          a {
+            justify-content: center;
+          }
         }
       }
     }

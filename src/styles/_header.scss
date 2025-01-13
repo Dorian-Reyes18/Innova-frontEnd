@@ -1,8 +1,13 @@
-.block-header {
+.block-container {
   padding: 10px 20px;
 
   @include media(mobile) {
     background: $color-morado;
+    height: 100%;
+  }
+  @include media(tablet) {
+    background: $color-morado;
+    height: 100%;
   }
 
   .header-container {
@@ -22,7 +27,7 @@
       -o-border-radius: 5px;
 
       @include media(mobile) {
-        padding: 0;
+        padding: 20px 0;
       }
 
       span {

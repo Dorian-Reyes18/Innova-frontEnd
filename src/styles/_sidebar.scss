@@ -22,7 +22,7 @@
     z-index: 1;
     height: fit-content;
     border-bottom-right-radius: 16px;
-    box-shadow: 6px 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.5);
     gap: 0;
   }
 
@@ -30,7 +30,7 @@
     width: 350px;
     position: absolute;
     z-index: 1;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.15);
     height: fit-content;
     border-bottom-right-radius: 16px;
     gap: 0;
@@ -41,6 +41,16 @@
     justify-content: center;
     padding: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    @include media(mobile) {
+      background: $color-morado;
+      box-shadow: none;
+    }
+
+    @include media(tablet) {
+      background: $color-morado;
+      box-shadow: none;
+    }
 
     .toggle-btn {
       background-color: transparent;
@@ -55,6 +65,10 @@
     justify-content: space-between;
     padding: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    @include media(mobile) {
+      background: $color-morado;
+    }
 
     .innovaText {
       width: 140px;
@@ -174,6 +188,13 @@
 }
 .collapsed {
   width: 70px;
+
+  @include media(mobile) {
+    box-shadow: none;
+  }
+  @include media(tablet) {
+    box-shadow: none;
+  }
 
   .sidebar-content {
     padding: 0;

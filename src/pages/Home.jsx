@@ -1,16 +1,7 @@
-import { useUser } from "../context/UserContext";
+import HelloMessageGeneral from "../components/HelloMessageGeneral";
 
 const Home = () => {
-  const { user } = useUser();
-  const myUser = user?.user?.data;
-
-  return (
-    <div>
-      <h2>Datos del Usuario</h2>
-      <p>Usuario: {myUser ? myUser?.username : "No hay usuario"}</p>
-      <p>Rol: {myUser ? myUser.role.name : "No hay usuario"}</p>
-    </div>
-  );
+  return <HelloMessageGeneral />;
 };
 
 export default Home;

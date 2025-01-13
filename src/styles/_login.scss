@@ -29,6 +29,7 @@
     display: grid;
     grid-template-columns: 30% 70%;
     box-shadow: 0 0 12px 5px rgba(45, 8, 129, 0.1);
+    border: 1px solid $color-morado;
     padding: 40px;
     gap: 20px;
     border-radius: 8px;
@@ -44,6 +45,7 @@
       padding: 20px;
       box-shadow: none;
       flex-direction: column;
+      border: none;
     }
 
     .block {

@@ -1,0 +1,35 @@
+.hello-message {
+  @include media(mobile) {
+    color: $color-blanco;
+    margin-top: 40px;
+    text-align: center;
+  }
+  @include media(tablet) {
+    color: $color-blanco;
+    text-align: center;
+    margin-top: 40px;
+  }
+  .t1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+
+    @include media(mobile) {
+      font-size: 16px;
+    }
+    @include media(tablet) {
+      font-size: 16px;
+    }
+  }
+
+  .t2 {
+    font-family: $montserrat-bold;
+    font-size: 24px;
+
+    @include media(mobile) {
+      font-size: 28px;
+    }
+    @include media(tablet) {
+      font-size: 28px;
+    }
+  }
+}

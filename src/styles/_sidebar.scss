@@ -19,14 +19,18 @@
   @include media(mobile) {
     width: 320px;
     position: absolute;
+    z-index: 1;
     height: fit-content;
     border-bottom-right-radius: 16px;
+    box-shadow: 6px 4px 8px rgba(0, 0, 0, 0.15);
     gap: 0;
   }
 
   @include media(tablet) {
     width: 350px;
     position: absolute;
+    z-index: 1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     height: fit-content;
     border-bottom-right-radius: 16px;
     gap: 0;
@@ -113,18 +117,12 @@
 
           &.active {
             background-color: $color-morado-hover;
-
-            @include media(mobile) {
-              background: $color-morado-oscuro;
-            }
-
-            @include media(tablet) {
-              background: $color-morado-oscuro;
-            }
+            background: $color-morado-oscuro;
           }
 
           &:hover {
             background-color: $color-morado-hover;
+            background: $color-morado-oscuro;
           }
 
           a {

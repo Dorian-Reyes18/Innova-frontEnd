@@ -2,7 +2,6 @@ import { useUser } from "../context/UserContext";
 
 const Home = () => {
   const { user } = useUser();
-  console.log(user?.user?.data.username);
   const myUser = user?.user?.data;
 
   return (

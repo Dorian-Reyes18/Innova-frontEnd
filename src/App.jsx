@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import Sidebar from "./components/Sidebar";
+import Header from "./components/Header";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
@@ -26,7 +27,10 @@ function App() {
             <PrivateRoute>
               <div style={{ display: "flex", height: "100vh" }}>
                 <Sidebar />
-                <div style={{ flex: 1, padding: "20px" }}>
+                <div className="general-container">
+                  <div className="block-header">
+                    <Header />
+                  </div>
                   <Home />
                 </div>
               </div>

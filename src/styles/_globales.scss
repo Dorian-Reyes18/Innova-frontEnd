@@ -58,5 +58,9 @@ html {
         color: $color-morado !important;
       }
     }
+    .general-container {
+      position: relative;
+      flex: 1;
+    }
   }
 }

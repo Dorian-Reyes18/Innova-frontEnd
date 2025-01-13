@@ -5,6 +5,10 @@
   height: 100vh;
   flex-direction: column;
 
+  @include media(mobile) {
+    background: $color-blanco;
+  }
+
   .head {
     width: 100%;
     justify-content: end;
@@ -23,9 +27,10 @@
   .content {
     width: 600px;
     display: grid;
-    grid-template-columns: 40% 60%;
+    grid-template-columns: 30% 70%;
     box-shadow: 0 0 12px 5px rgba(45, 8, 129, 0.1);
     padding: 40px;
+    gap: 20px;
     border-radius: 8px;
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
@@ -36,7 +41,7 @@
       display: flex;
       width: 100%;
       gap: 30px;
-      padding: 0;
+      padding: 20px;
       box-shadow: none;
       flex-direction: column;
     }
@@ -59,6 +64,18 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 100%;
+
+        .inp-group {
+          width: 80%;
+        }
+
+        @include media(mobile) {
+          width: 85%;
+          .inp-group {
+            width: 100%;
+          }
+        }
       }
 
       .input {

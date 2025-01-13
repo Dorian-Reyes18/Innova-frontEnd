@@ -1,15 +1,15 @@
-import { useUser } from "../context/UserContext"; 
+import { useUser } from "../context/UserContext";
 
 const Home = () => {
-  const { user } = useUser(); 
-  console.log(user);
+  const { user } = useUser();
+  console.log(user?.user?.data.username);
+  const myUser = user?.user?.data;
 
   return (
     <div>
       <h2>Datos del Usuario</h2>
-      <p>Usuario: {user ? user.user.username : "No hay usuario"}</p>
-      <p>Rol: {user ? user.user.username : "No hay usuario"}</p>
-      
+      <p>Usuario: {myUser ? myUser?.username : "No hay usuario"}</p>
+      <p>Rol: {myUser ? myUser.role.name : "No hay usuario"}</p>
     </div>
   );
 };

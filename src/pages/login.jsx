@@ -36,8 +36,12 @@ const Login = () => {
 
       localStorage.setItem("authToken", response.data.jwt);
 
-      // Guardar los datos del usuario en el contexto
-      setUserData({ jwt: response.data.jwt, user: response.data.user });
+      // obtener los datos del usuario en base al id
+      const userResponse = await axiosInstance.get(`/users/me?populate=*`, {
+        headers: { Authorization: `Bearer ${response.data.jwt}` },
+      });
+
+      setUserData({ jwt: response.data.jwt, user: userResponse });
 
       navigate("/Home");
     } catch (error) {
@@ -62,14 +66,14 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="head">
-        <img src={BolHead} alt="" />
+        <img draggable="false" src={BolHead} alt="" />
       </div>
       <div className="content">
         <div className="block">
-          <img className="logo" src={LogoInnova} alt="" />
+          <img draggable="false" className="logo" src={LogoInnova} alt="" />
         </div>
         <div className="block">
-          <h5>Sistema Gestor</h5>
+          <h5>SISTEMA GESTOR</h5>
           {errorMessage && (
             <p style={{ color: "red", fontWeight: "bold", fontSize: 14 }}>
               {errorMessage}
@@ -106,7 +110,7 @@ const Login = () => {
         </div>
       </div>
       <div className="foot">
-        <img src={BolFoot} alt="" />
+        <img draggable="false" src={BolFoot} alt="" />
       </div>
     </div>
   );

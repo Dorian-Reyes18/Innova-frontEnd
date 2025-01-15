@@ -7,7 +7,7 @@ const HelloMessageGeneral = () => {
   return (
     <div className="hello-message">
       <p className="t1">
-        {myUser?.sexo === "Masculino" ? "Bienvenido" : "Benvenida"} {""}
+        {myUser?.sexo === "Masculino" ? "Bienvenido" : "Bienvenida"} {""}
         <strong>{myUser?.nombreApellido}</strong>
       </p>
       <p className="t2">¿Que desea hacer?</p>

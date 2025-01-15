@@ -8,13 +8,46 @@
   color: $color-morado;
   display: flex;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
-  width: fit-content;
+  width: 190px;
   padding: 20px;
-  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   -ms-border-radius: 8px;
   -o-border-radius: 8px;
+  border-radius: 8px;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+
+  .blanca {
+    display: none;
+  }
+
+  &:hover {
+    background: $color-morado;
+    color: $color-blanco;
+    transform: scale(1.03);
+    -webkit-transform: scale(1.03);
+    -moz-transform: scale(1.03);
+    -ms-transform: scale(1.03);
+    -o-transform: scale(1.03);
+
+    .blanca {
+      display: flex;
+    }
+
+    .normal {
+      display: none;
+    }
+  }
+
+  @include media(mobile) {
+    flex-direction: column;
+    width: 160px;
+    text-align: center;
+  }
 
   @include media(mobile) {
     flex-direction: column;

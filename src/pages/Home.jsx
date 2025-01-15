@@ -1,5 +1,6 @@
 import HelloMessageGeneral from "../components/homeComponents/HelloMessageGeneral";
 import DeliveryLink from "../components/homeComponents/DeliveryLink";
+import VentasLink from "../components/homeComponents/VentasLink";
 
 const Home = () => {
   return (
@@ -7,6 +8,7 @@ const Home = () => {
       <HelloMessageGeneral />
       <div className="body-section">
         <DeliveryLink />
+        <VentasLink />
       </div>
     </div>
   );

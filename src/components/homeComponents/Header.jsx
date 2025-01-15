@@ -1,9 +1,9 @@
-import { useUser } from "../context/UserContext";
+import { useUser } from "../../context/userContext";
 import { useEffect, useState } from "react";
-import AdminIcon from "../assets/AdminIconWhite.svg";
-import StockerIcon from "../assets/StockerIcon.svg";
-import SellerIcon from "../assets/SellerIcon.svg";
-import DeliveryIcon from "../assets/DeliveryIcon.svg";
+import AdminIcon from "../../assets/AdminIconWhite.svg";
+import StockerIcon from "../../assets/StockerIcon.svg";
+import SellerIcon from "../../assets/SellerIcon.svg";
+import DeliveryIcon from "../../assets/DeliveryIcon.svg";
 
 const Header = () => {
   const { user } = useUser();

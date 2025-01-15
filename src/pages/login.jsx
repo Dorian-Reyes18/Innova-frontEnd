@@ -73,7 +73,7 @@ const Login = () => {
           <img draggable="false" className="logo" src={LogoInnova} alt="" />
         </div>
         <div className="block">
-          <h5>SISTEMA GESTOR</h5>
+          <h6>SISTEMA GESTOR</h6>
           {errorMessage && (
             <p style={{ color: "red", fontWeight: "bold", fontSize: 14 }}>
               {errorMessage}

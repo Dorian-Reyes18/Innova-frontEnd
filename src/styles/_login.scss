@@ -13,6 +13,13 @@
     width: 100%;
     justify-content: end;
     display: flex;
+
+    @include media(mobile) {
+      img {
+        width: 100px;
+        height: auto;
+      }
+    }
   }
   .foot {
     width: 100%;
@@ -21,6 +28,13 @@
 
     img {
       transform: scaleX(-1);
+    }
+
+    @include media(mobile) {
+      img {
+        width: 70px;
+        height: auto;
+      }
     }
   }
 

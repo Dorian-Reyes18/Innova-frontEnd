@@ -1,16 +1,16 @@
 .block-container {
-  padding: 10px 20px;
-
-  @include media(mobile) {
-    background: $color-morado;
-    height: 100%;
-  }
-  @include media(tablet) {
-    background: $color-morado;
-    height: 100%;
-  }
-
   .header-container {
+    padding: 20px;
+
+    @include media(mobile) {
+      padding: 0 20px;
+      background: $color-morado;
+    }
+    @include media(tablet) {
+      padding: 0 20px;
+      background: $color-morado;
+    }
+
     display: flex;
     gap: 15px;
     justify-content: end;

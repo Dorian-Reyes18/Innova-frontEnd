@@ -1,22 +1,42 @@
 .hello-message {
+  padding: 0 20px;
+
+  @include media(desktop) {
+    padding: 0 20px;
+    padding-bottom: 0px;
+    border-bottom: 1px solid #cecece;
+    padding-bottom: 20px;
+    border-radius: 0 0 23px 23px;
+    margin-bottom: 20px;
+    -webkit-border-radius: 0 0 23px 23px;
+    -moz-border-radius: 0 0 23px 23px;
+    -ms-border-radius: 0 0 23px 23px;
+    -o-border-radius: 0 0 23px 23px;
+  }
+
   @include media(mobile) {
+    background: $color-morado;
+    padding: 30px 20px 80px 20px;
     color: $color-blanco;
-    margin-top: 40px;
     text-align: center;
   }
   @include media(tablet) {
+    padding: 30px 20px 80px 20px;
+    background: $color-morado;
     color: $color-blanco;
     text-align: center;
-    margin-top: 40px;
   }
   .t1 {
     font-size: 32px;
     margin-bottom: 10px;
+    color: $color-morado;
 
     @include media(mobile) {
       font-size: 16px;
+      color: $color-blanco;
     }
     @include media(tablet) {
+      color: $color-blanco;
       font-size: 16px;
     }
   }

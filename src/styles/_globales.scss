@@ -62,5 +62,37 @@ html {
       position: relative;
       flex: 1;
     }
+    .section-general {
+      display: flex;
+      flex-direction: column;
+
+      .body-section {
+        background: $color-blanco;
+        height: 100%;
+        padding: 20px;
+
+        @include media(mobile) {
+          padding: 40px 20px 0 20px;
+          position: relative;
+          bottom: 50px;
+          border-radius: 50px 50px 0 0;
+          -webkit-border-radius: 50px 50px 0 0;
+          -moz-border-radius: 50px 50px 0 0;
+          -ms-border-radius: 50px 50px 0 0;
+          -o-border-radius: 50px 50px 0 0;
+        }
+
+        @include media(tablet) {
+          padding: 40px 20px 0 20px;
+          position: relative;
+          bottom: 50px;
+          border-radius: 50px 50px 0 0;
+          -webkit-border-radius: 50px 50px 0 0;
+          -moz-border-radius: 50px 50px 0 0;
+          -ms-border-radius: 50px 50px 0 0;
+          -o-border-radius: 50px 50px 0 0;
+        }
+      }
+    }
   }
 }

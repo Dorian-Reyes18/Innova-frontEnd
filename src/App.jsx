@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import Sidebar from "./components/Sidebar";
-import Header from "./components/Header";
+import Header from "./components/homeComponents/Header";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";

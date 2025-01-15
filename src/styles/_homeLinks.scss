@@ -1,0 +1,34 @@
+.link-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-family: $montserrat-bold;
+  color: $color-morado;
+  display: flex;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+  width: fit-content;
+  padding: 20px;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+
+  @include media(mobile) {
+    flex-direction: column;
+    width: 160px;
+    text-align: center;
+  }
+
+  img {
+    width: 55px;
+    height: auto;
+
+    @include media(mobile) {
+      width: 75px;
+      height: auto;
+    }
+  }
+}

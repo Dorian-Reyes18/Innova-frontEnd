@@ -8,8 +8,8 @@
   color: $color-morado;
   display: flex;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
-  width: 190px;
-  padding: 20px;
+  width: 170px;
+  padding: 15px 20px;
   transition: all 0.2s ease-in-out;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
@@ -44,12 +44,7 @@
   }
 
   @include media(mobile) {
-    flex-direction: column;
-    width: 160px;
-    text-align: center;
-  }
-
-  @include media(mobile) {
+    padding: 20px;
     flex-direction: column;
     width: 160px;
     text-align: center;

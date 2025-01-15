@@ -9,9 +9,9 @@ const VentasLink = () => {
 
   if (role === 1 || role === 5) {
     return (
-      <Link to="/home" className="link-card">
-        <img className="normal" src={SellIcon} alt="Asignar Delivery" />
-        <img className="blanca" src={SellIconBlanco} alt="Asignar Delivery" />
+      <Link to="/ventas" className="link-card">
+        <img className="normal" src={SellIcon} alt="Ventas" />
+        <img className="blanca" src={SellIconBlanco} alt="Ventas" />
         <span>Ventas</span>
       </Link>
     );

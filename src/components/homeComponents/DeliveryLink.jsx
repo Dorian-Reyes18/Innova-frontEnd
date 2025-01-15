@@ -12,7 +12,7 @@ const DeliveryLink = () => {
       <Link to="/home" className="link-card">
         <img className="normal" src={AsingIcon} alt="Asignar Delivery" />
         <img className="blanca" src={AsingIconBlanco} alt="Asignar Delivery" />
-        <span>Asignar Delivery</span>
+        <span>Asignar</span>
       </Link>
     );
   }

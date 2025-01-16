@@ -43,6 +43,7 @@ const Sidebar = () => {
       roles: [1, 2, 3, 4, 5, 6],
     },
     { icon: UsersIcon, name: "Usuarios", path: "/usuarios", roles: [1, 5] },
+    { icon: UsersIcon, name: "Mis asignadas", path: "/asignadas", roles: [4] },
   ];
 
   // Filtrar los ítems del menú según el rol del usuario

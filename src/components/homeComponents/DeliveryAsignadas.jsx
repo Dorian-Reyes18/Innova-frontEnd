@@ -9,7 +9,7 @@ const DeliveryAsignadas = () => {
 
   if (role === 4) {
     return (
-      <Link to="/delivery-historial" className="link-card">
+      <Link to="/asignadas" className="link-card">
         <img className="normal" src={DeliveryAsignadaIcon} alt="Ventas" />
         <img className="blanca" src={DeliveryAsignadaBlanco} alt="Ventas" />
         <span>Asignadas</span>

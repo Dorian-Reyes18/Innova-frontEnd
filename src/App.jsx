@@ -46,7 +46,6 @@ function App() {
                 <Sidebar />
                 <div className="general-container">
                   <div className="block-container">
-                    <Header />
                     <Asignadas />
                   </div>
                 </div>

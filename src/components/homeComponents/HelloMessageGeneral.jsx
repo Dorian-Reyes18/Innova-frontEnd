@@ -11,7 +11,6 @@ const HelloMessageGeneral = () => {
         <strong>{myUser?.nombreApellido}</strong>
       </p>
       <p className="t2">¿Que desea hacer?</p>
-      {console.log(myUser)}
     </div>
   );
 };

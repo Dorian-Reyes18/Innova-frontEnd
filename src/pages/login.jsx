@@ -26,8 +26,6 @@ const Login = () => {
     localStorage.removeItem("authToken");
 
     try {
-      console.log("Datos enviados:", { identifier: userName, password });
-
       const response = await axiosInstance.post(
         "/auth/local",
         { identifier: userName, password: password },

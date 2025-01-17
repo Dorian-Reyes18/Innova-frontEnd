@@ -4,6 +4,7 @@ import Sidebar from "./components/Sidebar";
 import Header from "./components/homeComponents/Header";
 import Home from "./pages/Home";
 import Asignadas from "./pages/Asignadas";
+import Productos from "./pages/Productos";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import { UserProvider } from "./context/userContext";
@@ -47,6 +48,22 @@ function App() {
                 <div className="general-container">
                   <div className="block-container">
                     <Asignadas />
+                  </div>
+                </div>
+              </div>
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/productos"
+          element={
+            <PrivateRoute>
+              <div style={{ display: "flex", height: "100vh" }}>
+                <Sidebar />
+                <div className="general-container">
+                  <div className="block-container">
+                    <Productos />
                   </div>
                 </div>
               </div>

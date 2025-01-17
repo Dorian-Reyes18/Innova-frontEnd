@@ -1,0 +1,43 @@
+.body-global {
+  .header-products {
+    display: flex;
+    position: relative;
+    display: flex;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    @include media(mobile) {
+      background: $color-morado;
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
+    }
+    @include media(tablet) {
+      background: $color-morado;
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
+    }
+
+    .title-header {
+      font-family: $montserrat-bold;
+      font-size: 28px;
+
+      @include media(mobile) {
+        font-size: 18px;
+        color: $color-blanco;
+      }
+      @include media(tablet) {
+        color: $color-blanco;
+        font-size: 18px;
+      }
+    }
+
+    .iconRole {
+      position: absolute;
+      right: 0;
+      margin-right: 20px;
+      width: 22px;
+    }
+  }
+}

@@ -7,6 +7,7 @@ import Collapse from "../assets/Collapse.svg";
 import onCollapse from "../assets/onCollapse.svg";
 import InnovaText from "../assets/InnovaStoreText.svg";
 import AsignadaSidebarIcon from "../assets/AsignadaSidebarIcon.svg";
+import StockMenuIcon from "../assets/StcokMenuIcon.svg";
 import Logout from "./LogOutButton";
 
 const Sidebar = () => {
@@ -43,8 +44,19 @@ const Sidebar = () => {
       path: "/Home",
       roles: [1, 2, 3, 4, 5, 6],
     },
+    {
+      icon: StockMenuIcon,
+      name: "Stock",
+      path: "/productos",
+      roles: [1, 2, 3, 4, 5, 6],
+    },
     { icon: UsersIcon, name: "Usuarios", path: "/usuarios", roles: [1, 5] },
-    { icon: AsignadaSidebarIcon, name: "Mis asignadas", path: "/asignadas", roles: [4] },
+    {
+      icon: AsignadaSidebarIcon,
+      name: "Mis asignadas",
+      path: "/asignadas",
+      roles: [4],
+    },
   ];
 
   // Filtrar los ítems del menú según el rol del usuario

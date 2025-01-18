@@ -42,84 +42,119 @@
     }
   }
 
-  .product {
-    padding: 10px;
-    width: fit-content;
-    max-width: 350px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
-    border-radius: 8px;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    -o-border-radius: 8px;
-
-    @include media(mobile) {
+  .product-container {
+    padding: 20px;
+    .product-list {
+      list-style: none;
+      margin: 0;
       padding: 0;
-      width: 100%;
-      max-width: 100%;
-      box-shadow: none;
-    }
-
-    .block {
       display: flex;
-      align-items: center;
-      width: fit-content;
-      gap: 20px;
+      gap: 30px;
 
       @include media(mobile) {
-        width: 100%;
-        padding-bottom: 20px;
-        border-bottom: 1px solid grayscale($color: #959595);
-      }
-
-      .img-product {
-        @include media(mobile) {
-          width: fit-content;
-        }
-        img {
-          width: 80px;
-
-          @include media(mobile) {
-            width: 123px;
-            padding: 23px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
-            border-radius: 8px;
-            -webkit-border-radius: 8px;
-            -moz-border-radius: 8px;
-            -ms-border-radius: 8px;
-            -o-border-radius: 8px;
-          }
-        }
-      }
-
-      .block-info {
-        display: flex;
-        width: 95%;
         flex-direction: column;
+      }
+      @include media(tablet) {
+        justify-content: center;
+      }
+
+      li {
+        width: fit-content;
 
         @include media(mobile) {
           width: 100%;
         }
-        .info {
-          padding: 1px 10px;
-          display: flex;
-          gap: 10px;
+      }
 
-          @include media(mobile) {
-            padding: 4px 10px;
-          }
-          strong {
-            display: flex;
-          }
+      .product {
+        padding: 10px 20px;
+        width: fit-content;
+        max-width: 375px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+        border-radius: 8px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        -ms-border-radius: 8px;
+        -o-border-radius: 8px;
+
+        @include media(mobile) {
+          padding: 0;
+          width: 100%;
+          max-width: 100%;
+          box-shadow: none;
         }
-        .nombre {
-          font-family: $montserrat-bold;
-          font-size: 20px;
-          margin-bottom: 8px;
-          color: $color-morado;
+
+        @include media(tablet) {
+          width: 340px;
+        }
+
+        .block {
+          display: flex;
+          align-items: center;
+          width: fit-content;
+          gap: 20px;
 
           @include media(mobile) {
-            font-size: 18px;
+            gap: 25px;
+            width: 100%;
+            padding-bottom: 20px;
+            border-bottom: 1px solid grayscale($color: #959595);
+          }
+
+          .img-product {
+            @include media(mobile) {
+              width: fit-content;
+            }
+            img {
+              width: 70px;
+
+              @include media(mobile) {
+                width: 123px;
+                padding: 14px;
+                box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+                border-radius: 8px;
+                -webkit-border-radius: 8px;
+                -moz-border-radius: 8px;
+                -ms-border-radius: 8px;
+                -o-border-radius: 8px;
+              }
+            }
+          }
+
+          .block-info {
+            display: flex;
+            width: 95%;
+            flex-direction: column;
+
+            @include media(mobile) {
+              width: 100%;
+            }
+            .info {
+              display: flex;
+              gap: 10px;
+
+              @include media(mobile) {
+                padding: 3px 0;
+              }
+              strong {
+                display: flex;
+              }
+            }
+            .nombre {
+              font-family: $montserrat-bold;
+              margin-bottom: 8px;
+              color: $color-morado;
+            }
+
+            .cantidad {
+              margin-top: 10px;
+              color: forestgreen;
+              font-family: $montserrat-bold;
+
+              .agotado {
+                color: red;
+              }
+            }
           }
         }
       }

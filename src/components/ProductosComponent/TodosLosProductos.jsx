@@ -1,9 +1,12 @@
 import axiosInstance from "../../axios";
 import { useState, useEffect } from "react";
 import ProductoIndividual from "./ProductoIndividual";
+import Spinner from "../Spiner";
+import SearchBar from "./SearchBar";
 
 const TodosLosProductos = () => {
   const [productos, setProductos] = useState([]);
+  const [productosFiltrados, setProductosFiltrados] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchProducts = async () => {
@@ -12,7 +15,13 @@ const TodosLosProductos = () => {
       const response = await axiosInstance.get(
         "/inventario-productos?populate=*"
       );
-      setProductos(response?.data.data);
+
+      const productosOrdenados = response?.data.data.sort((a, b) =>
+        a.nombreProducto.localeCompare(b.nombreProducto)
+      );
+
+      setProductos(productosOrdenados);
+      setProductosFiltrados(productosOrdenados);
     } catch (error) {
       console.log("Error fetching products:", error.message);
     } finally {
@@ -20,27 +29,46 @@ const TodosLosProductos = () => {
     }
   };
 
+  const handleSearch = (term) => {
+    if (!term) {
+      setProductosFiltrados(productos);
+    } else {
+      const normalizarTexto = (texto) =>
+        texto
+          .normalize("NFD") 
+          .replace(/[\u0300-\u036f]/g, ""); 
+
+      const productosFiltrados = productos.filter((producto) =>
+        normalizarTexto(producto.nombreProducto)
+          .toLowerCase()
+          .includes(normalizarTexto(term).toLowerCase())
+      );
+
+      setProductosFiltrados(productosFiltrados);
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
   }, []);
 
-  useEffect(() => {
-    if (productos.length > 0) {
-      console.log("Productos actualizados:", productos);
-    }
-  }, [productos]);
-
   return (
     <div className="product-container">
+      <SearchBar onSearch={handleSearch} />
+
       <ul className="product-list">
         {loading ? (
-          <li>Cargando productos...</li>
-        ) : (
-          productos.map((producto) => (
+          <Spinner />
+        ) : productosFiltrados.length > 0 ? (
+          productosFiltrados.map((producto) => (
             <li key={producto.id}>
               <ProductoIndividual producto={producto} />
             </li>
           ))
+        ) : (
+          <p className="error-message">
+            No se encontraron productos relacionados.
+          </p>
         )}
       </ul>
     </div>

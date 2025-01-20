@@ -98,6 +98,18 @@ html {
           -o-border-radius: 50px 50px 0 0;
         }
       }
+      .body-global {
+        height: 100vh;
+        overflow-y: scroll;
+      }
+    }
+
+    .error-message {
+      color: red;
+      font-size: 14px;
+      font-family: $montserrat-bold;
+      width: 100%;
+      text-align: center;
     }
   }
 }

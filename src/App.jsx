@@ -5,6 +5,7 @@ import Header from "./components/homeComponents/Header";
 import Home from "./pages/Home";
 import Asignadas from "./pages/Asignadas";
 import Productos from "./pages/Productos";
+import GestionarProductos from "./pages/GestionarProductos";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import { UserProvider } from "./context/userContext";
@@ -16,10 +17,7 @@ function App() {
   return (
     <UserProvider>
       <Routes>
-        {/* Ruta inicial */}
         <Route path="/" element={<Navigate to="/Login" />} />
-
-        {/* Ruta de Login */}
         <Route path="/Login" element={<Login />} />
 
         {/* Rutas protegidas */}
@@ -55,6 +53,7 @@ function App() {
           }
         />
 
+        {/* Ruta de Productos y su subpágina */}
         <Route
           path="/productos"
           element={
@@ -69,7 +68,9 @@ function App() {
               </div>
             </PrivateRoute>
           }
-        />
+        >
+          <Route path="gestionar-productos/:id" element={<GestionarProductos />} />
+        </Route>
 
         <Route path="*" element={<NotFound />} />
       </Routes>

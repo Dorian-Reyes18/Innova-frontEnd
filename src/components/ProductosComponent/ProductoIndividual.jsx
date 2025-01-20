@@ -1,11 +1,13 @@
 import ProductPlaceholder from "../../assets/ProductPlaceholder.svg";
 import PropTypes from "prop-types";
 import { useUser } from "../../context/userContext";
+import { Link } from "react-router-dom";
 
 const ProductoIndividual = ({ producto }) => {
   const { user } = useUser();
   const myUser = user.user.data;
 
+  console.log(producto);
   const info = {
     img: producto?.imagen == null ? ProductPlaceholder : producto.imagen[0].url,
     compra: producto?.precioCompra,
@@ -34,7 +36,7 @@ const ProductoIndividual = ({ producto }) => {
           </div>
           <div className="precio-promo info">
             <strong>Promocion:</strong>
-            {info.promo}
+            {info.promo === null ? 0 : info.promo}
           </div>
           <div className="cantidad info">
             {info.cantidad === 0 ? null : info.cantidad}{" "}
@@ -48,12 +50,19 @@ const ProductoIndividual = ({ producto }) => {
           </div>
         </div>
       </div>
+      <Link
+        to={`/productos/gestionar-productos/${producto?.id}`}
+        className="ver-mas"
+      >
+        Ver
+      </Link>
     </div>
   );
 };
 
 ProductoIndividual.propTypes = {
   producto: PropTypes.shape({
+    id: PropTypes.number,
     nombreProducto: PropTypes.string,
     imagen: PropTypes.arrayOf(
       PropTypes.shape({

@@ -88,7 +88,9 @@ const Sidebar = () => {
                 <li
                   key={item.path}
                   className={
-                    location.pathname === item.path ? "active" : "item-nav"
+                    location.pathname.startsWith(item.path)
+                      ? "active"
+                      : "item-nav"
                   }
                 >
                   <Link to={item.path}>

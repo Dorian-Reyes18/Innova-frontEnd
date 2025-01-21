@@ -69,7 +69,10 @@ function App() {
             </PrivateRoute>
           }
         >
-          <Route path="gestionar-productos/:id" element={<GestionarProductos />} />
+          <Route
+            path="gestionar-productos/:id"
+            element={<GestionarProductos />}
+          />
         </Route>
 
         <Route path="*" element={<NotFound />} />

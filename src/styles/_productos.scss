@@ -189,3 +189,93 @@
     }
   }
 }
+.gestion-productos {
+  .body-form {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .form {
+      width: 800px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+      padding: 20px;
+      border-radius: 8px;
+
+      @include media(mobile) {
+        width: 100%;
+        padding: 20px;
+        box-shadow: none;
+        padding: 0;
+      }
+      @include media(tablet) {
+        width: 100%;
+        padding: 20px;
+        box-shadow: none;
+        padding: 0;
+      }
+
+      .form-group {
+        width: fit-content;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        label {
+          font-size: 14px;
+        }
+        .imagen {
+          width: 150px;
+          height: auto;
+        }
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+
+        .group-1 {
+          display: flex;
+          gap: 30px;
+
+          @include media(mobile) {
+            flex-direction: column;
+            width: 100%;
+            align-items: center;
+          }
+
+          .group-1-1 {
+            width: 100%;
+            display: flex;
+            gap: 15px;
+            flex-direction: column;
+            height: fit-content;
+
+            .form-group {
+              width: 100%;
+            }
+          }
+        }
+
+        .group-2 {
+          display: flex;
+          gap: 20px;
+          flex-wrap: wrap;
+
+          .form-group {
+            width: 170px;
+
+            @include media(mobile) {
+              width: 46%;
+            }
+          }
+        }
+      }
+
+      input,
+      textarea {
+        font-size: 14px;
+      }
+    }
+  }
+}

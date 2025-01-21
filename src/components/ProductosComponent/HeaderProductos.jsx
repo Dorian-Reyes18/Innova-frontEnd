@@ -3,10 +3,25 @@ import AdminIcon from "../../assets/AdminIconWhite.svg";
 import StockerIcon from "../../assets/StockerIcon.svg";
 import SellerIcon from "../../assets/SellerIcon.svg";
 import DeliveryIcon from "../../assets/DeliveryIcon.svg";
+import { useLocation, useParams } from "react-router-dom";
 
 const HeaderProductos = () => {
   const { user } = useUser();
+  const { id } = useParams();
   const myUser = user?.user?.data;
+
+  const location = useLocation();
+  const rutas = [
+    { path: "/productos", name: "Productos en Stock" },
+    {
+      path: `/productos/gestionar-productos/${id}`,
+      name: "Gestión de Productos",
+    },
+  ];
+
+  const titleHeader = rutas.map((ruta) =>
+    location.pathname === ruta.path ? ruta.name : null
+  );
 
   const roles = [
     {
@@ -33,7 +48,7 @@ const HeaderProductos = () => {
 
   return (
     <div className="header-products">
-      <span className="title-header">Productos en Stock</span>
+      <span className="title-header">{titleHeader}</span>
       {roles.map((role) => {
         if (role.id === myUser?.role?.id) {
           return (

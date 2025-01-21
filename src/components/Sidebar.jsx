@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom"; // Corregí "react-route-dom" a "react-router-dom"
+import { Link, useLocation } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import HomeIcon from "../assets/HomeIcon.svg";
 import UsersIcon from "../assets/UsersIcon.svg";
@@ -17,7 +17,6 @@ const Sidebar = () => {
   const myUser = user?.user?.data;
   const location = useLocation();
 
-  // Actualiza el estado de la barra lateral según el breakpoint
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);

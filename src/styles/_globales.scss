@@ -1,7 +1,7 @@
 html {
   body {
     font-family: $montserrat-regular;
-    color: $color-gris;
+    color: $color-gris !important;
 
     strong,
     h1,
@@ -33,6 +33,55 @@ html {
         &:focus {
           box-shadow: 0 0 0 0.25rem rgba(141, 13, 253, 0.25);
         }
+      }
+    }
+
+    .btn-pr {
+      outline: none;
+      text-decoration: none;
+      border: none;
+      padding: 8px 18px;
+      background: $color-morado;
+      color: $color-blanco;
+      border-radius: 8px;
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      -ms-border-radius: 8px;
+      -o-border-radius: 8px;
+
+      &:hover {
+        background: $color-morado-hover;
+        color: $color-blanco;
+      }
+
+      &:active {
+        background: $color-blanco;
+        border: 1px solid $color-morado;
+        color: $color-morado !important;
+      }
+    }
+
+    .btn-out {
+      outline: none;
+      text-decoration: none;
+      border: none;
+      padding: 8px 18px;
+      background: $color-blanco;
+      color: $color-morado;
+      border: 1px solid $color-morado;
+      border-radius: 8px;
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      -ms-border-radius: 8px;
+      -o-border-radius: 8px;
+
+      &:hover {
+        background: $color-morado-opaco;
+      }
+
+      &:active {
+        background: $color-morado;
+        color: $color-blanco;
       }
     }
 
@@ -112,7 +161,8 @@ html {
       text-align: center;
     }
 
-    input, textarea {
+    input,
+    textarea {
       flex: 1;
       padding: 4px 8px;
       border: 1px solid #ccc;

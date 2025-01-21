@@ -223,6 +223,7 @@
 
         label {
           font-size: 14px;
+          font-family: $montserrat-bold;
         }
         .imagen {
           width: 150px;
@@ -262,6 +263,13 @@
           gap: 20px;
           flex-wrap: wrap;
 
+          @include media(mobile) {
+            justify-content: center;
+          }
+          @include media(tablet) {
+            justify-content: center;
+          }
+
           .form-group {
             width: 170px;
 
@@ -270,6 +278,14 @@
             }
           }
         }
+      }
+
+      .actions {
+        gap: 20px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
       }
 
       input,

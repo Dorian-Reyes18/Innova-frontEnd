@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useUser } from "../context/userContext";
 import { useState, useEffect } from "react";
 import Spinner from "../components/Spiner";
+import { Link } from "react-router-dom";
 
 const GestionarProductos = () => {
   const { id } = useParams();
@@ -113,7 +114,7 @@ const GestionarProductos = () => {
                     <Field type="number" id="precioVenta" name="precioVenta" />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="precioPromocion">Precio de promoción</label>
+                    <label htmlFor="precioPromocion">Precio en promo</label>
                     <Field
                       type="number"
                       id="precioPromocion"
@@ -121,7 +122,14 @@ const GestionarProductos = () => {
                     />
                   </div>
                 </div>
-                <button type="submit">Guardar</button>
+                <div className="actions">
+                  <Link to="/productos" className="btn-out" type="submit">
+                    Volver
+                  </Link>
+                  <Link Link className="btn-pr" type="submit">
+                    Guardar
+                  </Link>
+                </div>
               </Form>
             </Formik>
           </div>

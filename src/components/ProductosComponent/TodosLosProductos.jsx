@@ -7,10 +7,12 @@ import SearchBar from "./SearchBar";
 const TodosLosProductos = () => {
   const [productos, setProductos] = useState([]);
   const [productosFiltrados, setProductosFiltrados] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
 
   const fetchProducts = async () => {
     setLoading(true);
+    setError(null); 
     try {
       const response = await axiosInstance.get(
         "/inventario-productos?populate=*"
@@ -23,6 +25,7 @@ const TodosLosProductos = () => {
       setProductos(productosOrdenados);
       setProductosFiltrados(productosOrdenados);
     } catch (error) {
+      setError("Error al cargar los productos. Intenta nuevamente.");
       console.log("Error fetching products:", error.message);
     } finally {
       setLoading(false);
@@ -34,9 +37,7 @@ const TodosLosProductos = () => {
       setProductosFiltrados(productos);
     } else {
       const normalizarTexto = (texto) =>
-        texto
-          .normalize("NFD") 
-          .replace(/[\u0300-\u036f]/g, ""); 
+        texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
       const productosFiltrados = productos.filter((producto) =>
         normalizarTexto(producto.nombreProducto)
@@ -59,6 +60,8 @@ const TodosLosProductos = () => {
       <ul className="product-list">
         {loading ? (
           <Spinner />
+        ) : error ? (
+          <p className="error-message">{error}</p> 
         ) : productosFiltrados.length > 0 ? (
           productosFiltrados.map((producto) => (
             <li key={producto.id}>

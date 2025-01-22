@@ -8,7 +8,10 @@ const ProductoIndividual = ({ producto }) => {
   const myUser = user.user.data;
 
   const info = {
-    img: producto?.imagen == null ? ProductPlaceholder : producto.imagen[0].url,
+    img:
+      producto?.imagen == null
+        ? ProductPlaceholder
+        : producto?.imagen?.formats?.thumbnail?.url,
     compra: producto?.precioCompra,
     venta: producto?.precioVenta,
     promo: producto?.precioPromocion,

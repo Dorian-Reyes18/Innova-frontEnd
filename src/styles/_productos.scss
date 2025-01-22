@@ -1,18 +1,22 @@
 .header-products {
   display: flex;
   position: relative;
+  width: 100%;
   display: flex;
+  z-index: 2;
   padding: 20px;
   margin-bottom: 25px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
   @include media(mobile) {
+    position: fixed;
     background: $color-morado;
     justify-content: center;
     align-items: center;
     padding: 25px;
   }
   @include media(tablet) {
+    position: fixed;
     background: $color-morado;
     justify-content: center;
     align-items: center;
@@ -43,6 +47,13 @@
 
 .product-container {
   padding: 20px;
+
+  @include media(mobile) {
+    padding-top: 120px;
+  }
+  @include media(tablet) {
+    padding-top: 120px;
+  }
 
   .product-list {
     list-style: none;
@@ -196,22 +207,30 @@
     justify-content: center;
     align-items: center;
 
+    @include media(mobile) {
+      padding-top: 120px;
+    }
+    @include media(tablet) {
+      padding-top: 120px;
+    }
+
     .form {
       width: 800px;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
       padding: 20px;
+      border: 1px solid gray;
       border-radius: 8px;
 
       @include media(mobile) {
         width: 100%;
         padding: 20px;
-        box-shadow: none;
+        border: none;
         padding: 0;
       }
       @include media(tablet) {
         width: 100%;
         padding: 20px;
         box-shadow: none;
+        border: none;
         padding: 0;
       }
 
@@ -291,6 +310,69 @@
       input,
       textarea {
         font-size: 14px;
+      }
+    }
+  }
+
+  .modal-conatiner {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @include media(mobile) {
+      padding: 25px;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 5px;
+      width: fit-content;
+      text-align: center;
+      width: 500px;
+      border: 1px solid rgb(179, 179, 179);
+
+      @include media(mobile) {
+        width: 100%;
+      }
+
+      .title {
+        text-align: left;
+        border-bottom: 1px solid rgb(179, 179, 179);
+        padding: 20px;
+        display: flex;
+        gap: 20px;
+        align-items: center;
+
+        img {
+          width: 30px;
+          cursor: pointer;
+        }
+      }
+      .body {
+        text-align: left;
+        border-bottom: 1px solid rgb(179, 179, 179);
+        padding: 20px;
+        padding-bottom: 40px;
+      }
+
+      .foot {
+        padding: 20px;
+        display: flex;
+        gap: 20px;
+        justify-content: end;
+      }
+      .spin {
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
   }

@@ -7,16 +7,24 @@ import HeaderProductos from "../components/ProductosComponent/HeaderProductos";
 import ProductPlaceholder from "../assets/ProductPlaceholder.svg";
 import Spinner from "../components/Spiner";
 import IconSuccess from "../assets/IconSuccess.svg";
+import IconSuccessDelete from "../assets/IconSuccessDelete.svg";
 
 const GestionarProductos = () => {
   const { id } = useParams();
   const { currentProduct, setCurrentProduct, user } = useUser();
   const [loading, setLoading] = useState(false);
-  const [putLoading, setPutLoading] = useState(false);
   const [touched, setTouched] = useState(false);
+  const [putLoading, setPutLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showModalDelete, setShowModalDelete] = useState(false);
   const [confirmEdit, setConfirmEdit] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const myUser = user?.user?.data;
+  const [submitOptions, setSubmitOptions] = useState({
+    put: false,
+    delete: false,
+  });
 
   // Función para verificar permisos por rol
   const hasRoleAccess = (roles) => roles.includes(myUser?.role?.id);
@@ -51,6 +59,26 @@ const GestionarProductos = () => {
       console.error("Error al actualizar productos:", error);
     } finally {
       setPutLoading(false);
+    }
+  };
+
+  // Eliminar producto actual
+  const deleteProduct = async (values) => {
+    setDeleteLoading(true);
+    try {
+      const response = await axiosInstance.delete(
+        `/inventario-productos/${id}`,
+        values
+      );
+
+      console.log(response);
+      if (response.status === 204) {
+        setConfirmDelete(true);
+      }
+    } catch (error) {
+      console.error("Error el eliminar el producto:", error);
+    } finally {
+      setDeleteLoading(false);
     }
   };
 
@@ -96,7 +124,11 @@ const GestionarProductos = () => {
                 const dataSend = {
                   data: values,
                 };
-                putProduct(dataSend);
+                if (submitOptions.put) {
+                  putProduct(dataSend);
+                } else if (submitOptions.delete) {
+                  deleteProduct(dataSend);
+                }
               }}
             >
               {({ submitForm }) => (
@@ -116,7 +148,41 @@ const GestionarProductos = () => {
                           >
                             No
                           </div>
-                          <div className="btn-pr" onClick={() => submitForm()}>
+                          <div
+                            className="btn-pr"
+                            onClick={() => {
+                              setSubmitOptions({ put: true, delete: false });
+                              submitForm();
+                            }}
+                          >
+                            {" "}
+                            Si
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {showModalDelete && (
+                    <div className="modal-conatiner">
+                      <div className="modal-content">
+                        <h5 className="title">Eliminar Producto</h5>
+                        <span className="body">
+                          ¿Está seguro que desea eliminar el producto actual?
+                        </span>
+                        <div className="foot">
+                          <div
+                            className="btn-out"
+                            onClick={() => setShowModalDelete(false)}
+                          >
+                            No
+                          </div>
+                          <div
+                            className="btn-pr"
+                            onClick={() => {
+                              setSubmitOptions({ put: false, delete: true });
+                              submitForm();
+                            }}
+                          >
                             {" "}
                             Si
                           </div>
@@ -126,6 +192,18 @@ const GestionarProductos = () => {
                   )}
                   {putLoading && showModal ? setShowModal(false) : null}
                   {putLoading ? (
+                    <div className="modal-conatiner">
+                      <div className="modal-content">
+                        <div className="spin">
+                          <Spinner />
+                        </div>
+                      </div>
+                    </div>
+                  ) : null}
+                  {deleteLoading && showModalDelete
+                    ? setShowModalDelete(false)
+                    : null}
+                  {deleteLoading ? (
                     <div className="modal-conatiner">
                       <div className="modal-content">
                         <div className="spin">
@@ -144,6 +222,24 @@ const GestionarProductos = () => {
                         </h5>
                         <span className="body">
                           Los cambios se aplicarón correctamente
+                        </span>
+                        <div className="foot">
+                          <Link to="/productos" className="btn-scc">
+                            Cerrar
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {confirmDelete && (
+                    <div className="modal-conatiner">
+                      <div className="modal-content">
+                        <h5 className="title">
+                          <img src={IconSuccess} alt="" />
+                          <span>Eliminación Exitosa</span>
+                        </h5>
+                        <span className="body">
+                          Se eliminó el producto correctamente
                         </span>
                         <div className="foot">
                           <Link to="/productos" className="btn-scc">
@@ -235,12 +331,21 @@ const GestionarProductos = () => {
                     <Link to="/productos" className="btn-out">
                       Volver
                     </Link>
+
                     {hasRoleAccess([1, 5]) && (
                       <div
                         className="btn-pr"
                         onClick={() => setShowModal(true)}
                       >
                         Guardar
+                      </div>
+                    )}
+                    {hasRoleAccess([1, 5]) && (
+                      <div
+                        className="btn-dl"
+                        onClick={() => setShowModalDelete(true)}
+                      >
+                        Borrar
                       </div>
                     )}
                   </div>

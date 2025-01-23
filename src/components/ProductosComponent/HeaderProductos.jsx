@@ -17,6 +17,10 @@ const HeaderProductos = () => {
       path: `/productos/gestionar-productos/${id}`,
       name: "Gestión de Productos",
     },
+    {
+      path: `/productos/crear-producto`,
+      name: "Nuevo Producto",
+    },
   ];
 
   const titleHeader = rutas.map((ruta) =>

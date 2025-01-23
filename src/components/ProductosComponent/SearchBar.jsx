@@ -1,5 +1,6 @@
 import { useState } from "react";
 import InnovaStockIcon from "../../assets/InnovaStock.svg";
+import { Link } from "react-router-dom";
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,6 +22,10 @@ const SearchBar = ({ onSearch }) => {
         />
         <button onClick={handleSearch}>Buscar</button>
       </div>
+      <Link to="crear-producto" className="btn-out">
+        {" "}
+        Crear Producto
+      </Link>
     </div>
   );
 };

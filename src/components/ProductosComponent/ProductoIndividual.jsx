@@ -29,16 +29,16 @@ const ProductoIndividual = ({ producto }) => {
           {myUser.role.id === 1 || myUser.role.id === 5 ? (
             <div className="precio info">
               <strong>Compra: </strong>
-              {info.compra}
+              C$ {info.compra}
             </div>
           ) : null}
           <div className="precio-venta info">
             <strong>Venta: </strong>
-            {info.venta}
+            C$ {info.venta}
           </div>
           <div className="precio-promo info">
             <strong>Promocion:</strong>
-            {info.promo === null ? 0 : info.promo}
+            C$ {info.promo === null ? 0 : info.promo}
           </div>
           <div className="cantidad info">
             {info.cantidad === 0 ? null : info.cantidad}{" "}

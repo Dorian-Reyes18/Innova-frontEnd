@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Asignadas from "./pages/Asignadas";
 import Productos from "./pages/Productos";
 import GestionarProductos from "./pages/GestionarProductos";
+import CrearProducto from "./pages/CrearProducto";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import { UserProvider } from "./context/userContext";
@@ -73,6 +74,7 @@ function App() {
             path="gestionar-productos/:id"
             element={<GestionarProductos />}
           />
+          <Route path="crear-producto" element={<CrearProducto />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

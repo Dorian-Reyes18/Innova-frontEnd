@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { useParams, Link } from "react-router-dom";
 import { useUser } from "../context/userContext";
 import axiosInstance from "../axios";
 import HeaderProductos from "../components/ProductosComponent/HeaderProductos";
@@ -14,12 +14,12 @@ const CrearProducto = () => {
   const [touched, setTouched] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [confirmEdit, setConfirmEdit] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const myUser = user?.user?.data;
 
-  // Función para verificar permisos por rol
-  const hasRoleAccess = (roles) => roles.includes(myUser?.role?.id);
+  const hasRoleAccess = (roles) =>
+    myUser?.role?.id ? roles.includes(myUser.role.id) : false;
 
-  // Actualizar datos del producto
   const postProduct = async (values) => {
     setPostLoading(true);
     try {
@@ -27,22 +27,36 @@ const CrearProducto = () => {
         `/inventario-productos`,
         values
       );
-      if (response.status === 200) {
+      if (response.status === 201) {
         setConfirmEdit(true);
+        setErrorMessage("");
       }
     } catch (error) {
-      console.error("Error al actualizar productos:", error);
+      setErrorMessage(
+        "Error al crear el producto. Por favor, verifica los datos."
+      );
+      console.error("Error al crear el producto:", error);
     } finally {
       setPostLoading(false);
     }
   };
 
-  // Manejar permisos para edición
   const touchHandler = () => {
     setTouched(hasRoleAccess([1, 5]));
   };
 
-  // Valores iniciales para Formik
+  useEffect(() => {
+    if (myUser) {
+      touchHandler();
+    }
+  }, [myUser]);
+
+  useEffect(() => {
+    if (postLoading && showModal) {
+      setShowModal(false);
+    }
+  }, [postLoading, showModal]);
+
   const initialValues = {
     nombreProducto: "",
     descripcion: "",
@@ -51,13 +65,6 @@ const CrearProducto = () => {
     precioVenta: 0,
     precioPromocion: 0,
   };
-  const imagenProducto = ProductPlaceholder;
-
-  useEffect(() => {
-    if (myUser) {
-      touchHandler();
-    }
-  }, [myUser]);
 
   return (
     <div className="gestion-productos">
@@ -82,8 +89,7 @@ const CrearProducto = () => {
                     <div className="modal-content">
                       <h5 className="title">Guardar cambios</h5>
                       <span className="body">
-                        ¿Está seguro que desea guardar los cambios realizados en
-                        el producto?
+                        ¿Está seguro que desea crear el producto?
                       </span>
                       <div className="foot">
                         <div
@@ -93,15 +99,14 @@ const CrearProducto = () => {
                           No
                         </div>
                         <div className="btn-pr" onClick={() => submitForm()}>
-                          {" "}
                           Si
                         </div>
                       </div>
                     </div>
                   </div>
                 )}
-                {postLoading && showModal ? setShowModal(false) : null}
-                {postLoading ? (
+
+                {postLoading && (
                   <div className="modal-conatiner">
                     <div className="modal-content">
                       <div className="spin">
@@ -109,7 +114,7 @@ const CrearProducto = () => {
                       </div>
                     </div>
                   </div>
-                ) : null}
+                )}
 
                 {confirmEdit && (
                   <div className="modal-conatiner">
@@ -130,14 +135,18 @@ const CrearProducto = () => {
                   </div>
                 )}
 
-                <h4>Detalles del producto</h4>
+                {errorMessage && (
+                  <div className="error-message">{errorMessage}</div>
+                )}
+
+                <h4>Detalles del nuevo producto</h4>
                 <div className="group-1">
                   <div className="form-group">
                     <img
                       id="imagen"
                       className="imagen"
                       name="imagen"
-                      src={imagenProducto}
+                      src={ProductPlaceholder}
                       alt="Producto"
                     />
                   </div>
@@ -196,7 +205,9 @@ const CrearProducto = () => {
                   </div>
                   {hasRoleAccess([1, 5, 6, 4]) && (
                     <div className="form-group">
-                      <label htmlFor="precioPromocion">Precio en promo</label>
+                      <label htmlFor="precioPromocion">
+                        Precio de promoción
+                      </label>
                       <Field
                         type="number"
                         id="precioPromocion"
@@ -206,16 +217,16 @@ const CrearProducto = () => {
                     </div>
                   )}
                 </div>
-
                 <div className="actions">
                   <Link to="/productos" className="btn-out">
                     Volver
                   </Link>
-                  {hasRoleAccess([1, 5]) && (
-                    <div className="btn-pr" onClick={() => setShowModal(true)}>
-                      Crear
-                    </div>
-                  )}
+                  <div
+                    className="btn-pr disabled-btn"
+                    onClick={() => setShowModal(true)}
+                  >
+                    Crear
+                  </div>
                 </div>
               </Form>
             )}

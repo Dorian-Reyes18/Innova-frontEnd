@@ -5,6 +5,7 @@ import Header from "./components/homeComponents/Header";
 import Home from "./pages/Home";
 import Asignadas from "./pages/Asignadas";
 import Productos from "./pages/Productos";
+import Usuarios from "./pages/Usuarios";
 import GestionarProductos from "./pages/GestionarProductos";
 import CrearProducto from "./pages/CrearProducto";
 import Login from "./pages/Login";
@@ -64,6 +65,29 @@ function App() {
                 <div className="general-container">
                   <div className="block-container">
                     <Productos />
+                  </div>
+                </div>
+              </div>
+            </PrivateRoute>
+          }
+        >
+          <Route
+            path="gestionar-productos/:id"
+            element={<GestionarProductos />}
+          />
+          <Route path="crear-producto" element={<CrearProducto />} />
+        </Route>
+
+        {/* Ruta de Usuarios y su subpágina */}
+        <Route
+          path="/usuarios"
+          element={
+            <PrivateRoute>
+              <div style={{ display: "flex", height: "100vh" }}>
+                <Sidebar />
+                <div className="general-container">
+                  <div className="block-container">
+                    <Usuarios />
                   </div>
                 </div>
               </div>

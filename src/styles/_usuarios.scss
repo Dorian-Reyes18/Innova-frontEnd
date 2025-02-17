@@ -1,0 +1,154 @@
+.all-users-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+
+  @include media(mobile) {
+    padding-top: 120px;
+    gap: 20px;
+  }
+  @include media(tablet) {
+    padding-top: 120px;
+  }
+
+  .user-container {
+    display: flex;
+    justify-content: center;
+
+    .block {
+      width: 80%;
+      max-width: 800px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+      text-align: center;
+      border-bottom: 1px solid $color-bordes;
+
+      @include media(mobile) {
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        padding: 0;
+        padding-bottom: 25px;
+        margin: 0;
+        border-bottom: none;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        border-radius: 0 0 8px 8px;
+        -webkit-border-radius: 0 0 8px 8px;
+        -moz-border-radius: 0 0 8px 8px;
+        -ms-border-radius: 0 0 8px 8px;
+        -o-border-radius: 0 0 8px 8px;
+      }
+
+      @include media(tablet) {
+        width: 95%;
+      }
+
+      .head {
+        width: 150px;
+
+        @include media(mobile) {
+          width: 100%;
+          padding: 12px;
+          display: flex;
+          justify-content: flex-start;
+          background: $color-morado;
+          border-radius: 8px 8px 0 0;
+          -webkit-border-radius: 8px 8px 0 0;
+          -moz-border-radius: 8px 8px 0 0;
+          -ms-border-radius: 8px 8px 0 0;
+          -o-border-radius: 8px 8px 0 0;
+        }
+        .name {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-family: $montserrat-bold;
+          color: $color-morado;
+          width: 100%;
+          text-align: left;
+
+          @include media(mobile) {
+            width: fit-content;
+            color: $color-blanco;
+          }
+        }
+      }
+      .body {
+        width: 60%;
+        display: flex;
+        justify-content: space-between;
+
+        @include media(desktop) {
+          .user {
+            width: 80px;
+            display: flex;
+          }
+          .telf {
+            width: 100px;
+            display: flex;
+          }
+
+          .role {
+            width: 120px;
+            display: flex;
+          }
+          .sexo {
+            width: 90px;
+            display: flex;
+          }
+        }
+        @include media(mobile) {
+          flex-direction: column;
+          width: 100%;
+          gap: 20px;
+          padding: 20px;
+          margin-bottom: 10px;
+
+          .user,
+          .telf,
+          .role,
+          .sexo {
+            display: flex;
+            width: 100%;
+            gap: 30px;
+          }
+        }
+      }
+      .label {
+        width: 30%;
+        text-align: start;
+        font-family: $montserrat-bold;
+        display: none;
+
+        @include media(mobile) {
+          display: block;
+        }
+      }
+
+      .acciones {
+        width: 86px;
+        text-align: left;
+        display: flex;
+        justify-content: center;
+
+        @include media(mobile) {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .encabezado {
+    background: $color-morado;
+    .user,
+    .telf,
+    .role,
+    .sexo,
+    .name,
+    .acciones {
+      color: $color-blanco !important;
+    }
+  }
+}

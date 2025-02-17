@@ -1,9 +1,12 @@
 import { useState } from "react";
 import InnovaStockIcon from "../../assets/InnovaStock.svg";
 import { Link } from "react-router-dom";
+import { useUser } from "../../context/userContext";
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const { user } = useUser();
+  const myUser = user?.user?.data;
 
   const handleSearch = () => {
     onSearch(searchTerm);
@@ -22,10 +25,13 @@ const SearchBar = ({ onSearch }) => {
         />
         <button onClick={handleSearch}>Buscar</button>
       </div>
-      <Link to="crear-producto" className="btn-out">
-        {" "}
-        Crear Producto
-      </Link>
+
+      {myUser?.role?.id === 1 || myUser?.role?.id === 5 ? (
+        <Link to="crear-producto" className="btn-out">
+          {" "}
+          Crear Producto
+        </Link>
+      ) : null}
     </div>
   );
 };

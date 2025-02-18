@@ -2,10 +2,13 @@ import UsuarioIndividual from "./UsuarioIndividual";
 import axiosInstance from "../../axios";
 import Spinner from "../Spiner";
 import { useEffect, useState } from "react";
+import SearchBarUsuarios from "./SearchBarUsuario";
 
 const TodosLosUsuarios = () => {
   const [allUsers, setAllUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [searchMade, setSearchMade] = useState(false); // Estado para verificar si se ha hecho una búsqueda
 
   const fetchUsers = async () => {
     setLoading(true);
@@ -16,10 +19,25 @@ const TodosLosUsuarios = () => {
         a.nombreApellido.localeCompare(b.nombreApellido)
       );
       setAllUsers(sortedUsers);
+      setFilteredUsers(sortedUsers);
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSearch = (term, filter) => {
+    setSearchMade(true); // Marcar que se ha hecho una búsqueda
+
+    if (!term) {
+      setFilteredUsers(allUsers);
+    } else {
+      const filtered = allUsers.filter((user) => {
+        const value = user[filter] ? user[filter].toString().toLowerCase() : "";
+        return value.includes(term.toLowerCase());
+      });
+      setFilteredUsers(filtered);
     }
   };
 
@@ -29,11 +47,12 @@ const TodosLosUsuarios = () => {
 
   return (
     <div className="all-users-container">
+      <SearchBarUsuarios onSearch={handleSearch} />{" "}
       {loading ? (
         <Spinner />
       ) : (
         <>
-          <div className="user-container ">
+          <div className="user-container head-dis">
             <div className="block encabezado">
               <div className="head">
                 <div className="name">Nombre usuario</div>
@@ -47,9 +66,16 @@ const TodosLosUsuarios = () => {
               <div className="acciones">Opciones</div>
             </div>
           </div>
-          {allUsers.map((user) => (
-            <UsuarioIndividual usuario={user} key={user.id} />
-          ))}
+
+          {searchMade && filteredUsers.length === 0 ? (
+            <div className="error-message" style={{ margin: "30px 0" }}>
+              No existen resultados para ese término.
+            </div>
+          ) : (
+            filteredUsers.map((user) => (
+              <UsuarioIndividual usuario={user} key={user.id} />
+            ))
+          )}
         </>
       )}
     </div>

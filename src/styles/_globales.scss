@@ -37,6 +37,8 @@ html {
     }
 
     .btn-pr {
+      display: flex;
+      align-items: center;
       width: fit-content;
       outline: none;
       text-decoration: none;
@@ -63,6 +65,8 @@ html {
     }
 
     .btn-out {
+      display: flex;
+      align-items: center;
       width: fit-content;
       outline: none;
       text-decoration: none;
@@ -87,6 +91,8 @@ html {
       }
     }
     .btn-scc {
+      display: flex;
+      align-items: center;
       width: fit-content;
       outline: none;
       text-decoration: none;
@@ -111,6 +117,8 @@ html {
       }
     }
     .btn-dl {
+      display: flex;
+      align-items: center;
       width: fit-content;
       outline: none;
       text-decoration: none;
@@ -137,6 +145,8 @@ html {
   }
 
   .btn {
+    display: flex;
+    align-items: center;
     width: fit-content;
     padding: 10px 18px;
     color: $color-blanco;

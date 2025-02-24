@@ -3,12 +3,15 @@ import axiosInstance from "../../axios";
 import Spinner from "../Spiner";
 import { useEffect, useState } from "react";
 import SearchBarUsuarios from "./SearchBarUsuario";
+import { useUser } from "../../context/UserContext";
 
 const TodosLosUsuarios = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchMade, setSearchMade] = useState(false); // Estado para verificar si se ha hecho una búsqueda
+  const { user } = useUser();
+  const role = user?.user?.data?.role?.id;
 
   const fetchUsers = async () => {
     setLoading(true);
@@ -63,7 +66,8 @@ const TodosLosUsuarios = () => {
                 <div className="role">Rol</div>
                 <div className="sexo">Sexo</div>
               </div>
-              <div className="acciones">Opciones</div>
+
+              {role === 1 ? <div className="acciones">Opciones</div> : null}
             </div>
           </div>
 

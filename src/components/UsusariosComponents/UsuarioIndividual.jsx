@@ -1,6 +1,10 @@
 import PropTypes from "prop-types";
+import { useUser } from "../../context/UserContext";
 
 const UsuarioIndividual = ({ usuario }) => {
+  const { user } = useUser();
+  const role = user?.user?.data?.role?.id;
+
   return (
     <div className="user-container">
       <div className="block">
@@ -25,9 +29,11 @@ const UsuarioIndividual = ({ usuario }) => {
             {usuario?.sexo}
           </div>
         </div>
-        <div className="acciones">
-          <div className="btn-out">ver</div>
-        </div>
+        {role === 1 ? (
+          <div className="acciones">
+            <div className="btn-out">ver</div>
+          </div>
+        ) : null}
       </div>
     </div>
   );

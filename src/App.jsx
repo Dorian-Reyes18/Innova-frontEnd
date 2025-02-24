@@ -21,7 +21,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/Login" />} />
         <Route path="/Login" element={<Login />} />
-
         {/* Rutas protegidas */}
         <Route
           path="/home"
@@ -95,10 +94,10 @@ function App() {
           }
         >
           <Route
-            path="gestionar-productos/:id"
+            path="gestionar-usuarios/:id"
             element={<GestionarProductos />}
           />
-          <Route path="crear-producto" element={<CrearProducto />} />
+          <Route path="crear-usuario" element={<CrearProducto />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

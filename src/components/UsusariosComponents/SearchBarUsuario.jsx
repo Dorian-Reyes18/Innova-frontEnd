@@ -7,7 +7,9 @@ const SearchBarUsuarios = ({ onSearch }) => {
 
   const handleSearch = () => {
     if (!filter) {
-      setErrorMessage("Por favor, seleccione una opción de filtro.");
+      setErrorMessage(
+        "Por favor, escriba antes un termino o seleccione una opción de filtro."
+      );
       return;
     }
     setErrorMessage("");

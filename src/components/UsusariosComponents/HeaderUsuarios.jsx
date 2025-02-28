@@ -14,12 +14,12 @@ const HeaderUsuarios = () => {
   const rutas = [
     { path: "/usuarios", name: "Usuarios del sistema" },
     {
-      path: `/productos/gestionar-productos/${id}`,
-      name: "Gestión de Productos",
+      path: `/usuarios/gestionar-usuarios/${id}`,
+      name: "Gestión de Usuarios",
     },
     {
-      path: `/productos/crear-producto`,
-      name: "Nuevo Producto",
+      path: `/usuarios/crear-usuario`,
+      name: "Nuevo Usuario",
     },
   ];
 

@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useUser } from "../../context/UserContext";
+import { Link } from "react-router-dom";
 
 const UsuarioIndividual = ({ usuario }) => {
   const { user } = useUser();
@@ -31,7 +32,9 @@ const UsuarioIndividual = ({ usuario }) => {
         </div>
         {role === 1 ? (
           <div className="acciones">
-            <div className="btn-out">ver</div>
+            <Link className="btn-out" to={`gestionar-usuarios/${usuario.id}`}>
+              Editar
+            </Link>
           </div>
         ) : null}
       </div>

@@ -1,19 +1,25 @@
+// Dependencias
+import { UserProvider } from "./context/userContext";
 import { Routes, Route, Navigate } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "./styles/app.main.scss";
+
+// Componentes
 import Sidebar from "./components/Sidebar";
 import Header from "./components/homeComponents/Header";
+
+// Paginas
+import Login from "./pages/Login";
+import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import Asignadas from "./pages/Asignadas";
 import Productos from "./pages/Productos";
 import Usuarios from "./pages/Usuarios";
 import GestionarProductos from "./pages/GestionarProductos";
 import CrearProducto from "./pages/CrearProducto";
-import Login from "./pages/Login";
-import NotFound from "./pages/NotFound";
-import { UserProvider } from "./context/userContext";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import "./styles/app.main.scss";
+import GestionarUsuarios from "./pages/GestionarUsuarios";
 
 function App() {
   return (
@@ -95,7 +101,7 @@ function App() {
         >
           <Route
             path="gestionar-usuarios/:id"
-            element={<GestionarProductos />}
+            element={<GestionarUsuarios />}
           />
           <Route path="crear-usuario" element={<CrearProducto />} />
         </Route>

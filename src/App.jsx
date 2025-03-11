@@ -20,6 +20,7 @@ import Usuarios from "./pages/Usuarios";
 import GestionarProductos from "./pages/GestionarProductos";
 import CrearProducto from "./pages/CrearProducto";
 import GestionarUsuarios from "./pages/GestionarUsuarios";
+import CrearUsuarios from "./pages/CrearUsuarios";
 
 function App() {
   return (
@@ -103,7 +104,7 @@ function App() {
             path="gestionar-usuarios/:id"
             element={<GestionarUsuarios />}
           />
-          <Route path="crear-usuario" element={<CrearProducto />} />
+          <Route path="crear-usuario" element={<CrearUsuarios />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

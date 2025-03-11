@@ -1,9 +1,14 @@
 import { useState } from "react";
+import { useUser } from "../../context/userContext";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const SearchBarUsuarios = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const { user } = useUser();
+  const myUser = user?.user?.data;
 
   const handleSearch = () => {
     if (!filter) {
@@ -58,6 +63,12 @@ const SearchBarUsuarios = ({ onSearch }) => {
             <option value="telefono">Teléfono</option>
           </select>
           <button onClick={handleSearch}>Buscar</button>
+          {myUser?.role?.id === 1 || myUser?.role?.id === 5 ? (
+            <Link to="crear-usuario" className="btn-out">
+              {" "}
+              Crear usuario
+            </Link>
+          ) : null}
         </div>
       </div>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
@@ -66,3 +77,7 @@ const SearchBarUsuarios = ({ onSearch }) => {
 };
 
 export default SearchBarUsuarios;
+
+SearchBarUsuarios.propTypes = {
+  onSearch: PropTypes.func,
+};

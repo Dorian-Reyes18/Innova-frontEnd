@@ -2,6 +2,7 @@ import { useState } from "react";
 import InnovaStockIcon from "../../assets/InnovaStock.svg";
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/userContext";
+import PropTypes from "prop-types";
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -37,3 +38,7 @@ const SearchBar = ({ onSearch }) => {
 };
 
 export default SearchBar;
+
+SearchBar.propTypes = {
+  onSearch: PropTypes.func,
+};

@@ -1,7 +1,7 @@
 // importaciones
 import { Formik, Form, Field } from "formik";
-import { Link, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 import axiosInstance from "../axios";
 
 // Componentes
@@ -11,24 +11,15 @@ import Spinner from "../components/Spiner";
 // Imagenes
 import IconSuccess from "../assets/IconSuccess.svg";
 
-const GestionarUsuarios = () => {
+const CrearUsuarios = () => {
   // Estados
-  const [userData, setUserData] = useState(null);
-  const [loadingUser, setLoadingUser] = useState(false);
-  const [putLoading, setPutLoading] = useState(false);
-  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [postLoading, setPostLoading] = useState(false);
   const [showModalSave, setShowModalSave] = useState(false);
-  const [showModalDelete, setShowModalDelete] = useState(false);
-  const [submitOptions, setSubmitOptions] = useState({
-    put: false,
-    delete: false,
-  });
-  const [confirmEdit, setConfirmEdit] = useState(false);
-  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [submitOptions, setSubmitOptions] = useState(false);
+  const [confirmEdit, setConfirmCreate] = useState(false);
 
   // Configs
-  const { id } = useParams();
-  
+
   // Objetos
   const rolesData = {
     roles: [
@@ -49,74 +40,34 @@ const GestionarUsuarios = () => {
 
   // Objetos
 
-  const blockedStyles = [
-    { color: "Red", backgroundColor: "#ffe4e4", fontWeight: "700" },
-    { color: "#003b00", backgroundColor: "#d6ffd6", fontWeight: "700" },
-  ];
-
-  // servicios de fetching
-  const fetchUser = async () => {
-    // Obtener el usuario actual
+  // Servicios de API
+  const postUser = async (values) => {
+    // Crear nuevo usuario
+    setPostLoading(true);
     try {
-      setLoadingUser(true);
-      const response = await axiosInstance.get(`/users/${id}?populate=*`);
-      setUserData(response.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoadingUser(false);
-    }
-  };
-
-  const putUser = async (values) => {
-    // Actualizar datos del usuario actual
-    setPutLoading(true);
-    try {
-      const response = await axiosInstance.put(`/users/${id}`, values);
-      if (response.status === 200) {
-        setConfirmEdit(true);
+      const response = await axiosInstance.post(`/users`, values);
+      if (response.status === 201) {
+        setShowModalSave(false);
+        setConfirmCreate(true);
       }
     } catch (error) {
-      console.error("Error al actualizar el usuario:", error);
+      console.error("Error al crear el usuario:", error);
     } finally {
-      setPutLoading(false);
+      setPostLoading(false);
     }
   };
-
-  const deleteUser = async (values) => {
-    // Eliminar usuario actual
-    setDeleteLoading(true);
-    try {
-      const response = await axiosInstance.delete(`/users/${id}`, values);
-
-      // console.log(response);
-      if (response.status === 200) {
-        setConfirmDelete(true);
-      }
-    } catch (error) {
-      console.error("Error el eliminar el usuario:", error);
-    } finally {
-      setDeleteLoading(false);
-    }
-  };
-
-  // Efectos
-  useEffect(() => {
-    fetchUser();
-  }, []);
 
   return (
     <div className="gestionar-usuarios">
       <HeaderUsuarios />
-
-      {loadingUser ? (
+      {postLoading ? (
         <Spinner />
       ) : (
         <>
           <div className="gestor-container">
             <div className="form-container">
               <div className="header">
-                <h5>Detalles del usuario</h5>
+                <h5>Detalles del nuevo usuario</h5>
                 <span className="svg"></span>
               </div>
 
@@ -125,41 +76,31 @@ const GestionarUsuarios = () => {
                   <Formik
                     enableReinitialize
                     initialValues={{
-                      username: userData?.username || "",
-                      nombreApellido: userData?.nombreApellido || "",
-                      telefono: userData?.telefono || "",
-                      email: userData?.email || "",
-                      role: userData?.role?.id || "",
-                      sexo: userData?.sexo || "",
-                      blocked:
-                        userData?.blocked !== undefined
-                          ? userData?.blocked
-                          : false,
-                      confirmed:
-                        userData?.confirmed !== undefined
-                          ? userData?.confirmed
-                          : false,
+                      username: "",
+                      nombreApellido: "",
+                      telefono: "",
+                      email: "",
+                      role: "",
+                      sexo: "",
+                      blocked: false,
+                      confirmed: false,
                     }}
                     onSubmit={(values) => {
-                      // console.log(values);
-                      if (submitOptions.put) {
-                        putUser(values);
-                      } else if (submitOptions.delete) {
-                        deleteUser();
+                      console.log(values);
+                      if (submitOptions) {
+                        postUser(values);
                       }
                     }}
                   >
                     {({ handleSubmit, setFieldValue, submitForm }) => (
                       <Form onSubmit={handleSubmit}>
-                        {/*  */}
                         {/* Modal inicial que pregunta si se desea guardar los cambios */}
                         {showModalSave && (
                           <div className="modal-conatiner">
                             <div className="modal-content">
-                              <h5 className="title">Guardar cambios</h5>
+                              <h5 className="title">Crear usuario</h5>
                               <span className="body">
-                                ¿Está seguro que desea guardar los cambios
-                                realizados en el usuario actual?
+                                ¿Está seguro que desea un nuevo usuario?
                               </span>
                               <div className="foot">
                                 <div
@@ -172,10 +113,7 @@ const GestionarUsuarios = () => {
                                 <div
                                   className="btn-pr"
                                   onClick={() => {
-                                    setSubmitOptions({
-                                      put: true,
-                                      delete: false,
-                                    });
+                                    setSubmitOptions(true);
                                     submitForm();
                                   }}
                                 >
@@ -187,60 +125,12 @@ const GestionarUsuarios = () => {
                           </div>
                         )}
 
-                        {/* Modal para eliminar el usuario actual */}
-                        {showModalDelete && (
-                          <div className="modal-conatiner">
-                            <div className="modal-content">
-                              <h5 className="title">Eliminar usuario</h5>
-                              <span className="body">
-                                ¿Está seguro que desea eliminar el usuario
-                                actual?
-                              </span>
-                              <div className="foot">
-                                <div
-                                  className="btn-out"
-                                  onClick={() => setShowModalDelete(false)}
-                                >
-                                  No
-                                </div>
-                                <div
-                                  className="btn-pr"
-                                  onClick={() => {
-                                    setSubmitOptions({
-                                      put: false,
-                                      delete: true,
-                                    });
-                                    submitForm();
-                                  }}
-                                >
-                                  {" "}
-                                  Si
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-
-                        {/* Si hay una confirmación de edición cerramos el modal inicial */}
-                        {putLoading && showModalSave
+                        {/* Si hay una confirmación de creacion cerramos el modal inicial */}
+                        {postLoading && showModalSave
                           ? setShowModalSave(false)
                           : null}
 
-                        {putLoading ? (
-                          <div className="modal-conatiner">
-                            <div className="modal-content">
-                              <div className="spin">
-                                <Spinner />
-                              </div>
-                            </div>
-                          </div>
-                        ) : null}
-
-                        {/* Si hay una confirmación de eliminación cerramos el modal inicial */}
-                        {deleteLoading && showModalDelete
-                          ? setShowModalDelete(false)
-                          : null}
-                        {deleteLoading ? (
+                        {postLoading ? (
                           <div className="modal-conatiner">
                             <div className="modal-content">
                               <div className="spin">
@@ -260,26 +150,6 @@ const GestionarUsuarios = () => {
                               </h5>
                               <span className="body">
                                 Los cambios se aplicarón correctamente
-                              </span>
-                              <div className="foot">
-                                <Link to="/usuarios" className="btn-scc">
-                                  Cerrar
-                                </Link>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-
-                        {/* Modal que confirma la eliminación exitosa */}
-                        {confirmDelete && (
-                          <div className="modal-conatiner">
-                            <div className="modal-content">
-                              <h5 className="title">
-                                <img src={IconSuccess} alt="" />
-                                <span>Eliminación Exitosa</span>
-                              </h5>
-                              <span className="body">
-                                Se eliminó el usuario correctamente
                               </span>
                               <div className="foot">
                                 <Link to="/usuarios" className="btn-scc">
@@ -354,11 +224,6 @@ const GestionarUsuarios = () => {
                           <div className="group-form">
                             <label htmlFor="blocked">Bloquear usuario</label>
                             <Field
-                              style={
-                                userData?.blocked
-                                  ? blockedStyles[0]
-                                  : blockedStyles[1]
-                              }
                               as="select"
                               id="blocked"
                               name="blocked"
@@ -426,12 +291,6 @@ const GestionarUsuarios = () => {
                           >
                             Guardar
                           </div>
-                          <div
-                            className="btn-dl"
-                            onClick={() => setShowModalDelete(true)}
-                          >
-                            Borrar
-                          </div>
                         </div>
                       </Form>
                     )}
@@ -446,4 +305,4 @@ const GestionarUsuarios = () => {
   );
 };
 
-export default GestionarUsuarios;
+export default CrearUsuarios;

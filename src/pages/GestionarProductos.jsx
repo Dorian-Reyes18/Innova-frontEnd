@@ -7,7 +7,6 @@ import HeaderProductos from "../components/ProductosComponent/HeaderProductos";
 import ProductPlaceholder from "../assets/ProductPlaceholder.svg";
 import Spinner from "../components/Spiner";
 import IconSuccess from "../assets/IconSuccess.svg";
-import IconSuccessDelete from "../assets/IconSuccessDelete.svg";
 
 const GestionarProductos = () => {
   const { id } = useParams();

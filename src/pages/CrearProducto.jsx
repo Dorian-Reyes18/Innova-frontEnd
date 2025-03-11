@@ -87,7 +87,7 @@ const CrearProducto = () => {
                 {showModal && (
                   <div className="modal-conatiner">
                     <div className="modal-content">
-                      <h5 className="title">Guardar cambios</h5>
+                      <h5 className="title">Crear Producto</h5>
                       <span className="body">
                         ¿Está seguro que desea crear el producto?
                       </span>

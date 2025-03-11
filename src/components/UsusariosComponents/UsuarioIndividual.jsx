@@ -5,10 +5,11 @@ import { Link } from "react-router-dom";
 const UsuarioIndividual = ({ usuario }) => {
   const { user } = useUser();
   const role = user?.user?.data?.role?.id;
+  const blocked = usuario?.blocked;
 
   return (
     <div className="user-container">
-      <div className="block">
+      <div className="block" style={{ background: blocked ? "#ffe4e4" : null }}>
         <div className="head">
           <div className="name">{usuario?.nombreApellido}</div>
         </div>
@@ -48,6 +49,8 @@ UsuarioIndividual.propTypes = {
     username: PropTypes.string.isRequired,
     telefono: PropTypes.string,
     sexo: PropTypes.string,
+    id: PropTypes.number,
+    blocked: PropTypes.bool,
     role: PropTypes.shape({
       name: PropTypes.string.isRequired,
     }),

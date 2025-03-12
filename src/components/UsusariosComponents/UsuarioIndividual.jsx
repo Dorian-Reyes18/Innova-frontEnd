@@ -7,9 +7,22 @@ const UsuarioIndividual = ({ usuario }) => {
   const role = user?.user?.data?.role?.id;
   const blocked = usuario?.blocked;
 
+  const determinarColor = () => {
+    return usuario.confirmed ? "#36E43D" : "#DD4EEA";
+  };
+
   return (
-    <div className="user-container">
-      <div className="block" style={{ background: blocked ? "#ffe4e4" : null }}>
+    <div className="user-container mobile">
+      <div className="block" style={{ background: blocked ? "#ffefef" : null }}>
+        {role === 1 && (
+          <div
+            className="color"
+            style={{
+              border: "none",
+              background: determinarColor(),
+            }}
+          ></div>
+        )}
         <div className="head">
           <div className="name">{usuario?.nombreApellido}</div>
         </div>
@@ -51,6 +64,7 @@ UsuarioIndividual.propTypes = {
     sexo: PropTypes.string,
     id: PropTypes.number,
     blocked: PropTypes.bool,
+    confirmed: PropTypes.bool,
     role: PropTypes.shape({
       name: PropTypes.string.isRequired,
     }),

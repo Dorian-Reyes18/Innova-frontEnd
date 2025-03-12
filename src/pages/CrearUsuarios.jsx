@@ -34,8 +34,8 @@ const CrearUsuarios = () => {
     { prop: false, des: "Desbloqueado" },
   ];
   const confirmedState = [
-    { prop: true, des: "Confirmado" },
-    { prop: false, des: "No confirmado" },
+    { prop: true, des: "Activo" },
+    { prop: false, des: "Inactivo" },
   ];
 
   // Objetos
@@ -83,7 +83,7 @@ const CrearUsuarios = () => {
                       role: "",
                       sexo: "",
                       blocked: false,
-                      confirmed: false,
+                      confirmed: true,
                     }}
                     onSubmit={(values) => {
                       console.log(values);

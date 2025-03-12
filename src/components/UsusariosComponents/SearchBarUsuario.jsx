@@ -9,6 +9,7 @@ const SearchBarUsuarios = ({ onSearch }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const { user } = useUser();
   const myUser = user?.user?.data;
+  const role = myUser?.role?.id;
 
   const handleSearch = () => {
     if (!filter) {
@@ -63,7 +64,7 @@ const SearchBarUsuarios = ({ onSearch }) => {
             <option value="telefono">Teléfono</option>
           </select>
           <button onClick={handleSearch}>Buscar</button>
-          {myUser?.role?.id === 1 || myUser?.role?.id === 5 ? (
+          {myUser?.role?.id === 1 ? (
             <Link to="crear-usuario" className="btn-out">
               {" "}
               Crear usuario

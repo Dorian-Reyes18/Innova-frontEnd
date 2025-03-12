@@ -14,6 +14,10 @@
   .search-container {
     flex-direction: column;
     align-items: center;
+
+    @include media(mobile) {
+      margin-bottom: 30px;
+    }
     .barr {
       width: 80%;
       max-width: 800px;
@@ -62,6 +66,40 @@
     }
   }
 
+  .container-total-users {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-bottom: 40px;
+
+    @include media(mobile) {
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .block {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+
+      .color {
+        width: 15px;
+        height: 15px;
+        border-radius: 2px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        -ms-border-radius: 2px;
+        -o-border-radius: 2px;
+      }
+
+      .total {
+        display: flex;
+        gap: 10px;
+      }
+    }
+  }
+
   .head-dis {
     @include media(mobile) {
       display: none !important;
@@ -102,6 +140,17 @@
         width: 95%;
       }
 
+      .color {
+        width: 15px;
+        height: 15px;
+        border: 2px solid $color-blanco;
+        border-radius: 2px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        -ms-border-radius: 2px;
+        -o-border-radius: 2px;
+      }
+
       .head {
         width: 150px;
 
@@ -111,11 +160,6 @@
           display: flex;
           justify-content: flex-start;
           background: $color-morado;
-          border-radius: 8px 8px 0 0;
-          -webkit-border-radius: 8px 8px 0 0;
-          -moz-border-radius: 8px 8px 0 0;
-          -ms-border-radius: 8px 8px 0 0;
-          -o-border-radius: 8px 8px 0 0;
         }
         .name {
           white-space: nowrap;
@@ -123,8 +167,8 @@
           text-overflow: ellipsis;
           font-family: $montserrat-bold;
           color: $color-morado;
-          width: 100%;
-          text-align: left;
+          width: 150px;
+          text-align: left !important;
 
           @include media(mobile) {
             width: fit-content;
@@ -193,6 +237,21 @@
 
         @include media(mobile) {
           width: 100%;
+        }
+      }
+    }
+  }
+
+  .mobile {
+    .block {
+      .color {
+        @include media(mobile) {
+          width: 100%;
+          border-radius: 8px 8px 0 0;
+          -webkit-border-radius: 8px 8px 0 0;
+          -moz-border-radius: 8px 8px 0 0;
+          -ms-border-radius: 8px 8px 0 0;
+          -o-border-radius: 8px 8px 0 0;
         }
       }
     }

@@ -4,6 +4,7 @@ import Spinner from "../Spiner";
 import { useEffect, useState } from "react";
 import SearchBarUsuarios from "./SearchBarUsuario";
 import { useUser } from "../../context/UserContext";
+import TotalUsers from "./TotalUsers";
 
 const TodosLosUsuarios = () => {
   const [allUsers, setAllUsers] = useState([]);
@@ -50,13 +51,15 @@ const TodosLosUsuarios = () => {
 
   return (
     <div className="all-users-container">
-      <SearchBarUsuarios onSearch={handleSearch} />{" "}
+      <SearchBarUsuarios onSearch={handleSearch} />
+      {role === 1 && <TotalUsers usuarios={allUsers} />}
       {loading ? (
         <Spinner />
       ) : (
         <>
           <div className="user-container head-dis">
             <div className="block encabezado">
+              <div className="color"></div>
               <div className="head">
                 <div className="name">Nombre usuario</div>
               </div>

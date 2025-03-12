@@ -28,7 +28,7 @@ const GestionarUsuarios = () => {
 
   // Configs
   const { id } = useParams();
-  
+
   // Objetos
   const rolesData = {
     roles: [
@@ -43,8 +43,8 @@ const GestionarUsuarios = () => {
     { prop: false, des: "Desbloqueado" },
   ];
   const confirmedState = [
-    { prop: true, des: "Confirmado" },
-    { prop: false, des: "No confirmado" },
+    { prop: true, des: "Activo" },
+    { prop: false, des: "Inactivo" },
   ];
 
   // Objetos

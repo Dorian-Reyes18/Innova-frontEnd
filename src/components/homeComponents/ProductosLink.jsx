@@ -8,7 +8,7 @@ const ProductosLink = () => {
   const roleName = user?.user?.data?.role?.name?.toLowerCase();
 
   // Definimos los roles permitidos
-  const rolesPermitidos = ["administrador", "stocker", "vendedor"];
+  const rolesPermitidos = ["administrador", "stocker", "vendedor", "delivery"];
 
   if (roleName && rolesPermitidos.includes(roleName)) {
     return (

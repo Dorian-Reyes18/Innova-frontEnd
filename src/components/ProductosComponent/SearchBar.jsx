@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const { user } = useUser();
-  const myUser = user?.user?.data;
+  const role = user?.user?.data?.role?.name?.toLowerCase(); 
 
   const handleSearch = () => {
     onSearch(searchTerm);
@@ -15,7 +15,7 @@ const SearchBar = ({ onSearch }) => {
 
   return (
     <div className="search-container">
-      <img className="innova-stock" src={InnovaStockIcon} alt="" />
+      <img className="innova-stock" src={InnovaStockIcon} alt="Innova Stock" />
       <div className="search-bar">
         <input
           type="search"
@@ -27,18 +27,17 @@ const SearchBar = ({ onSearch }) => {
         <button onClick={handleSearch}>Buscar</button>
       </div>
 
-      {myUser?.role?.id === 1 || myUser?.role?.id === 5 ? (
+      {(role === "administrador" || role === "stocker") && (
         <Link to="crear-producto" className="btn-out">
-          {" "}
           Crear Producto
         </Link>
-      ) : null}
+      )}
     </div>
   );
 };
 
-export default SearchBar;
-
 SearchBar.propTypes = {
-  onSearch: PropTypes.func,
+  onSearch: PropTypes.func.isRequired,
 };
+
+export default SearchBar;

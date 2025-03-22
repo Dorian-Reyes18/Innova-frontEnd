@@ -5,7 +5,7 @@ import { useUser } from "../../context/UserContext";
 
 const ProductoIndividual = ({ producto }) => {
   const { user } = useUser();
-  const myUser = user.user.data;
+  const role = user?.user?.data?.role?.name?.toLowerCase(); // Obtenemos el rol y lo convertimos a minúsculas
 
   const info = {
     img:
@@ -18,6 +18,9 @@ const ProductoIndividual = ({ producto }) => {
     cantidad: producto?.cantidad,
   };
 
+  // Verificamos si el rol es "administrador" o "stocker"
+  const showCompraPrice = role === "administrador" || role === "stocker";
+
   return (
     <div className="product">
       <div className="block">
@@ -26,12 +29,12 @@ const ProductoIndividual = ({ producto }) => {
         </div>
         <div className="block-info">
           <div className="nombre info">{producto?.nombreProducto}</div>
-          {myUser.role.id === 1 || myUser.role.id === 5 ? (
+          {showCompraPrice && (
             <div className="precio info">
               <strong>Compra: </strong>
               C$ {info.compra}
             </div>
-          ) : null}
+          )}
           <div className="precio-venta info">
             <strong>Venta: </strong>
             C$ {info.venta}

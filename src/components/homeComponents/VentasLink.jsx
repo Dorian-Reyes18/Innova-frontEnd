@@ -5,9 +5,12 @@ import { useUser } from "../../context/UserContext";
 
 const VentasLink = () => {
   const { user } = useUser();
-  const role = user?.user?.data?.role?.id;
+  const roleName = user?.user?.data?.role?.name?.toLowerCase();
 
-  if (role === 1 || role === 5) {
+  // Definimos los roles permitidos
+  const rolesPermitidos = ["administrador", "stocker", "vendedor"];
+
+  if (roleName && rolesPermitidos.includes(roleName)) {
     return (
       <Link to="/ventas" className="link-card">
         <img className="normal" src={SellIcon} alt="Ventas" />

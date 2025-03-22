@@ -59,7 +59,7 @@ const TodosLosUsuarios = () => {
         <>
           <div className="user-container head-dis">
             <div className="block encabezado">
-              <div className="color"></div>
+              {role === 1 ? <div className="color"></div> : null}
               <div className="head">
                 <div className="name">Nombre usuario</div>
               </div>

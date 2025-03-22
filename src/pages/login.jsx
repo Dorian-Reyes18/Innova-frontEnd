@@ -47,13 +47,14 @@ const Login = () => {
         const { status, data } = error.response;
 
         if (status === 400 && data.error.name === "ValidationError") {
+          console.log(error);
           setErrorMessage("Usuario o contraseña incorrectos.");
         } else {
-          setErrorMessage(
-            "Ocurrió un error en el servidor. Inténtalo más tarde."
-          );
+          console.log(error);
+          setErrorMessage("Su usuario ha sido bloqueado por el administrador");
         }
       } else {
+        console.log(error);
         setErrorMessage(
           "Error al realizar la solicitud. Verifica tu conexión."
         );

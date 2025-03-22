@@ -5,13 +5,16 @@ import { useUser } from "../../context/UserContext";
 
 const DeliveryAsignadas = () => {
   const { user } = useUser();
-  const role = user?.user?.data?.role?.id;
+  const roleName = user?.user?.data?.role?.name?.toLowerCase();
 
-  if (role === 4) {
+  // Definimos los roles permitidos
+  const rolesPermitidos = ["delivery"];
+
+  if (roleName && rolesPermitidos.includes(roleName)) {
     return (
       <Link to="/asignadas" className="link-card">
-        <img className="normal" src={DeliveryAsignadaIcon} alt="Ventas" />
-        <img className="blanca" src={DeliveryAsignadaBlanco} alt="Ventas" />
+        <img className="normal" src={DeliveryAsignadaIcon} alt="Asignadas" />
+        <img className="blanca" src={DeliveryAsignadaBlanco} alt="Asignadas" />
         <span>Asignadas</span>
       </Link>
     );

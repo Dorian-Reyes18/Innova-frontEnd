@@ -7,7 +7,7 @@ const DeliveryLink = () => {
   const { user } = useUser();
   const role = user?.user?.data?.role?.id;
 
-  if (role === 1 || role === 5) {
+  if (role === 1) {
     return (
       <Link to="/deliverys" className="link-card">
         <img className="normal" src={AsingIcon} alt="Asignar Delivery" />

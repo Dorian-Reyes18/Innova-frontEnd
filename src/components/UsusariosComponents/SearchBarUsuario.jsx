@@ -9,7 +9,6 @@ const SearchBarUsuarios = ({ onSearch }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const { user } = useUser();
   const myUser = user?.user?.data;
-  const role = myUser?.role?.id;
 
   const handleSearch = () => {
     if (!filter) {

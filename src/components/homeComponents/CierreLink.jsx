@@ -5,13 +5,16 @@ import { useUser } from "../../context/UserContext";
 
 const CierreLink = () => {
   const { user } = useUser();
-  const role = user?.user?.data?.role?.id;
+  const roleName = user?.user?.data?.role?.name?.toLowerCase(); 
 
-  if (role === 1 || role === 5) {
+  // Definimos los roles permitidos
+  const rolesPermitidos = ["administrador", "stocker"];
+
+  if (roleName && rolesPermitidos.includes(roleName)) {
     return (
       <Link to="/ventas" className="link-card">
-        <img className="normal" src={CierreIcon} alt="Ventas" />
-        <img className="blanca" src={CierreIconMorado} alt="Ventas" />
+        <img className="normal" src={CierreIcon} alt="Cierre" />
+        <img className="blanca" src={CierreIconMorado} alt="Cierre" />
         <span>Cierre</span>
       </Link>
     );

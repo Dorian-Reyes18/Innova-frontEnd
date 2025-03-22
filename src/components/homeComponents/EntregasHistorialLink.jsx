@@ -5,13 +5,16 @@ import { useUser } from "../../context/UserContext";
 
 const EntregasHistorialLink = () => {
   const { user } = useUser();
-  const role = user?.user?.data?.role?.id;
+  const roleName = user?.user?.data?.role?.name?.toLowerCase(); 
 
-  if (role === 4) {
+  // Definimos los roles permitidos
+  const rolesPermitidos = ["delivery"];
+
+  if (roleName && rolesPermitidos.includes(roleName)) {
     return (
       <Link to="/delivery-historial" className="link-card">
-        <img className="normal" src={HistoryIcon} alt="Ventas" />
-        <img className="blanca" src={HistoryIconBlanco} alt="Ventas" />
+        <img className="normal" src={HistoryIcon} alt="Historial" />
+        <img className="blanca" src={HistoryIconBlanco} alt="Historial" />
         <span>Historial</span>
       </Link>
     );

@@ -9,6 +9,7 @@ const HeaderUsuarios = () => {
   const { user } = useUser();
   const { id } = useParams();
   const myUser = user?.user?.data;
+  const roleName = myUser?.role?.name?.toLowerCase(); // Convertimos a minúsculas
 
   const location = useLocation();
   const rutas = [
@@ -29,23 +30,19 @@ const HeaderUsuarios = () => {
 
   const roles = [
     {
-      id: 1,
-      name: "Administrador",
+      name: "administrador",
       icon: AdminIcon,
     },
     {
-      id: 4,
-      name: "Delivery",
+      name: "delivery",
       icon: DeliveryIcon,
     },
     {
-      id: 5,
-      name: "Stocker",
+      name: "stocker",
       icon: StockerIcon,
     },
     {
-      id: 6,
-      name: "Vendedor",
+      name: "vendedor",
       icon: SellerIcon,
     },
   ];
@@ -54,13 +51,13 @@ const HeaderUsuarios = () => {
     <div className="header-products">
       <span className="title-header">{titleHeader}</span>
       {roles.map((role) => {
-        if (role.id === myUser?.role?.id) {
+        if (role.name === roleName) {
           return (
             <img
               className="iconRole"
               src={role.icon}
               alt={role.name}
-              key={role.id}
+              key={role.name}
             />
           );
         }

@@ -10,9 +10,9 @@ const TodosLosUsuarios = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [searchMade, setSearchMade] = useState(false); // Estado para verificar si se ha hecho una búsqueda
+  const [searchMade, setSearchMade] = useState(false); 
   const { user } = useUser();
-  const role = user?.user?.data?.role?.id;
+  const roleName = user?.user?.data?.role?.name?.toLowerCase(); // Convertimos a minúsculas
 
   const fetchUsers = async () => {
     setLoading(true);
@@ -52,14 +52,16 @@ const TodosLosUsuarios = () => {
   return (
     <div className="all-users-container">
       <SearchBarUsuarios onSearch={handleSearch} />
-      {role === 1 && <TotalUsers usuarios={allUsers} />}
+      {roleName === "administrador" && <TotalUsers usuarios={allUsers} />}
       {loading ? (
         <Spinner />
       ) : (
         <>
           <div className="user-container head-dis">
             <div className="block encabezado">
-              {role === 1 ? <div className="color"></div> : null}
+              {roleName === "administrador" ? (
+                <div className="color"></div>
+              ) : null}
               <div className="head">
                 <div className="name">Nombre usuario</div>
               </div>
@@ -70,7 +72,9 @@ const TodosLosUsuarios = () => {
                 <div className="sexo">Sexo</div>
               </div>
 
-              {role === 1 ? <div className="acciones">Opciones</div> : null}
+              {roleName === "administrador" ? (
+                <div className="acciones">Opciones</div>
+              ) : null}
             </div>
           </div>
 

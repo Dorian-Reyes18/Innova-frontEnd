@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const UsuarioIndividual = ({ usuario }) => {
   const { user } = useUser();
-  const role = user?.user?.data?.role?.id;
+  const roleName = user?.user?.data?.role?.name?.toLowerCase(); // Convertimos a minúsculas
   const blocked = usuario?.blocked;
 
   const determinarColor = () => {
@@ -14,7 +14,7 @@ const UsuarioIndividual = ({ usuario }) => {
   return (
     <div className="user-container mobile">
       <div className="block" style={{ background: blocked ? "#ffefef" : null }}>
-        {role === 1 && (
+        {roleName === "administrador" && (
           <div
             className="color"
             style={{
@@ -44,7 +44,7 @@ const UsuarioIndividual = ({ usuario }) => {
             {usuario?.sexo}
           </div>
         </div>
-        {role === 1 ? (
+        {roleName === "administrador" ? (
           <div className="acciones">
             <Link className="btn-out" to={`gestionar-usuarios/${usuario.id}`}>
               Editar

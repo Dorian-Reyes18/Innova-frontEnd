@@ -9,11 +9,12 @@ const SearchBarUsuarios = ({ onSearch }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const { user } = useUser();
   const myUser = user?.user?.data;
+  const roleName = myUser?.role?.name?.toLowerCase(); // Convertimos a minúsculas
 
   const handleSearch = () => {
     if (!filter) {
       setErrorMessage(
-        "Por favor, escriba antes un termino o seleccione una opción de filtro."
+        "Por favor, escriba antes un término o seleccione una opción de filtro."
       );
       return;
     }
@@ -63,9 +64,8 @@ const SearchBarUsuarios = ({ onSearch }) => {
             <option value="telefono">Teléfono</option>
           </select>
           <button onClick={handleSearch}>Buscar</button>
-          {myUser?.role?.id === 1 ? (
+          {roleName === "administrador" ? (
             <Link to="crear-usuario" className="btn-out">
-              {" "}
               Crear usuario
             </Link>
           ) : null}

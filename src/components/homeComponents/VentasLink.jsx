@@ -12,7 +12,7 @@ const VentasLink = () => {
 
   if (roleName && rolesPermitidos.includes(roleName)) {
     return (
-      <Link to="/ventas" className="link-card">
+      <Link to="/panel-de-ventas" className="link-card">
         <img className="normal" src={SellIcon} alt="Ventas" />
         <img className="blanca" src={SellIconBlanco} alt="Ventas" />
         <span>Ventas</span>

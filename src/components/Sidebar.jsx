@@ -11,56 +11,58 @@ import StockMenuIcon from "../assets/StcokMenuIcon.svg";
 import Logout from "./LogOutButton";
 
 const Sidebar = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [collapsed, setCollapsed] = useState(window.innerWidth < 992);
   const { user } = useUser();
   const myUser = user?.user?.data;
   const location = useLocation();
 
+  const role = myUser?.role?.name?.toLowerCase(); // Convertimos el rol a minúsculas
+
   useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
+    const handleResize = () => setCollapsed(window.innerWidth < 992);
     window.addEventListener("resize", handleResize);
-
-    if (windowWidth < 992) {
-      setCollapsed(true);
-    }
-
     return () => window.removeEventListener("resize", handleResize);
-  }, [windowWidth]);
+  }, []);
 
-  const toggleSidebar = () => {
-    setCollapsed(!collapsed);
-  };
+  const toggleSidebar = () => setCollapsed((prev) => !prev);
 
-  // Rutas y sus permisos
+  // Definir rutas y permisos
   const menuItems = [
     {
       icon: HomeIcon,
       name: "Inicio",
       path: "/Home",
-      roles: [1, 2, 3, 4, 5, 6],
+      roles: ["administrador", "public", "delivery", "stocker", "vendedor"],
     },
     {
       icon: StockMenuIcon,
       name: "Stock",
       path: "/productos",
-      roles: [1, 2, 3, 4, 5, 6],
+      roles: ["administrador", "public", "delivery", "stocker", "vendedor"],
     },
-    { icon: UsersIcon, name: "Usuarios", path: "/usuarios", roles: [1, 5] },
+    {
+      icon: UsersIcon,
+      name: "Usuarios",
+      path: "/usuarios",
+      roles: ["administrador", "stocker"],
+    },
     {
       icon: AsignadaSidebarIcon,
       name: "Mis asignadas",
       path: "/asignadas",
-      roles: [4],
+      roles: ["delivery"],
+    },
+    {
+      icon: AsignadaSidebarIcon,
+      name: "Panel Ventas",
+      path: "/panel-de-ventas",
+      roles: ["administrador", "stocker", "vendedor"],
     },
   ];
 
   // Filtrar los ítems del menú según el rol del usuario
   const filteredMenuItems = menuItems.filter((item) =>
-    item.roles.includes(myUser?.role?.id)
+    item.roles.includes(role)
   );
 
   return (
@@ -72,14 +74,11 @@ const Sidebar = () => {
           <img src={InnovaText} alt="InnovaText" className="innovaText" />
         )}
         <button onClick={toggleSidebar} className="toggle-btn">
-          {collapsed ? (
-            <img src={onCollapse} alt="onCollapse" />
-          ) : (
-            <img src={Collapse} alt="collapse" />
-          )}
+          <img src={collapsed ? onCollapse : Collapse} alt="toggle sidebar" />
         </button>
       </div>
-      {windowWidth < 992 && collapsed ? null : (
+
+      {!collapsed && (
         <div className="sidebar-content">
           <nav className="sidebar-nav">
             <ul>

@@ -21,6 +21,7 @@ import GestionarProductos from "./pages/GestionarProductos";
 import CrearProducto from "./pages/CrearProducto";
 import GestionarUsuarios from "./pages/GestionarUsuarios";
 import CrearUsuarios from "./pages/CrearUsuarios";
+import PanelDeVentas from "./pages/PanelDeVentas";
 
 function App() {
   return (
@@ -94,6 +95,29 @@ function App() {
                 <div className="general-container">
                   <div className="block-container">
                     <Usuarios />
+                  </div>
+                </div>
+              </div>
+            </PrivateRoute>
+          }
+        >
+          <Route
+            path="gestionar-usuarios/:id"
+            element={<GestionarUsuarios />}
+          />
+          <Route path="crear-usuario" element={<CrearUsuarios />} />
+        </Route>
+
+        {/* Ruta Panel de ventas y subpaginas */}
+        <Route
+          path="/panel-de-ventas"
+          element={
+            <PrivateRoute>
+              <div style={{ display: "flex", height: "100vh" }}>
+                <Sidebar />
+                <div className="general-container">
+                  <div className="block-container">
+                    <PanelDeVentas />
                   </div>
                 </div>
               </div>

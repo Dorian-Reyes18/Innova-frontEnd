@@ -8,6 +8,7 @@ import onCollapse from "../assets/onCollapse.svg";
 import InnovaText from "../assets/InnovaStoreText.svg";
 import AsignadaSidebarIcon from "../assets/AsignadaSidebarIcon.svg";
 import StockMenuIcon from "../assets/StcokMenuIcon.svg";
+import TagIconSellerNav from "../assets/TagIconSellerNav.svg";
 import Logout from "./LogOutButton";
 
 const Sidebar = () => {
@@ -53,7 +54,7 @@ const Sidebar = () => {
       roles: ["delivery"],
     },
     {
-      icon: AsignadaSidebarIcon,
+      icon: TagIconSellerNav,
       name: "Panel Ventas",
       path: "/panel-de-ventas",
       roles: ["administrador", "stocker", "vendedor"],

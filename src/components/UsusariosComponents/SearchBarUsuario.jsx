@@ -66,7 +66,7 @@ const SearchBarUsuarios = ({ onSearch }) => {
           <button onClick={handleSearch}>Buscar</button>
           {roleName === "administrador" ? (
             <Link to="crear-usuario" className="btn-out">
-              Crear usuario
+              Nuevo
             </Link>
           ) : null}
         </div>

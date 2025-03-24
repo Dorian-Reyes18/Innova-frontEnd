@@ -279,6 +279,8 @@ html {
     .general-container {
       position: relative;
       flex: 1;
+      height: 100vh;
+      overflow-y: scroll;
     }
     .section-general {
       display: flex;
@@ -316,10 +318,6 @@ html {
           -o-border-radius: 50px 50px 0 0;
         }
       }
-      .body-global {
-        height: 100vh;
-        overflow-y: scroll;
-      }
     }
 
     .error-message {
@@ -330,6 +328,13 @@ html {
       text-align: center;
     }
 
+    .warning-message {
+      color: $warning-color;
+      font-size: 14px;
+      font-family: $montserrat-bold;
+      width: 100%;
+      text-align: center;
+    }
     input,
     textarea {
       flex: 1;
@@ -405,6 +410,53 @@ html {
         background-size: 15px;
         padding-right: 40px;
         height: 40px;
+      }
+    }
+
+    .container-tabs {
+      display: flex;
+      gap: 10px;
+
+      .tab {
+        width: fit-content;
+        padding: 12px 20px;
+        cursor: pointer;
+        background: $color-tab1;
+        color: $color-morado;
+        transition: background 0.3s ease-in-out, color 0.3s ease-in-out,
+          opacity 0.3s;
+        border-radius: 23px;
+
+        @include media(mobile) {
+          padding: 9px;
+          border-radius: 18px;
+
+          span {
+            font-size: 14px;
+          }
+        }
+
+        &:hover {
+          background: $color-morado;
+          color: $color-blanco;
+        }
+
+        &.active {
+          background: $color-morado;
+          color: $color-blanco;
+          font-family: $montserrat-bold;
+          animation: fadeIn 0.3s ease-in-out;
+        }
+      }
+
+      // Animación de fundido
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
     }
   }

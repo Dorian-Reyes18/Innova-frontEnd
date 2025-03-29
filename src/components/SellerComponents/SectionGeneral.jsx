@@ -1,6 +1,7 @@
 // importaciones
 import { useState, useEffect } from "react";
 import { getCurrentWeekDateRange, fetchSales } from "./SectionGeneral/utils";
+import SalesBaseFilter from "./SectionGeneral/SalesBaseFilter";
 import Spinner from "../Spiner";
 
 // Componente
@@ -62,20 +63,9 @@ const SectionGeneral = () => {
             <span className="warning-message">
               Los vendedores no han realizado ventas esta semana
             </span>
-          ) : null}
-
-          {salesGroup.map((group) => (
-            <div key={group.name}>
-              <h3>{group.name}</h3>
-              {group.sales.length > 0 ? (
-                <span>
-                  <p>Total de ventas: {group.sales.length}</p>
-                </span>
-              ) : (
-                <p>No hay ventas en este estado</p>
-              )}
-            </div>
-          ))}
+          ) : (
+            <SalesBaseFilter sales={sales} salesGroup={salesGroup} />
+          )}
         </div>
       )}
     </div>

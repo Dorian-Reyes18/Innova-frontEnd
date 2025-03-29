@@ -13,19 +13,34 @@ import Logout from "./LogOutButton";
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(window.innerWidth < 992);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { user } = useUser();
   const myUser = user?.user?.data;
   const location = useLocation();
-
   const role = myUser?.role?.name?.toLowerCase(); // Convertimos el rol a minúsculas
 
   useEffect(() => {
-    const handleResize = () => setCollapsed(window.innerWidth < 992);
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+      if (window.innerWidth < 992) {
+        setCollapsed(true);
+      }
+    };
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const toggleSidebar = () => setCollapsed((prev) => !prev);
+  const toggleSidebar = () => {
+    setCollapsed(!collapsed);
+  };
+
+  // Función para manejar el clic en un ítem del menú
+  const handleItemClick = () => {
+    if (window.innerWidth < 992) {
+      setCollapsed(true);
+    }
+  };
 
   // Definir rutas y permisos
   const menuItems = [
@@ -55,7 +70,7 @@ const Sidebar = () => {
     },
     {
       icon: TagIconSellerNav,
-      name: "Panel Ventas",
+      name: "Ventas",
       path: "/panel-de-ventas",
       roles: ["administrador", "stocker", "vendedor"],
     },
@@ -75,11 +90,14 @@ const Sidebar = () => {
           <img src={InnovaText} alt="InnovaText" className="innovaText" />
         )}
         <button onClick={toggleSidebar} className="toggle-btn">
-          <img src={collapsed ? onCollapse : Collapse} alt="toggle sidebar" />
+          {collapsed ? (
+            <img src={onCollapse} alt="onCollapse" />
+          ) : (
+            <img src={Collapse} alt="collapse" />
+          )}
         </button>
       </div>
-
-      {!collapsed && (
+      {windowWidth < 992 && collapsed ? null : (
         <div className="sidebar-content">
           <nav className="sidebar-nav">
             <ul>
@@ -92,7 +110,7 @@ const Sidebar = () => {
                       : "item-nav"
                   }
                 >
-                  <Link to={item.path}>
+                  <Link to={item.path} onClick={handleItemClick}>
                     <img src={item.icon} alt="" />
                     {!collapsed && item.name}
                   </Link>

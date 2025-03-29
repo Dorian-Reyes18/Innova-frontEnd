@@ -34,7 +34,6 @@ export const fetchSales = async (
     const response = await axiosInstance.get(
       `/ventas?filters[createdAt][$gte]=${startDate}&filters[createdAt][$lte]=${endDate}&populate=*`
     );
-    console.log(response.data.data);
     setSales(response.data.data);
   } catch (error) {
     console.log(error);

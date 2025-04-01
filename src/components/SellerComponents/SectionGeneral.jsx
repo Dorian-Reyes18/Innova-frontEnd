@@ -60,7 +60,10 @@ const SectionGeneral = () => {
       ) : (
         <div>
           {sales.length === 0 ? (
-            <span className="warning-message">
+            <span
+              className="warning-message"
+              style={{ margin: "0 auto", width: "100%" }}
+            >
               Los vendedores no han realizado ventas esta semana
             </span>
           ) : (

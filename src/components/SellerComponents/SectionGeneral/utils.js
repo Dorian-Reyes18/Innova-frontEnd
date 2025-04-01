@@ -32,7 +32,7 @@ export const fetchSales = async (
   setLoadingSales(true);
   try {
     const response = await axiosInstance.get(
-      `/ventas?filters[createdAt][$gte]=${startDate}&filters[createdAt][$lte]=${endDate}&populate=*`
+      `/ventas?filters[createdAt][$gte]=${startDate}&filters[createdAt][$lte]=${endDate}&populate[vendedor_asociado][populate]=role&populate[detalleCliente]=*&populate[estadoVenta]=*&populate[detalleDeVenta][populate]=producto_asociado`
     );
     setSales(response.data.data);
   } catch (error) {

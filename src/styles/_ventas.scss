@@ -21,6 +21,10 @@
     width: 100%;
 
     .search-container {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
       .search-bar {
         width: 100%;
         max-width: 500px;
@@ -29,6 +33,18 @@
           width: 100%;
           display: flex;
           gap: 20px;
+          position: relative;
+          align-items: center;
+          
+          input {
+            height: 40px;
+          }
+
+          .reset {
+            position: absolute;
+            right: 0;
+            padding: 15px 10px;
+          }
         }
       }
     }
@@ -103,6 +119,12 @@
               margin: auto 0;
               border-right: 1.5px solid $color-bordes;
             }
+          }
+          .create-at {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            font-size: 13px;
           }
         }
       }

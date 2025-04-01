@@ -51,6 +51,12 @@ const Sidebar = () => {
       roles: ["administrador", "public", "delivery", "stocker", "vendedor"],
     },
     {
+      icon: TagIconSellerNav,
+      name: "Ventas",
+      path: "/panel-de-ventas",
+      roles: ["administrador", "stocker", "vendedor"],
+    },
+    {
       icon: StockMenuIcon,
       name: "Stock",
       path: "/productos",
@@ -67,12 +73,6 @@ const Sidebar = () => {
       name: "Mis asignadas",
       path: "/asignadas",
       roles: ["delivery"],
-    },
-    {
-      icon: TagIconSellerNav,
-      name: "Ventas",
-      path: "/panel-de-ventas",
-      roles: ["administrador", "stocker", "vendedor"],
     },
   ];
 

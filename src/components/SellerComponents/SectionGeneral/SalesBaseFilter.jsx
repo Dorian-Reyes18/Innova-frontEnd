@@ -1,24 +1,20 @@
 import { useState, useEffect } from "react";
 import SearchDeVentas from "./SearchDeVentas";
 import LayoutVenta from "./LayoutVenta";
+import FiltroDeVentas from "./FiltroDeVentas";
 
 const SalesBaseFilter = ({ sales, salesGroup }) => {
-  // Iniciamos filteredSales en vacío para que no muestre resultados por defecto
   const [filteredSales, setFilteredSales] = useState([]);
-  // Estado para manejar qué componente se renderiza
-  const [stateRendering, setStateRendering] = useState({
-    mostrarFiltradosSearch: false,
-    mostrarFiltradosSelect: true,
-  });
+  const [stateRendering, setStateRendering] = useState(false);
 
-  // Efecto que se ejecuta al montar el componente o cuando 'sales' cambia
+  // Guardamos las ventas originales cuando cargamos el componente
+  const [originalSales, setOriginalSales] = useState(sales);
+
+  // Reiniciamos los estados al valor inicial cuando cambian las ventas
   useEffect(() => {
-    // Reiniciamos los estados al valor inicial
-    setFilteredSales([]);
-    setStateRendering({
-      mostrarFiltradosSearch: false,
-      mostrarFiltradosSelect: true,
-    });
+    setFilteredSales(sales);
+    setOriginalSales(sales);
+    setStateRendering(false); 
   }, [sales]);
 
   // Función que se ejecuta al hacer click en el botón de búsqueda
@@ -27,22 +23,33 @@ const SalesBaseFilter = ({ sales, salesGroup }) => {
       (sale) => sale.codigoVenta === String(codigoVenta)
     );
     setFilteredSales(filtered);
-    setStateRendering({
-      mostrarFiltradosSearch: true,
-      mostrarFiltradosSelect: false,
-    });
+    setStateRendering(true);
     console.log("Ventas filtradas", filtered);
+  };
+
+  
+  const handleCleanFilter = (isCleaned) => {
+    if (isCleaned) {
+      setFilteredSales(originalSales); 
+      setStateRendering(false); 
+    }
   };
 
   return (
     <div className="sales-base-filter">
-      <SearchDeVentas onSearch={handleSearch} />
-      {stateRendering.mostrarFiltradosSearch ? (
+      <SearchDeVentas onSearch={handleSearch} cleanFilter={handleCleanFilter} />
+      {stateRendering ? (
         <div className="sales-list">
-          <h1>Resultado encontrado</h1>
+          {filteredSales.length === 0 ? (
+            <div className="error-message" style={{ margin: "0 auto" }}>
+              No hay resultados para la búsqueda
+            </div>
+          ) : (
+            <LayoutVenta venta={filteredSales} />
+          )}
         </div>
       ) : (
-      <LayoutVenta />
+        <FiltroDeVentas />
       )}
     </div>
   );

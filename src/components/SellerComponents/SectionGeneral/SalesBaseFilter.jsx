@@ -14,24 +14,23 @@ const SalesBaseFilter = ({ sales, salesGroup }) => {
   useEffect(() => {
     setFilteredSales(sales);
     setOriginalSales(sales);
-    setStateRendering(false); 
+    setStateRendering(false);
   }, [sales]);
 
   // Función que se ejecuta al hacer click en el botón de búsqueda
+  // Ahora realiza un filtrado parcial usando startsWith
   const handleSearch = (codigoVenta) => {
-    const filtered = sales.filter(
-      (sale) => sale.codigoVenta === String(codigoVenta)
+    const filtered = sales.filter((sale) =>
+      sale.codigoVenta.toString().toLowerCase().startsWith(codigoVenta)
     );
     setFilteredSales(filtered);
     setStateRendering(true);
-    console.log("Ventas filtradas", filtered);
   };
 
-  
   const handleCleanFilter = (isCleaned) => {
     if (isCleaned) {
-      setFilteredSales(originalSales); 
-      setStateRendering(false); 
+      setFilteredSales(originalSales);
+      setStateRendering(false);
     }
   };
 
@@ -49,7 +48,7 @@ const SalesBaseFilter = ({ sales, salesGroup }) => {
           )}
         </div>
       ) : (
-        <FiltroDeVentas />
+        <FiltroDeVentas salesGroup={salesGroup} />
       )}
     </div>
   );

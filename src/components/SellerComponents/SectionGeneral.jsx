@@ -29,7 +29,11 @@ const SectionGeneral = () => {
   // Clasificar las ventas en los grupos correspondientes
   useEffect(() => {
     if (sales.length > 0) {
-      const groupedSales = sales.reduce((acc, sale) => {
+      const sortedSales = [...sales].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+
+      const groupedSales = sortedSales.reduce((acc, sale) => {
         const saleStatus = sale.estadoVenta.estado;
         const group = acc.find((group) => group.name === saleStatus);
 
@@ -62,7 +66,11 @@ const SectionGeneral = () => {
           {sales.length === 0 ? (
             <span
               className="warning-message"
-              style={{ margin: "0 auto", width: "100%" }}
+              style={{
+                margin: "0 auto",
+                width: "100%",
+                display: "flex",
+              }}
             >
               Los vendedores no han realizado ventas esta semana
             </span>

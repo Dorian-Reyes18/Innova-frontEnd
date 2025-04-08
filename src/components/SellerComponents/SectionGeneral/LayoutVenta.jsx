@@ -15,18 +15,18 @@ const LayoutVenta = ({ venta }) => {
       <div className="venta">
         <div className="card-head">
           <div className="seller-data">
-            <span className="role-name">Vendedor:</span>
+            <span className="role-name">Vendedor</span>
             <span className="name">
               {objectSale?.vendedor_asociado?.nombreApellido}
             </span>
           </div>
-          <span className="code">000145 </span>
+          <span className="code">{objectSale?.codigoVenta}</span>
         </div>
         <div className="card-body">
           <div className="content">
             <div className="group-item">
               <div className="item">
-                {objectSale.detalleDeVenta.map((venta) => (
+                {objectSale?.detalleDeVenta.map((venta) => (
                   <>
                     <img
                       src={ProductIcon}
@@ -45,22 +45,31 @@ const LayoutVenta = ({ venta }) => {
                 </div>
               </div>
             </div>
-            <span className="line"></span>
+
             <div className="group-item">
-              <div className="item">
-                <img src={LocationIcon} alt="icono ubicacion" />
-                <a href={objectSale?.detalleCliente?.direccionGps}>
-                  {objectSale?.detalleCliente?.direccionGps === ""
-                    ? "No hay ubicación"
-                    : objectSale?.detalleCliente?.direccionGps}
-                </a>
-              </div>
-              <div className="item">
-                <img src={TimeIcon} alt="icono hora entrega" />
-                <div className="desc">{objectSale?.horaEntrega}</div>
-              </div>
+              {/* ocultamos el icono de ubicacion */}
+              {objectSale?.detalleCliente?.direccionGps === "" ? null : (
+                <div className="item">
+                  <img src={LocationIcon} alt="icono ubicacion" />
+                  <a
+                    href={objectSale?.detalleCliente?.direccionGps}
+                    target="_blank"
+                  >
+                    {objectSale?.detalleCliente?.direccionGps === ""
+                      ? "No hay ubicación"
+                      : objectSale?.detalleCliente?.direccionGps}
+                  </a>
+                </div>
+              )}
+
+              {objectSale?.horaEntrega === "" ? (
+                <div className="item">
+                  <img src={TimeIcon} alt="icono hora entrega" />
+                  <div className="desc">No hay hora de entrega</div>
+                </div>
+              ) : null}
             </div>
-            <span className="line"></span>
+
             <div className="group-item">
               <div className="item">
                 <img src={DeliveryIcon} alt="icono de delivery" />

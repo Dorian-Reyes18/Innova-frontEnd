@@ -1,13 +1,24 @@
-import { useState } from "react";
-import { Formik, Form, Field } from "formik";
+import { useState, useEffect } from "react";
+import { Formik, Form, Field, useFormikContext } from "formik";
+import LayoutVenta from "./LayoutVenta";
 
-const FiltroDeVentas = () => {
-  // Definimos un estado para guardar la opción seleccionada
+const EstadoWatcher = ({ onChange }) => {
+  const { values } = useFormikContext();
+
+  useEffect(() => {
+    onChange(values.filtro);
+  }, [values.filtro, onChange]);
+
+  return null;
+};
+
+const FiltroDeVentas = ({ salesGroup }) => {
   const [selectedOption, setSelectedOption] = useState("En tramite");
 
-  // Manejador de cambio para actualizar el estado con la opción seleccionada
-  const handleSelectChange = (e) => {
-    setSelectedOption(e.target.value);
+  // Función para obtener las ventas según el estado seleccionado
+  const obtenerVentasPorEstado = (estado) => {
+    const grupoEncontrado = salesGroup.find((grupo) => grupo.name === estado);
+    return grupoEncontrado?.sales || [];
   };
 
   return (
@@ -17,55 +28,44 @@ const FiltroDeVentas = () => {
     >
       {() => (
         <Form className="filter-selector">
-          {/* Select usando Formik Field */}
-          <Field
-            as="select"
-            name="filtro"
-            onChange={(e) => {
-              handleSelectChange(e);
-            }}
-          >
+          {/* Sincronizamos el valor del select de Formik con el estado local */}
+          <EstadoWatcher onChange={setSelectedOption} />
+
+          <label htmlFor="filtro">Resultados por estado</label>
+          <Field as="select" name="filtro">
             <option value="En tramite">En tramite</option>
             <option value="Por asignar">Por asignar</option>
-            <option value="Asignada">Asignada</option>
+            <option value="Asignadas">Asignadas</option>
             <option value="En ruta">En ruta</option>
             <option value="Rechazada">Rechazada</option>
             <option value="Entregada">Entregada</option>
           </Field>
 
-          {/* Renderizado condicional de los contenedores según la opción seleccionada */}
-          {selectedOption === "En tramite" && (
-            <div className="en-tramite">
-              {/* Aquí se carga un componente especial para "En tramite" */}
-              {/* <EnTramiteComponent /> */}
-              <p>Contenido para En tramite</p>
-            </div>
-          )}
-          {selectedOption === "Por asignar" && (
-            <div className="por-asignar">
-              <p>Contenido para Por asignar</p>
-            </div>
-          )}
-          {selectedOption === "Asignada" && (
-            <div className="asignada">
-              <p>Contenido para Asignada</p>
-            </div>
-          )}
-          {selectedOption === "En ruta" && (
-            <div className="en-ruta">
-              <p>Contenido para En ruta</p>
-            </div>
-          )}
-          {selectedOption === "Rechazada" && (
-            <div className="rechazada">
-              <p>Contenido para Rechazada</p>
-            </div>
-          )}
-          {selectedOption === "Entregada" && (
-            <div className="entregada">
-              <p>Contenido para Entregada</p>
-            </div>
-          )}
+          <div className="content-result">
+            {(() => {
+              const ventasFiltradas = obtenerVentasPorEstado(selectedOption);
+
+              if (ventasFiltradas.length === 0) {
+                return (
+                  <p className="warning-message">No hay ventas que mostrar</p>
+                );
+              }
+
+              return (
+                <>
+                  <span className="count-result">
+                    {ventasFiltradas.length} resultado
+                    {ventasFiltradas.length === 1 ? "" : "s"}
+                  </span>
+                  <div className="sales-list">
+                    {ventasFiltradas.map((venta) => (
+                      <LayoutVenta key={venta.codigoVenta} venta={[venta]} />
+                    ))}
+                  </div>
+                </>
+              );
+            })()}
+          </div>
         </Form>
       )}
     </Formik>

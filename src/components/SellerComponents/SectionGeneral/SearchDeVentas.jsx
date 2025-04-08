@@ -3,20 +3,30 @@ import PropTypes from "prop-types";
 
 const SearchDeVentas = ({ onSearch, cleanFilter }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); // Estado para el mensaje de error
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Función que se ejecuta cuando el usuario realiza una búsqueda
   const handleSearch = () => {
-    if (searchTerm.trim() === "") {
+    const term = searchTerm.toLowerCase().trim();
+
+    // Validar que el input no esté vacío
+    if (term === "") {
       setErrorMessage("Por favor, ingresa un código de venta para buscar.");
-      // Limpiar el mensaje después de 2 segundos
-      setTimeout(() => {
-        setErrorMessage("");
-      }, 3000);
+      // Limpiar el mensaje después de 3 segundos
+      setTimeout(() => setErrorMessage(""), 3000);
       return;
     }
 
-    onSearch(searchTerm.toLowerCase().trim());
+    // Validar que se ingresen al menos 3 dígitos para la búsqueda parcial
+    if (term.length < 3) {
+      setErrorMessage("Por favor, ingresa al menos 3 dígitos para buscar.");
+      setTimeout(() => setErrorMessage(""), 3000);
+      return;
+    }
+
+    // Ejecutamos la búsqueda con el término (se asume que onSearch implementa el filtro parcial,
+    // por ejemplo usando `sale.codigoVenta.startsWith(term)`)
+    onSearch(term);
   };
 
   // Detecta cuando el usuario presiona Enter
@@ -47,26 +57,24 @@ const SearchDeVentas = ({ onSearch, cleanFilter }) => {
 
   return (
     <div className="search-container">
-      <>
-        <div className="search-bar barr">
-          <div className="search-block">
-            <input
-              className="search-user"
-              type="text"
-              placeholder="Buscar por código de venta..."
-              value={searchTerm}
-              onChange={handleChange}
-              onKeyDown={handleKeyDown}
-            />
-            {searchTerm && (
-              <span className="reset" onClick={handleReset}>
-                X
-              </span>
-            )}
-          </div>
-          <button onClick={handleSearch}>Buscar</button>
+      <div className="search-bar barr">
+        <div className="search-block">
+          <input
+            className="search-user"
+            type="text"
+            placeholder="Buscar por código de venta..."
+            value={searchTerm}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+          />
+          {searchTerm && (
+            <span className="reset" onClick={handleReset}>
+              X
+            </span>
+          )}
         </div>
-      </>
+        <button onClick={handleSearch}>Buscar</button>
+      </div>
       {errorMessage && (
         <div
           className="error-message"

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Formik, Form, Field, useFormikContext } from "formik";
-import LayoutVenta from "./LayoutVenta";
+import LayoutVenta from "../LayoutVenta";
 
 const EstadoWatcher = ({ onChange }) => {
   const { values } = useFormikContext();
@@ -47,7 +47,7 @@ const FiltroDeVentas = ({ salesGroup }) => {
 
               if (ventasFiltradas.length === 0) {
                 return (
-                  <p className="warning-message">No hay ventas que mostrar</p>
+                  <p className="warning-message">No hay ventas que mostrar en esta sección</p>
                 );
               }
 
@@ -59,7 +59,7 @@ const FiltroDeVentas = ({ salesGroup }) => {
                   </span>
                   <div className="sales-list">
                     {ventasFiltradas.map((venta) => (
-                      <LayoutVenta key={venta.codigoVenta} venta={[venta]} />
+                      <LayoutVenta key={venta.codigoVenta} venta={venta} />
                     ))}
                   </div>
                 </>

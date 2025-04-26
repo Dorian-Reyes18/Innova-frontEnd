@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import SearchDeVentas from "./SearchDeVentas";
-import LayoutVenta from "./LayoutVenta";
+import LayoutVenta from "../LayoutVenta";
 import FiltroDeVentas from "./FiltroDeVentas";
 
 const SalesBaseFilter = ({ sales, salesGroup }) => {
@@ -36,7 +36,6 @@ const SalesBaseFilter = ({ sales, salesGroup }) => {
 
   return (
     <div className="sales-base-filter">
-      <SearchDeVentas onSearch={handleSearch} cleanFilter={handleCleanFilter} />
       {stateRendering ? (
         <div className="sales-list">
           {filteredSales.length === 0 ? (
@@ -44,11 +43,17 @@ const SalesBaseFilter = ({ sales, salesGroup }) => {
               No hay resultados para la búsqueda
             </div>
           ) : (
-            <LayoutVenta venta={filteredSales} />
+            <LayoutVenta venta={filteredSales[0]} />
           )}
         </div>
       ) : (
-        <FiltroDeVentas salesGroup={salesGroup} />
+        <>
+          <SearchDeVentas
+            onSearch={handleSearch}
+            cleanFilter={handleCleanFilter}
+          />
+          <FiltroDeVentas salesGroup={salesGroup} />
+        </>
       )}
     </div>
   );

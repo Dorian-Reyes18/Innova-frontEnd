@@ -70,6 +70,7 @@ const SectionGeneral = () => {
                 margin: "0 auto",
                 width: "100%",
                 display: "flex",
+                justifyContent: "center",
               }}
             >
               Los vendedores no han realizado ventas esta semana

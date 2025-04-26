@@ -419,6 +419,10 @@ html {
       gap: 10px;
 
       .tab {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
         width: fit-content;
         padding: 8px 18px;
         cursor: pointer;
@@ -427,9 +431,13 @@ html {
         transition: background 0.3s ease-in-out, color 0.3s ease-in-out,
           opacity 0.3s;
         border-radius: 23px;
+        -webkit-transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+        -moz-transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+        -ms-transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+        -o-transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
 
         @include media(mobile) {
-          padding: 10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            px;
+          padding: 10 px;
           border-radius: 18px;
 
           span {

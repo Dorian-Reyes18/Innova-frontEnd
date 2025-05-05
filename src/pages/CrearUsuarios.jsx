@@ -34,8 +34,8 @@ const CrearUsuarios = () => {
     { prop: false, des: "Desbloqueado" },
   ];
   const confirmedState = [
-    { prop: true, des: "Activo" },
-    { prop: false, des: "Inactivo" },
+    { prop: true, des: "Contratado" },
+    { prop: false, des: "Desvinculado" },
   ];
 
   // Objetos

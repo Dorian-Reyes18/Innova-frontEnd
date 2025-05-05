@@ -18,10 +18,10 @@ const SalesBaseFilter = ({ sales, salesGroup }) => {
   }, [sales]);
 
   // Función que se ejecuta al hacer click en el botón de búsqueda
-  // Ahora realiza un filtrado parcial usando startsWith
+  // Ahora realiza un filtrado buscando el término en cualquier parte del código
   const handleSearch = (codigoVenta) => {
     const filtered = sales.filter((sale) =>
-      sale.codigoVenta.toString().toLowerCase().startsWith(codigoVenta)
+      sale.codigoVenta.toString().toLowerCase().includes(codigoVenta)
     );
     setFilteredSales(filtered);
     setStateRendering(true);
@@ -36,6 +36,7 @@ const SalesBaseFilter = ({ sales, salesGroup }) => {
 
   return (
     <div className="sales-base-filter">
+      <SearchDeVentas onSearch={handleSearch} cleanFilter={handleCleanFilter} />
       {stateRendering ? (
         <div className="sales-list">
           {filteredSales.length === 0 ? (
@@ -47,13 +48,7 @@ const SalesBaseFilter = ({ sales, salesGroup }) => {
           )}
         </div>
       ) : (
-        <>
-          <SearchDeVentas
-            onSearch={handleSearch}
-            cleanFilter={handleCleanFilter}
-          />
-          <FiltroDeVentas salesGroup={salesGroup} />
-        </>
+        <FiltroDeVentas salesGroup={salesGroup} />
       )}
     </div>
   );

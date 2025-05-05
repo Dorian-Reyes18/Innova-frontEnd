@@ -40,14 +40,14 @@ const TotalUsers = ({ usuarios }) => {
       <div className="block">
         <span className="color" style={{ background: "#36E43D" }}></span>
         <div className="total">
-          <span>Activos:</span>
+          <span>Contratados:</span>
           <span style={{ fontWeight: 700 }}>{clasificacion.activos}</span>
         </div>
       </div>
       <div className="block">
         <span className="color" style={{ background: "#DD4EEA" }}></span>
         <div className="total">
-          <span>Inactivos:</span>
+          <span>Desvinculados:</span>
           <span style={{ fontWeight: 700 }}>{clasificacion.inactivos}</span>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { useState } from "react";
 // Componentes
 import HeaderVentas from "../components/SellerComponents/HeaderVentas";
 import SectionGeneral from "../components/SellerComponents/SectionGeneral";
+import SectionPerSales from "../components/SellerComponents/SectionPerSales";
 import SectionMySales from "../components/SellerComponents/sectionMySales";
 
 const PanelDeVentas = () => {
@@ -45,12 +46,12 @@ const PanelDeVentas = () => {
           )}
           {activeTab === "tab2" && (
             <div className="content-tab">
-              <SectionMySales />
+              <SectionPerSales />
             </div>
           )}
           {activeTab === "tab3" && (
             <div className="content-tab">
-              <h1>Mis ventas</h1>
+              <SectionMySales />
             </div>
           )}
         </div>

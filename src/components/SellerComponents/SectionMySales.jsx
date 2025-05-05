@@ -1,109 +1,65 @@
-// * Importaciones
-import { useState, useEffect } from "react";
-import axiosInstance from "../../axios";
-import { getCurrentWeekDateRange, fetchSales } from "./SectionGeneral/utils";
-import LayoutVenta from "./LayoutVenta";
-import Spinner from "../Spiner";
+import { Link } from "react-router-dom";
+import TagIcon from "../../assets/MySalesIcons/TagIcon.svg";
+import PendingIcon from "../../assets/MySalesIcons/PendingIcon.svg";
+import CashIcon from "../../assets/MySalesIcons/CashIcon.svg";
+import DeliverIcon from "../../assets/MySalesIcons/DeliveryIcon.svg";
+import CheckIcon from "../../assets/MySalesIcons/CheckIcon.svg";
+import FailIcon from "../../assets/MySalesIcons/FailIcon.svg";
+import HistoryIcon from "../../assets/MySalesIcons/HistoryIcon.svg";
 
 const SectionMySales = () => {
-  const [usuarios, setUsuarios] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [loadingSales, setLoadingSales] = useState(true);
-  const [sales, setSales] = useState([]);
-  const [salesFiltered, setSalesFiltered] = useState([]);
-
-  // * Funciones
-  const handleChange = (e) => {
-    setSelectedUser(e.target.value);
-  };
-
-  const filtrarPorVendedor = (sales, selectedUser) => {
-    const filtradosArray = sales.filter((sale) => {
-      return sale?.vendedor_asociado?.nombreApellido === selectedUser;
-    });
-
-    setSalesFiltered(filtradosArray);
-  };
-
-  // * Funciones de fetch
-  // TODO: Obtenemos los usuarios
-  const fetchUsers = async () => {
-    try {
-      const response = await axiosInstance.get("users?populate=*");
-      const filteredUsers = response.data.filter(
-        (user) => user.role.name !== "Delivery"
-      ); // Filtramos aquellos usuarios que no tengan el rol de delivery
-      setUsuarios(filteredUsers);
-
-      if (filteredUsers.length > 0 && filteredUsers[0]?.nombreApellido) {
-        setSelectedUser(filteredUsers[0].nombreApellido);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // * Efectos
-  // TODO: Obtenemos todas las ventas de la semana actual
-  useEffect(() => {
-    const { startDate, endDate } = getCurrentWeekDateRange();
-    fetchUsers();
-    fetchSales(startDate, endDate, setLoadingSales, setSales); // Obtenemos las ventas de la semana actual
-  }, []);
-
-  useEffect(() => {
-    if (sales.length > 0 && selectedUser !== null) {
-      filtrarPorVendedor(sales, selectedUser);
-    }
-  }, [selectedUser, sales]);
-
   return (
-    <>
-      {loadingSales ? (
-        <Spinner />
-      ) : (
-        <>
-          <div className="selector-vendedor">
-            <label htmlFor="users">Seleccione vendedor</label>
-            <select
-              className="select"
-              id="users"
-              name="users"
-              value={selectedUser || ""}
-              onChange={(e) => handleChange(e)}
-            >
-              {usuarios.map((user) => (
-                <option key={user.id} value={user?.nombreApellido}>
-                  {user.nombreApellido}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="resultados-filtrados">
-            {salesFiltered.length > 0 ? (
-              <>
-                <span className="count-result">
-                  {salesFiltered.length}{" "}
-                  {salesFiltered.length === 1 ? "resultado" : "resultados"}
-                </span>
-
-                <div className="results">
-                  {salesFiltered.map((sale) => (
-                    <LayoutVenta key={sale.id} venta={sale}></LayoutVenta>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <p className="warning-message">
-                No hay ventas registradas para este vendedor.
-              </p>
-            )}
-          </div>
-        </>
-      )}
-    </>
+    <div className="my-sales-container">
+      <Link to="#" className="link-option">
+        <img className="icon" src={TagIcon} alt="" />
+        <div className="info">
+          <h6>Nueva venta</h6>
+          <span>Crear un nuevo registro de venta.</span>
+        </div>
+      </Link>
+      <Link to="#" className="link-option">
+        <img className="icon" src={PendingIcon} alt="" />
+        <div className="info">
+          <h6>Ventas pendientes</h6>
+          <span>Vea las ventas pendientes por finalizar.</span>
+        </div>
+      </Link>
+      <Link to="#" className="link-option">
+        <img className="icon" src={CashIcon} alt="" />
+        <div className="info">
+          <h6>Ventas pagadas</h6>
+          <span>Vea las ventas que ya han sido pagadas.</span>
+        </div>
+      </Link>
+      <Link to="#" className="link-option">
+        <img className="icon" src={DeliverIcon} alt="" />
+        <div className="info">
+          <h6>Ventas en ruta</h6>
+          <span>Vea las ventas que ya están en ruta de entrega.</span>
+        </div>
+      </Link>
+      <Link to="#" className="link-option">
+        <img className="icon" src={CheckIcon} alt="" />
+        <div className="info">
+          <h6>Ventas entregadas </h6>
+          <span>Vea todas las ventas entregadas esta semana.</span>
+        </div>
+      </Link>
+      <Link to="#" className="link-option">
+        <img className="icon" src={FailIcon} alt="" />
+        <div className="info">
+          <h6>Ventas fallidas </h6>
+          <span>Vea todas las ventas fallidas en esta semana.</span>
+        </div>
+      </Link>
+      <Link to="#" className="link-option">
+        <img className="icon" src={HistoryIcon} alt="" />
+        <div className="info">
+          <h6>Ventas anteriores </h6>
+          <span>Ventas por semanas anteriores.</span>
+        </div>
+      </Link>
+    </div>
   );
 };
-
 export default SectionMySales;

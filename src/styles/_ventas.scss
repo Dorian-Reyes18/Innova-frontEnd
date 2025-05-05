@@ -222,6 +222,59 @@
           justify-content: center;
         }
       }
+
+      // Estilos correspondientes a la sección mis ventas
+      .my-sales-container {
+        display: flex;
+        gap: 25px;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .link-option {
+          padding: 18px;
+          gap: 25px;
+          border: 1.5px solid $color-morado;
+          text-decoration: none;
+          color: $color-morado;
+          align-items: center;
+          width: 100%;
+          box-shadow: 0 0 8px rgba(0, 0, 0, 0.35);
+          display: flex;
+          max-width: 315px;
+          border-radius: 8px;
+          -webkit-border-radius: 8px;
+          -moz-border-radius: 8px;
+          -ms-border-radius: 8px;
+          -o-border-radius: 8px;
+          transition: all 0.2s ease-in-out;
+          -webkit-transition: all 0.2s ease-in-out;
+          -moz-transition: all 0.2s ease-in-out;
+          -ms-transition: all 0.2s ease-in-out;
+          -o-transition: all 0.2s ease-in-out;
+
+          &:hover {
+            transform: scale(1.03);
+            -webkit-transform: scale(1.05);
+            -moz-transform: scale(1.03);
+            -ms-transform: scale(1.03);
+            -o-transform: scale(1.03);
+          }
+
+          @include media(mobile) {
+            max-width: 350px;
+          }
+
+          .icon {
+            width: 66px;
+            height: 66px;
+          }
+          .info {
+            display: grid;
+            gap: 5px;
+            font-size: 14px;
+          }
+        }
+      }
     }
   }
 }

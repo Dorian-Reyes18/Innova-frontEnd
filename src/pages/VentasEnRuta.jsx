@@ -8,9 +8,9 @@ import {
   getCurrentWeekDateRange,
   getSalesByUser,
 } from "../components/SellerComponents/SectionGeneral/utils";
-import SeñorBurns from "../assets/memes/señor-burns.jpg";
+import DeliveryImg from "../assets/memes/DeliveryIMG.png";
 
-const VentasPagadas = () => {
+const VentasEnRuta = () => {
   const { user } = useUser();
   const myUserId = user?.user?.data?.id;
 
@@ -32,7 +32,9 @@ const VentasPagadas = () => {
   // Filtrado de ventas en trámite
   useEffect(() => {
     if (sales.length > 0) {
-      const filteredSales = sales.filter((sale) => sale?.pago_vendedor > 0);
+      const filteredSales = sales.filter(
+        (sale) => sale?.estadoVenta?.estado === "En ruta"
+      );
       setPendingSales(filteredSales);
     }
 
@@ -57,8 +59,7 @@ const VentasPagadas = () => {
                 <div className="resultados-filtrados">
                   <span className="count-result">
                     Tienes {pendingSales.length} venta
-                    {pendingSales.length > 1 ? "s" : ""} Pagada{" "}
-                    {pendingSales.length > 1 ? "s" : ""}
+                    {pendingSales.length > 1 ? "s" : ""} en ruta
                   </span>
                   <div className="results">
                     {pendingSales.map((sale) => (
@@ -76,13 +77,12 @@ const VentasPagadas = () => {
                 <Link to="/panel-de-ventas" className="btn-pr">
                   Volver al panel
                 </Link>
-
                 <div className="container-content">
                   <div className="content-tab" style={{ textAlign: "center" }}>
                     <span className="count-result error-message">
-                      No le han pagado ninguna venta
+                      Ninguna de sus ventas está en ruta de entrega
                     </span>
-                    <img src={SeñorBurns} alt="" style={{ width: "180px" }} />
+                    <img src={DeliveryImg} alt="" style={{ width: "300px" }} />
                   </div>
                 </div>
               </>
@@ -94,4 +94,4 @@ const VentasPagadas = () => {
   );
 };
 
-export default VentasPagadas;
+export default VentasEnRuta;

@@ -22,6 +22,14 @@ const HeaderVentas = () => {
       path: `/panel-de-ventas/ventas-pagadas`,
       name: "Ventas pagadas",
     },
+    {
+      path: `/panel-de-ventas/ventas-en-ruta`,
+      name: "Ventas en ruta",
+    },
+    {
+      path: `/panel-de-ventas/ventas-entregadas`,
+      name: "Ventas entregadas",
+    },
   ];
 
   const titleHeader = rutas.map((ruta) =>

@@ -8,9 +8,9 @@ import {
   getCurrentWeekDateRange,
   getSalesByUser,
 } from "../components/SellerComponents/SectionGeneral/utils";
-import SeñorBurns from "../assets/memes/señor-burns.jpg";
+import DontDeliveryImg from "../assets/memes/DontDelivery.png";
 
-const VentasPagadas = () => {
+const VentasEntregadas = () => {
   const { user } = useUser();
   const myUserId = user?.user?.data?.id;
 
@@ -32,7 +32,9 @@ const VentasPagadas = () => {
   // Filtrado de ventas en trámite
   useEffect(() => {
     if (sales.length > 0) {
-      const filteredSales = sales.filter((sale) => sale?.pago_vendedor > 0);
+      const filteredSales = sales.filter(
+        (sale) => sale?.estadoVenta?.estado === "Entregada"
+      );
       setPendingSales(filteredSales);
     }
 
@@ -57,7 +59,7 @@ const VentasPagadas = () => {
                 <div className="resultados-filtrados">
                   <span className="count-result">
                     Tienes {pendingSales.length} venta
-                    {pendingSales.length > 1 ? "s" : ""} Pagada{" "}
+                    {pendingSales.length > 1 ? "s" : ""} entregada
                     {pendingSales.length > 1 ? "s" : ""}
                   </span>
                   <div className="results">
@@ -76,13 +78,16 @@ const VentasPagadas = () => {
                 <Link to="/panel-de-ventas" className="btn-pr">
                   Volver al panel
                 </Link>
-
                 <div className="container-content">
                   <div className="content-tab" style={{ textAlign: "center" }}>
                     <span className="count-result error-message">
-                      No le han pagado ninguna venta
+                      Ninguna de sus ventas ha sido entregada
                     </span>
-                    <img src={SeñorBurns} alt="" style={{ width: "180px" }} />
+                    <img
+                      src={DontDeliveryImg}
+                      alt=""
+                      style={{ width: "250px" }}
+                    />
                   </div>
                 </div>
               </>
@@ -94,4 +99,4 @@ const VentasPagadas = () => {
   );
 };
 
-export default VentasPagadas;
+export default VentasEntregadas;

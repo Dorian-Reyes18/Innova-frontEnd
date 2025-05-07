@@ -24,6 +24,8 @@ import CrearUsuarios from "./pages/CrearUsuarios";
 import PanelDeVentas from "./pages/PanelDeVentas";
 import VentasPendientes from "./pages/VentasPendientes";
 import VentasPagadas from "./pages/VentasPagadas";
+import VentasEnRuta from "./pages/VentasEnRuta";
+import VentasEntregadas from "./pages/VentasEntregadas";
 
 function App() {
   return (
@@ -128,6 +130,8 @@ function App() {
         >
           <Route path="ventas-pendientes" element={<VentasPendientes />} />
           <Route path="ventas-pagadas" element={<VentasPagadas />} />
+          <Route path="ventas-en-ruta" element={<VentasEnRuta />} />
+          <Route path="ventas-entregadas" element={<VentasEntregadas />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

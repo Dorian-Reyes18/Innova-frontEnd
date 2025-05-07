@@ -20,7 +20,7 @@ const SectionMySales = () => {
       <Link to="ventas-pendientes" className="link-option">
         <img className="icon" src={PendingIcon} alt="" />
         <div className="info">
-          <h6>Ventas pendientes</h6>
+          <h6>Ventas en trámite</h6>
           <span>Vea las ventas pendientes por finalizar.</span>
         </div>
       </Link>
@@ -31,14 +31,14 @@ const SectionMySales = () => {
           <span>Vea las ventas que ya han sido pagadas.</span>
         </div>
       </Link>
-      <Link to="#" className="link-option">
+      <Link to="ventas-en-ruta" className="link-option">
         <img className="icon" src={DeliverIcon} alt="" />
         <div className="info">
           <h6>Ventas en ruta</h6>
           <span>Vea las ventas que ya están en ruta de entrega.</span>
         </div>
       </Link>
-      <Link to="#" className="link-option">
+      <Link to="ventas-entregadas" className="link-option">
         <img className="icon" src={CheckIcon} alt="" />
         <div className="info">
           <h6>Ventas entregadas </h6>

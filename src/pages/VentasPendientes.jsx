@@ -51,7 +51,7 @@ const VentasPendientes = () => {
         ) : !loading && pendingSales.length > 0 ? (
           <>
             <Link to="/panel-de-ventas" className="btn-pr">
-              Volver a mis ventas
+              Volver al panel
             </Link>
             <div className="container-content">
               <div className="content-tab">
@@ -74,9 +74,9 @@ const VentasPendientes = () => {
             {!loading && pendingSales.length === 0 && (
               <>
                 <Link to="/panel-de-ventas" className="btn-pr">
-                  Volver a mis ventas
+                  Volver al panel
                 </Link>
-                <span className="count-result">
+                <span className="count-result warning-message">
                   No tienes ventas en tramite
                 </span>
               </>

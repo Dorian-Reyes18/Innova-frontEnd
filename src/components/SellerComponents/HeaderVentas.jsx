@@ -15,12 +15,12 @@ const HeaderVentas = () => {
   const rutas = [
     { path: "/panel-de-ventas", name: "Panel de ventas" },
     {
-      path: `/usuarios/gestionar-usuarios/${id}`,
-      name: "Gestión de Usuarios",
+      path: `/panel-de-ventas/ventas-pendientes`,
+      name: "Ventas pendientes",
     },
     {
-      path: `/usuarios/crear-usuario`,
-      name: "Nuevo Usuario",
+      path: `/panel-de-ventas/ventas-pagadas`,
+      name: "Ventas pagadas",
     },
   ];
 

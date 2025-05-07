@@ -428,13 +428,23 @@ html {
         cursor: pointer;
         background: $color-tab1;
         color: $color-morado;
-        transition: background 0.3s ease-in-out, color 0.3s ease-in-out,
+        transition:
+          background 0.3s ease-in-out,
+          color 0.3s ease-in-out,
           opacity 0.3s;
         border-radius: 23px;
-        -webkit-transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
-        -moz-transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
-        -ms-transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
-        -o-transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+        -webkit-transition:
+          background 0.3s ease-in-out,
+          color 0.3s ease-in-out;
+        -moz-transition:
+          background 0.3s ease-in-out,
+          color 0.3s ease-in-out;
+        -ms-transition:
+          background 0.3s ease-in-out,
+          color 0.3s ease-in-out;
+        -o-transition:
+          background 0.3s ease-in-out,
+          color 0.3s ease-in-out;
 
         @include media(mobile) {
           padding: 10 px;
@@ -467,6 +477,14 @@ html {
           opacity: 1;
         }
       }
+    }
+
+    .count-result {
+      font-family: $montserrat-bold;
+      display: block;
+      text-align: center;
+      margin: 25px 0;
+      width: 100%;
     }
   }
 }

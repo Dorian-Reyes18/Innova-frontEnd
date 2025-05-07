@@ -22,6 +22,8 @@ import CrearProducto from "./pages/CrearProducto";
 import GestionarUsuarios from "./pages/GestionarUsuarios";
 import CrearUsuarios from "./pages/CrearUsuarios";
 import PanelDeVentas from "./pages/PanelDeVentas";
+import VentasPendientes from "./pages/VentasPendientes";
+import VentasPagadas from "./pages/VentasPagadas";
 
 function App() {
   return (
@@ -124,11 +126,8 @@ function App() {
             </PrivateRoute>
           }
         >
-          <Route
-            path="gestionar-usuarios/:id"
-            element={<GestionarUsuarios />}
-          />
-          <Route path="crear-usuario" element={<CrearUsuarios />} />
+          <Route path="ventas-pendientes" element={<VentasPendientes />} />
+          <Route path="ventas-pagadas" element={<VentasPagadas />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

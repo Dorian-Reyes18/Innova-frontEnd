@@ -17,14 +17,14 @@ const SectionMySales = () => {
           <span>Crear un nuevo registro de venta.</span>
         </div>
       </Link>
-      <Link to="#" className="link-option">
+      <Link to="ventas-pendientes" className="link-option">
         <img className="icon" src={PendingIcon} alt="" />
         <div className="info">
           <h6>Ventas pendientes</h6>
           <span>Vea las ventas pendientes por finalizar.</span>
         </div>
       </Link>
-      <Link to="#" className="link-option">
+      <Link to="ventas-pagadas" className="link-option">
         <img className="icon" src={CashIcon} alt="" />
         <div className="info">
           <h6>Ventas pagadas</h6>

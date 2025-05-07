@@ -12,6 +12,7 @@ import { es } from "date-fns/locale";
 const LayoutVenta = ({ venta }) => {
   const objectSale = venta;
 
+  console.log(objectSale);
   return (
     <div className="venta-container">
       <div className="venta">

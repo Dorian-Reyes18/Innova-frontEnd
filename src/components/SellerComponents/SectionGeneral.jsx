@@ -65,7 +65,7 @@ const SectionGeneral = () => {
         <div>
           {sales.length === 0 ? (
             <span
-              className="warning-message"
+              className="error-message"
               style={{
                 margin: "0 auto",
                 width: "100%",

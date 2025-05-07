@@ -8,9 +8,9 @@ import {
   getCurrentWeekDateRange,
   getSalesByUser,
 } from "../components/SellerComponents/SectionGeneral/utils";
-import DontDeliveryImg from "../assets/memes/DontDelivery.png";
+import VentasFallidasImg from "../assets/memes/VentasFallidas.png";
 
-const VentasEntregadas = () => {
+const VentasFallidas = () => {
   const { user } = useUser();
   const myUserId = user?.user?.data?.id;
 
@@ -33,7 +33,7 @@ const VentasEntregadas = () => {
   useEffect(() => {
     if (sales.length > 0) {
       const filteredSales = sales.filter(
-        (sale) => sale?.estadoVenta?.estado === "Entregada"
+        (sale) => sale?.estadoVenta?.estado === "Rechazada"
       );
       setPendingSales(filteredSales);
     }
@@ -81,12 +81,12 @@ const VentasEntregadas = () => {
                 <div className="container-content">
                   <div className="content-tab" style={{ textAlign: "center" }}>
                     <span className="count-result error-message">
-                      Ninguna de sus ventas ha sido entregada
+                      No hay ventas caídas o rechazadas
                     </span>
                     <img
-                      src={DontDeliveryImg}
+                      src={VentasFallidasImg}
                       alt=""
-                      style={{ width: "300px" }}
+                      style={{ width: "250px" }}
                     />
                   </div>
                 </div>
@@ -99,4 +99,4 @@ const VentasEntregadas = () => {
   );
 };
 
-export default VentasEntregadas;
+export default VentasFallidas;

@@ -82,7 +82,7 @@ const VentasEnRuta = () => {
                     <span className="count-result error-message">
                       Ninguna de sus ventas está en ruta de entrega
                     </span>
-                    <img src={DeliveryImg} alt="" style={{ width: "300px" }} />
+                    <img src={DeliveryImg} alt="" style={{ width: "310px" }} />
                   </div>
                 </div>
               </>

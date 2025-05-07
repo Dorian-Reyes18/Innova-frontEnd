@@ -26,6 +26,7 @@ import VentasPendientes from "./pages/VentasPendientes";
 import VentasPagadas from "./pages/VentasPagadas";
 import VentasEnRuta from "./pages/VentasEnRuta";
 import VentasEntregadas from "./pages/VentasEntregadas";
+import VentasFallidas from "./pages/VentasFallidas";
 
 function App() {
   return (
@@ -132,6 +133,7 @@ function App() {
           <Route path="ventas-pagadas" element={<VentasPagadas />} />
           <Route path="ventas-en-ruta" element={<VentasEnRuta />} />
           <Route path="ventas-entregadas" element={<VentasEntregadas />} />
+          <Route path="ventas-rechazadas" element={<VentasFallidas />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

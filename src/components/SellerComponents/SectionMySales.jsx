@@ -45,11 +45,11 @@ const SectionMySales = () => {
           <span>Vea todas las ventas entregadas esta semana.</span>
         </div>
       </Link>
-      <Link to="#" className="link-option">
+      <Link to="ventas-rechazadas" className="link-option">
         <img className="icon" src={FailIcon} alt="" />
         <div className="info">
-          <h6>Ventas fallidas </h6>
-          <span>Vea todas las ventas fallidas en esta semana.</span>
+          <h6>Ventas rechazadas</h6>
+          <span>Vea todas las ventas caídas en esta semana.</span>
         </div>
       </Link>
       <Link to="#" className="link-option">

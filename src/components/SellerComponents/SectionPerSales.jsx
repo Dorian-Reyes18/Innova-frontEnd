@@ -4,6 +4,7 @@ import axiosInstance from "../../axios";
 import { getCurrentWeekDateRange, fetchSales } from "./SectionGeneral/utils";
 import LayoutVenta from "./LayoutVenta";
 import Spinner from "../Spiner";
+import NoResults from "../../assets/memes/NohayResultados.png";
 
 const SectionPerSales = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -95,9 +96,12 @@ const SectionPerSales = () => {
                 </div>
               </>
             ) : (
-              <p className="warning-message">
-                No hay ventas registradas para este vendedor.
-              </p>
+              <>
+                <p className="error-message" style={{ margin: "40px 0" }}>
+                  No hay ventas registradas para este vendedor.
+                </p>
+                <img src={NoResults} alt="" style={{ width: "250px" }} />
+              </>
             )}
           </div>
         </>

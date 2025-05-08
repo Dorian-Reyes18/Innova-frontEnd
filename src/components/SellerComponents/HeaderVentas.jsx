@@ -34,6 +34,10 @@ const HeaderVentas = () => {
       path: `/panel-de-ventas/ventas-rechazadas`,
       name: "Ventas Rechazadas",
     },
+    {
+      path: `/panel-de-ventas/ventas-anteriores`,
+      name: "Ventas anteriores",
+    },
   ];
 
   const titleHeader = rutas.map((ruta) =>

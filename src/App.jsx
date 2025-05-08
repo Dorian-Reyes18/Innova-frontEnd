@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import 'react-datepicker/dist/react-datepicker.css';
 import "./styles/app.main.scss";
 
 // Componentes
@@ -27,6 +28,7 @@ import VentasPagadas from "./pages/VentasPagadas";
 import VentasEnRuta from "./pages/VentasEnRuta";
 import VentasEntregadas from "./pages/VentasEntregadas";
 import VentasFallidas from "./pages/VentasFallidas";
+import VentasAnteriores from "./pages/VentasAnteriores";
 
 function App() {
   return (
@@ -134,6 +136,7 @@ function App() {
           <Route path="ventas-en-ruta" element={<VentasEnRuta />} />
           <Route path="ventas-entregadas" element={<VentasEntregadas />} />
           <Route path="ventas-rechazadas" element={<VentasFallidas />} />
+          <Route path="ventas-anteriores" element={<VentasAnteriores />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

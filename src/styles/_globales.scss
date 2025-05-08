@@ -428,26 +428,16 @@ html {
         cursor: pointer;
         background: $color-tab1;
         color: $color-morado;
-        transition:
-          background 0.3s ease-in-out,
-          color 0.3s ease-in-out,
+        transition: background 0.3s ease-in-out, color 0.3s ease-in-out,
           opacity 0.3s;
         border-radius: 23px;
-        -webkit-transition:
-          background 0.3s ease-in-out,
-          color 0.3s ease-in-out;
-        -moz-transition:
-          background 0.3s ease-in-out,
-          color 0.3s ease-in-out;
-        -ms-transition:
-          background 0.3s ease-in-out,
-          color 0.3s ease-in-out;
-        -o-transition:
-          background 0.3s ease-in-out,
-          color 0.3s ease-in-out;
+        -webkit-transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+        -moz-transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+        -ms-transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+        -o-transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
 
         @include media(mobile) {
-          padding: 10 px;
+          padding: 8px 12px;
           border-radius: 18px;
 
           span {

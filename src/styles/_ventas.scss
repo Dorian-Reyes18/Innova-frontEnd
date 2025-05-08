@@ -35,7 +35,7 @@
       max-width: 900px;
       width: 100%;
       height: 100%;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
       word-break: break-word;
       border-radius: 0 0 8px 8px;
       -webkit-border-radius: 0 0 8px 8px;
@@ -268,7 +268,125 @@
         }
       }
 
-      // Estilos correspondientes a la sección de ventas pendientes
+      // Estilos correspondientes a la sección de ventas
+    }
+  }
+  // Estilos correspondientes a la sección de ventas anteriores
+
+  .block-history {
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    max-width: 1450px;
+    border: 1px solid $color-gris;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+
+    @include media(mobile) {
+      padding: 10px;
+    }
+    @include media(desktop) {
+      height: 515px;
+    }
+    @include media(desktopXXL) {
+      height: 750px;
+    }
+
+    .title-history {
+      text-align: center;
+      margin-bottom: 0;
+      padding: 20px;
+      font-size: 20px;
+      font-family: $montserrat-bold;
+      border-bottom: 1px solid $color-gris;
+      position: relative;
+
+      .volver {
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        position: absolute;
+        top: 50%;
+        align-items: center;
+        color: $color-gris;
+        text-decoration: none;
+        left: 20px;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+
+        &::before {
+          content: "";
+          display: flex;
+          background-image: url('data:image/svg+xml,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.5 21L7.5 12L16.5 3" stroke="%234B4B4B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+          width: 15px;
+          height: 15px;
+          margin-right: 7px;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
+        }
+      }
+    }
+    .contens {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+
+      .date-picker-form {
+        width: 100%;
+        padding: 25px;
+        display: grid;
+        border-right: 1px solid $color-gris;
+        height: 100%;
+        width: fit-content;
+        place-items: center;
+        align-items: start;
+
+        form {
+          width: 100%;
+          max-width: 1600px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          .body {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 20px;
+            justify-content: center;
+            align-items: flex-start;
+
+            .form-group {
+              display: flex;
+              flex-direction: column;
+              gap: 5px;
+              min-width: 210px;
+              width: 100%;
+
+              input {
+                min-width: 210px;
+                width: 100%;
+              }
+
+              .error-message {
+                text-align: start;
+                font-size: 13px;
+                font-family: $montserrat-regular;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

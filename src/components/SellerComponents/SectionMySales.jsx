@@ -52,7 +52,7 @@ const SectionMySales = () => {
           <span>Vea todas las ventas caídas en esta semana.</span>
         </div>
       </Link>
-      <Link to="#" className="link-option">
+      <Link to="ventas-anteriores" className="link-option">
         <img className="icon" src={HistoryIcon} alt="" />
         <div className="info">
           <h6>Ventas anteriores </h6>

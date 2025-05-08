@@ -1,0 +1,114 @@
+// Paleta de colores pastel en gama morada
+$primary-color: #9f7aea; // morado suave
+$secondary-color: #f3e8ff; // lavanda claro
+$hover-color: #d6bcfa; // morado pastel para hover
+$accent-color: #faf5ff; // blanco lavanda
+$text-color: #4c1d95; // morado intenso para texto
+$border-color: #e9d8fd; // bordes suaves
+
+// Fuente
+$font-stack: "Inter", "Segoe UI", sans-serif;
+
+// ----------- Personalización del calendario -----------
+.react-datepicker {
+  font-family: $font-stack;
+  background-color: $accent-color;
+  border: 1px solid $border-color;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(159, 122, 234, 0.25);
+  overflow: hidden;
+
+  &__header {
+    background-color: $secondary-color;
+    border-bottom: 1px solid $border-color;
+    padding: 12px;
+    color: $text-color;
+  }
+
+  &__current-month,
+  &__day-name {
+    font-weight: 600;
+    color: $text-color;
+  }
+
+  &__day {
+    color: $text-color;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: $hover-color;
+    }
+
+    &--selected,
+    &--in-selecting-range,
+    &--in-range {
+      background-color: $primary-color;
+      color: white;
+    }
+
+    &--keyboard-selected {
+      background-color: lighten($primary-color, 10%);
+      color: white;
+    }
+
+    &--today {
+      border: 1px solid $primary-color;
+    }
+
+    &--disabled {
+      color: lighten($text-color, 40%);
+      cursor: not-allowed;
+    }
+  }
+
+  &__navigation {
+    top: 16px;
+    line-height: 1.5;
+
+    &--previous,
+    &--next {
+      border: none;
+      background-color: transparent;
+      color: $text-color;
+
+      &:hover {
+        color: darken($primary-color, 10%);
+      }
+    }
+  }
+
+  &__time-container {
+    border-left: 1px solid $border-color;
+    background-color: $accent-color;
+
+    .react-datepicker__time {
+      color: $text-color;
+    }
+
+    .react-datepicker__time-box {
+      .react-datepicker__time-list-item {
+        &:hover {
+          background-color: $hover-color;
+          color: $text-color;
+        }
+
+        &--selected {
+          background-color: $primary-color;
+          color: white;
+        }
+      }
+    }
+  }
+
+  .react-datepicker__navigation-icon--next {
+    &::before {
+      border-color: $text-color;
+    }
+  }
+  .react-datepicker__navigation-icon--previous {
+    &::before {
+      border-color: $text-color;
+    }
+  }
+}

@@ -267,8 +267,6 @@
           }
         }
       }
-
-      // Estilos correspondientes a la sección de ventas
     }
   }
   // Estilos correspondientes a la sección de ventas anteriores
@@ -279,6 +277,7 @@
     overflow: hidden;
     flex-direction: column;
     max-width: 1450px;
+    box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.3);
     border: 1px solid $color-gris;
     border-radius: 8px;
     -webkit-border-radius: 8px;
@@ -336,8 +335,24 @@
     }
     .contens {
       display: flex;
-      flex-direction: column;
       height: 100%;
+      overflow: hidden;
+
+      .rango-fecha {
+        text-align: center;
+        font-size: 14px;
+        color: $color-azul;
+        font-family: $montserrat-bold;
+      }
+      .head-dinamic {
+        font-family: $montserrat-bold;
+        border-bottom: 1px solid $color-gris;
+        margin-bottom: 25px;
+
+        .dinero {
+          color: $color-succes;
+        }
+      }
 
       .date-picker-form {
         width: 100%;
@@ -382,6 +397,86 @@
                 text-align: start;
                 font-size: 13px;
                 font-family: $montserrat-regular;
+              }
+            }
+          }
+        }
+      }
+      .content-render {
+        padding: 20px;
+        width: 100%;
+        height: 100%;
+
+        .contenido-inicial {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          height: 100%;
+          width: 100%;
+
+          .img-aviso {
+            width: 620px;
+
+            @include media(desktopXXL) {
+              width: 900px;
+            }
+          }
+        }
+
+        .cargando {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          height: 100%;
+          width: 100%;
+        }
+
+        .tabla-de-resultados {
+          .table {
+            thead {
+              tr {
+                background: $color-head-tables;
+                th,
+                td {
+                  background-color: transparent;
+                  font-size: 14px;
+                }
+                &:hover {
+                  background-color: $color-hover-tables;
+                }
+              }
+            }
+            tbody {
+              tr {
+                td,
+                th {
+                  background-color: transparent;
+                  font-size: 14px;
+                }
+                &:hover {
+                  background-color: $color-hover-tables;
+                }
+              }
+            }
+
+            @include media(desktopXXL) {
+              thead {
+                tr {
+                  th,
+                  td {
+                    font-size: 16px;
+                  }
+                }
+              }
+              tbody {
+                tr {
+                  td,
+                  th {
+                    font-size: 16px;
+                  }
+                }
               }
             }
           }

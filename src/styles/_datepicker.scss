@@ -112,3 +112,6 @@ $font-stack: "Inter", "Segoe UI", sans-serif;
     }
   }
 }
+.react-datepicker-popper {
+  z-index: 2;
+}

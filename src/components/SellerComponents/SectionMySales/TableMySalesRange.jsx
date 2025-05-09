@@ -1,4 +1,16 @@
+import { useState, useEffect } from "react";
+
 const TableMySalesRange = ({ sales }) => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   // ordenar las ventas por fecha de creación primero la mas reciente y luego la mas antigua
   sales = sales.sort((a, b) => {
     const dateA = new Date(a.createdAt);
@@ -15,35 +27,78 @@ const TableMySalesRange = ({ sales }) => {
   };
 
   return (
-    <div className="tabla-de-resultados">
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">N°</th>
-            <th scope="col">Creación</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Pago</th>
-            <th scope="col">Cliente</th>
-            <th scope="col">Telf/Cliente</th>
+    <>
+      <div className="tabla-de-resultados">
+        <table className="table">
+          <>
+            {windowWidth < 767 ? null : (
+              <thead>
+                <tr>
+                  <th scope="col">N°</th>
+                  <th scope="col">Creación</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Pago</th>
+                  <th scope="col">Cliente</th>
+                  <th scope="col">Telf/Cliente</th>
+                  <th scope="col">Opciones</th>
+                </tr>
+              </thead>
+            )}
+          </>
 
-            <th scope="col">Opciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sales.map((sale, index) => (
-            <tr key={index}>
-              <th scope="row">{index + 1}</th>
-              <td>{formatDate(sale.createdAt)}</td>
-              <td>{sale?.estadoVenta?.estado}</td>
-              <td>C$ {sale?.pago_vendedor > 0 ? sale?.pago_vendedor : 0} </td>
-              <td>{sale?.detalleCliente?.nombre}</td>
-              <td>{sale?.detalleCliente?.telefono}</td>
-              <td>Editar</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          <>
+            {windowWidth > 767 ? (
+              <tbody>
+                {sales.map((sale, index) => (
+                  <tr key={index}>
+                    <th scope="row">{index + 1}</th>
+                    <td>{formatDate(sale.createdAt)}</td>
+                    <td>{sale?.estadoVenta?.estado}</td>
+                    <td>
+                      C$ {sale?.pago_vendedor > 0 ? sale?.pago_vendedor : 0}{" "}
+                    </td>
+                    <td>{sale?.detalleCliente?.nombre}</td>
+                    <td>{sale?.detalleCliente?.telefono}</td>
+                    <td>Editar</td>
+                  </tr>
+                ))}
+              </tbody>
+            ) : (
+              <>
+                {sales.map((sale, index) => (
+                  <tr key={index} className={index % 2 === 0 ? "" : "tr-odd"}>
+                    <span className="thead">
+                      <th scope="row">Creación</th>
+                      <th scope="row">Estado</th>
+                      <th scope="row">Pago</th>
+                      <th scope="row">Cliente</th>
+                      <th scope="row">Telf/Cliente</th>
+                      <th scope="row">Opciones</th>
+                    </span>
+
+                    <span className="body">
+                      <td>{formatDate(sale.createdAt)}</td>
+                      <td>{sale?.estadoVenta?.estado}</td>
+                      <td>
+                        C$ {sale?.pago_vendedor > 0 ? sale?.pago_vendedor : 0}
+                      </td>
+                      <td>{sale?.detalleCliente?.nombre}</td>
+                      <td>{sale?.detalleCliente?.telefono}</td>
+                      <td>Editar</td>
+                    </span>
+                  </tr>
+                ))}
+              </>
+            )}
+          </>
+        </table>
+      </div>
+      <div className="total-ventas-abajo">
+        {sales.length === 0 ? null : (
+          <span>Total de ventas: {sales.length}</span>
+        )}
+      </div>
+    </>
   );
 };
 

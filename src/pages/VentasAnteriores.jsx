@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Formik, Form, ErrorMessage } from "formik";
 import DatePicker from "react-datepicker";
 import * as Yup from "yup";
@@ -11,12 +11,11 @@ import { registerLocale } from "react-datepicker";
 import es from "date-fns/locale/es";
 import Spinner from "../components/Spiner";
 import Aviso from "../assets/memes/Aviso.svg";
+import AvisoMobile from "../assets/memes/AvisoMobile.svg";
 import warning from "../assets/memes/warning.svg";
 
-// Registrar idioma español para datepicker
 registerLocale("es", es);
 
-// Validación del formulario
 const validationSchema = Yup.object().shape({
   startDate: Yup.date().required("Fecha inicial requerida"),
   endDate: Yup.date()
@@ -32,46 +31,33 @@ const VentasAnteriores = () => {
   const myUserId = user?.user?.data?.id;
   const [loading, setLoading] = useState(false);
   const [sales, setSales] = useState([]);
-  const [confirmedSubmit, setConfirmedSubmit] = useState(false);
-  const [isoDates, setIsoDates] = useState({
-    startDateISO: "",
-    endDateISO: "",
-  });
+  const [confirmed, setConfirmed] = useState(false);
+  const [dateRange, setDateRange] = useState({ start: null, end: null });
 
-  // Función para obtener ventas
-  const getSalesByDateRange = async (startDateISO, endDateISO) => {
-    await getSalesByUser(
-      myUserId,
-      startDateISO,
-      endDateISO,
-      setLoading,
-      setSales
-    );
+  const handleSubmit = async (values) => {
+    const startISO = values.startDate.toISOString();
+    const endISO = values.endDate.toISOString();
+
+    setConfirmed(true);
+    setDateRange({ start: values.startDate, end: values.endDate });
+    await getSalesByUser(myUserId, startISO, endISO, setLoading, setSales);
   };
 
-  // Función de envío del formulario
-  const handleSubmit = (values) => {
-    const startDateISO = values.startDate.toISOString();
-    const endDateISO = values.endDate.toISOString();
-
-    setConfirmedSubmit(true);
-    setIsoDates({ startDateISO, endDateISO });
-    getSalesByDateRange(startDateISO, endDateISO);
+  const handleReset = (resetForm) => {
+    resetForm();
+    setSales([]);
+    setConfirmed(false);
+    setDateRange({ start: null, end: null });
+    setLoading(false);
   };
 
-  // Función compacta para mostrar el rango de fechas
-  const formatDateRange = (startISO, endISO) => {
+  const formatDateRange = (start, end) => {
     const options = { day: "numeric", month: "long", year: "numeric" };
-    const start = new Date(startISO).toLocaleDateString("es-ES", options);
-    const end = new Date(endISO).toLocaleDateString("es-ES", options);
-    return `Ventas del ${start} al ${end}`;
+    return `Ventas del ${start.toLocaleDateString(
+      "es-ES",
+      options
+    )} al ${end.toLocaleDateString("es-ES", options)}`;
   };
-
-  useEffect(() => {
-    if (sales.length > 0) {
-      console.log("Ventas recibidas:", sales);
-    }
-  }, [sales]);
 
   return (
     <>
@@ -92,26 +78,23 @@ const VentasAnteriores = () => {
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
               >
-                {({ setFieldValue, values }) => (
+                {({ setFieldValue, values, resetForm }) => (
                   <Form>
-                    {confirmedSubmit && loading === false && (
-                      <>
-                        {sales.length > 0 && (
-                          <div className=" head-dinamic">
-                            <p style={{ width: 210 }}>
-                              Dinero obtenido :{" "}
-                              <span className="dinero">
-                                C$
-                                {sales.reduce(
-                                  (acc, sale) => acc + sale?.pago_vendedor,
-                                  0
-                                )}
-                              </span>
-                            </p>
-                          </div>
-                        )}
-                      </>
+                    {confirmed && !loading && sales.length > 0 && (
+                      <div className="head-dinamic">
+                        <p>
+                          Total:{" "}
+                          <span className="dinero">
+                            C$
+                            {sales.reduce(
+                              (acc, sale) => acc + sale?.pago_vendedor,
+                              0
+                            )}
+                          </span>
+                        </p>
+                      </div>
                     )}
+
                     <div className="body">
                       <div className="form-group">
                         <label>Fecha inicial:</label>
@@ -124,6 +107,7 @@ const VentasAnteriores = () => {
                           dateFormat="dd-MM-yyyy"
                           placeholderText="Seleccione fecha inicial"
                           locale="es"
+                          onFocus={(e) => e.target.blur()}
                         />
                         <ErrorMessage
                           name="startDate"
@@ -144,6 +128,7 @@ const VentasAnteriores = () => {
                           dateFormat="dd-MM-yyyy"
                           placeholderText="Seleccione fecha final"
                           locale="es"
+                          onFocus={(e) => e.target.blur()}
                         />
                         <ErrorMessage
                           name="endDate"
@@ -153,40 +138,55 @@ const VentasAnteriores = () => {
                       </div>
                     </div>
 
-                    <button
-                      type="submit"
-                      className="btn-out"
-                      disabled={loading}
+                    <div
+                      className="buttons"
+                      style={{ display: "flex", gap: "10px" }}
                     >
-                      Buscar
-                    </button>
+                      <button
+                        type="button"
+                        className="btn-out"
+                        onClick={() => handleReset(resetForm)}
+                        disabled={loading}
+                      >
+                        Limpiar
+                      </button>
+                      <button
+                        type="submit"
+                        className="btn-out"
+                        disabled={loading}
+                      >
+                        Buscar
+                      </button>
+                    </div>
                   </Form>
                 )}
               </Formik>
             </div>
 
             <div className="content-render">
-              {!confirmedSubmit && (
+              {!confirmed && (
                 <div className="contenido-inicial">
                   <img src={Aviso} alt="aviso" className="img-aviso" />
+                  <img
+                    src={AvisoMobile}
+                    alt="aviso"
+                    className="img-aviso-mobile"
+                  />
                 </div>
               )}
 
-              {confirmedSubmit && loading && (
+              {confirmed && loading && (
                 <div className="cargando">
                   <Spinner />
                 </div>
               )}
 
-              {confirmedSubmit && !loading && (
+              {confirmed && !loading && (
                 <>
                   {sales.length > 0 ? (
                     <>
                       <p className="rango-fecha">
-                        {formatDateRange(
-                          isoDates.startDateISO,
-                          isoDates.endDateISO
-                        )}
+                        {formatDateRange(dateRange.start, dateRange.end)}
                       </p>
                       <TableMySalesRange sales={sales} />
                     </>

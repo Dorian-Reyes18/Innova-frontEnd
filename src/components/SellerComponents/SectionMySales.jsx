@@ -6,6 +6,7 @@ import DeliverIcon from "../../assets/MySalesIcons/DeliveryIcon.svg";
 import CheckIcon from "../../assets/MySalesIcons/CheckIcon.svg";
 import FailIcon from "../../assets/MySalesIcons/FailIcon.svg";
 import HistoryIcon from "../../assets/MySalesIcons/HistoryIcon.svg";
+import AsignarIcono from "../../assets/MySalesIcons/AssignIcon.svg";
 
 const SectionMySales = () => {
   return (
@@ -22,6 +23,13 @@ const SectionMySales = () => {
         <div className="info">
           <h6>Ventas en trámite</h6>
           <span>Vea las ventas pendientes por finalizar.</span>
+        </div>
+      </Link>
+      <Link to="ventas-por-asignar" className="link-option">
+        <img className="icon" src={AsignarIcono} alt="" />
+        <div className="info">
+          <h6>Ventas por asignar</h6>
+          <span>Vea las ventas listas para dar al delivery</span>
         </div>
       </Link>
       <Link to="ventas-pagadas" className="link-option">

@@ -8,9 +8,9 @@ import {
   getCurrentWeekDateRange,
   getSalesByUser,
 } from "../components/SellerComponents/SectionGeneral/utils";
-import SeñorBurns from "../assets/memes/señor-burns.jpg";
+import NadaAsignado from "../assets/memes/NadaAsignado.svg";
 
-const VentasPagadas = () => {
+const VentasPorAsignar = () => {
   const { user } = useUser();
   const myUserId = user?.user?.data?.id;
 
@@ -32,7 +32,9 @@ const VentasPagadas = () => {
   // Filtrado de ventas en trámite
   useEffect(() => {
     if (sales.length > 0) {
-      const filteredSales = sales.filter((sale) => sale?.pago_vendedor > 0);
+      const filteredSales = sales.filter(
+        (sale) => sale?.estadoVenta?.estado === "Por asignar"
+      );
       setPendingSales(filteredSales);
     }
 
@@ -49,31 +51,16 @@ const VentasPagadas = () => {
           <Spinner />
         ) : !loading && pendingSales.length > 0 ? (
           <>
-            <div className="head-pagada">
-              <span className="total">
-                Total pagado:{" "}
-                <strong className="dinero">
-                  C$
-                  {pendingSales.reduce(
-                    (total, sale) => total + sale.pago_vendedor,
-                    0
-                  )}
-                </strong>
-              </span>
-              <span className="total">
-                Ventas pagadas: {""} <strong>{pendingSales.length}</strong>{" "}
-              </span>
-              <span className="volver">
-                <Link to="/panel-de-ventas">Volver al panel</Link>
-              </span>
-            </div>
+            <Link to="/panel-de-ventas" className="btn-pr">
+              Volver al panel
+            </Link>
             <div className="container-content">
               <div className="content-tab">
                 <div className="resultados-filtrados">
                   <span className="count-result">
-                    Tienes {pendingSales.length} venta
-                    {pendingSales.length > 1 ? "s" : ""} Pagada{" "}
-                    {pendingSales.length > 1 ? "s" : ""}
+                    {pendingSales.length} venta
+                    {pendingSales.length > 1 ? "s" : ""} no se ha{" "}
+                    {pendingSales.length > 1 ? "n" : null} asignado
                   </span>
                   <div className="results">
                     {pendingSales.map((sale) => (
@@ -86,17 +73,19 @@ const VentasPagadas = () => {
           </>
         ) : (
           <>
-            {!loading && pendingSales.length === 0 && (
+            {pendingSales.length === 0 && (
               <>
                 <Link to="/panel-de-ventas" className="btn-pr">
                   Volver al panel
                 </Link>
+
                 <div className="container-content">
                   <div className="content-tab" style={{ textAlign: "center" }}>
                     <span className="count-result error-message">
-                      No le han pagado ninguna venta
+                      Sin nada aquí, sus ventas ya se asignaron o estan en
+                      tramite.
                     </span>
-                    <img src={SeñorBurns} alt="" style={{ width: "180px" }} />
+                    <img src={NadaAsignado} alt="" style={{ width: "250px" }} />
                   </div>
                 </div>
               </>
@@ -108,4 +97,4 @@ const VentasPagadas = () => {
   );
 };
 
-export default VentasPagadas;
+export default VentasPorAsignar;

@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import { useUser } from "../context/userContext";
 
 // Componentes
 import HeaderVentas from "../components/SellerComponents/HeaderVentas";
@@ -11,6 +12,21 @@ const PanelDeVentas = () => {
   const location = useLocation();
   const isRootPath = location.pathname === "/panel-de-ventas";
   const [activeTab, setActiveTab] = useState("tab1");
+  const { user } = useUser();
+
+  const myUserRole = user?.user?.data?.role?.name;
+
+  const usuariosPermitidos = ["Administrador"];
+
+  useEffect(() => {
+    if (!myUserRole) return;
+
+    if (usuariosPermitidos.includes(myUserRole)) {
+      setActiveTab("tab1");
+    } else {
+      setActiveTab("tab3");
+    }
+  }, [myUserRole]);
 
   return (
     <>
@@ -18,27 +34,31 @@ const PanelDeVentas = () => {
         <>
           <HeaderVentas />
           <div className="container-general-ventas">
-            {/* Tabs section */}
-            <div className="container-tabs">
-              <div
-                className={`tab ${activeTab === "tab1" ? "active" : ""}`}
-                onClick={() => setActiveTab("tab1")}
-              >
-                <span>General</span>
-              </div>
-              <div
-                className={`tab ${activeTab === "tab2" ? "active" : ""}`}
-                onClick={() => setActiveTab("tab2")}
-              >
-                Por vendedor
-              </div>
-              <div
-                className={`tab ${activeTab === "tab3" ? "active" : ""}`}
-                onClick={() => setActiveTab("tab3")}
-              >
-                Mis ventas
-              </div>
-            </div>
+            {usuariosPermitidos.includes(myUserRole) && (
+              <>
+                {/* Tabs section */}
+                <div className="container-tabs">
+                  <div
+                    className={`tab ${activeTab === "tab1" ? "active" : ""}`}
+                    onClick={() => setActiveTab("tab1")}
+                  >
+                    <span>General</span>
+                  </div>
+                  <div
+                    className={`tab ${activeTab === "tab2" ? "active" : ""}`}
+                    onClick={() => setActiveTab("tab2")}
+                  >
+                    Por vendedor
+                  </div>
+                  <div
+                    className={`tab ${activeTab === "tab3" ? "active" : ""}`}
+                    onClick={() => setActiveTab("tab3")}
+                  >
+                    Mis ventas
+                  </div>
+                </div>
+              </>
+            )}
 
             {/* Content rendering */}
             <div className="container-content">

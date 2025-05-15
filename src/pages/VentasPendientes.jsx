@@ -8,6 +8,7 @@ import {
   getCurrentWeekDateRange,
   getSalesByUser,
 } from "../components/SellerComponents/SectionGeneral/utils";
+import Proceess from "../assets/memes/process.svg";
 
 const VentasPendientes = () => {
   const { user } = useUser();
@@ -76,9 +77,15 @@ const VentasPendientes = () => {
                 <Link to="/panel-de-ventas" className="btn-pr">
                   Volver al panel
                 </Link>
-                <span className="count-result warning-message">
-                  No tienes ventas en tramite
-                </span>
+
+                <div className="container-content">
+                  <div className="content-tab" style={{ textAlign: "center" }}>
+                    <span className="count-result error-message">
+                      No tienes ventas en tramite
+                    </span>
+                    <img src={Proceess} alt="" style={{ width: "250px" }} />
+                  </div>
+                </div>
               </>
             )}
           </>

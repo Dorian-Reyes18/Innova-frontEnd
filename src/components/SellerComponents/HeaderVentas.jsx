@@ -38,6 +38,10 @@ const HeaderVentas = () => {
       path: `/panel-de-ventas/ventas-anteriores`,
       name: "Ventas anteriores",
     },
+    {
+      path: `/panel-de-ventas/ventas-por-asignar`,
+      name: "Ventas por asignar",
+    },
   ];
 
   const titleHeader = rutas.map((ruta) =>

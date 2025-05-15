@@ -3,6 +3,12 @@ html {
     font-family: $montserrat-regular;
     color: $color-gris !important;
 
+    a {
+      color: $color-morado;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
     strong,
     h1,
     h2,
@@ -475,6 +481,11 @@ html {
       text-align: center;
       margin: 25px 0;
       width: 100%;
+    }
+
+    .dinero {
+      color: $color-succes;
+      font-family: $montserrat-bold;
     }
   }
 }

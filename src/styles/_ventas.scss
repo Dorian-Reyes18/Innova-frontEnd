@@ -269,6 +269,35 @@
       }
     }
   }
+
+  // Estilos correspondientes a la sección pagadas
+  .head-pagada {
+    display: flex;
+
+    @include media(mobile) {
+      flex-direction: column;
+      align-items: center;
+    }
+    span {
+      display: flex;
+      align-items: center;
+      padding: 5px 20px;
+    }
+
+    .total {
+      display: flex;
+      gap: 7px;
+      @include media(desktop) {
+        border-right: 1px solid $color-gris;
+      }
+    }
+    .volver {
+      a {
+        font-family: $montserrat-bold;
+      }
+    }
+  }
+
   // Estilos correspondientes a la sección de ventas anteriores
 
   .block-history {
@@ -386,9 +415,6 @@
 
         @include media(mobile) {
           width: 100%;
-        }
-        .dinero {
-          color: $color-succes;
         }
       }
 

@@ -19,6 +19,7 @@ const VentasPorAsignar = () => {
   const [pendingSales, setPendingSales] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sales, setSales] = useState([]);
+  const [finalLoading, setFinalLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,6 +41,7 @@ const VentasPorAsignar = () => {
 
     // Fin del proceso de carga (aunque sea 0 resultados, ya procesamos todo)
     setLoading(false);
+    setFinalLoading(true);
   }, [sales]);
 
   return (
@@ -73,7 +75,7 @@ const VentasPorAsignar = () => {
           </>
         ) : (
           <>
-            {pendingSales.length === 0 && (
+            {!loading && pendingSales.length === 0 && (
               <>
                 <Link to="/panel-de-ventas" className="btn-pr">
                   Volver al panel

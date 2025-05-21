@@ -10,9 +10,11 @@
   }
 
   .head {
-    width: 100%;
-    justify-content: end;
-    display: flex;
+    & {
+      width: 100%;
+      justify-content: flex-end;
+      display: flex;
+    }
 
     @include media(mobile) {
       img {

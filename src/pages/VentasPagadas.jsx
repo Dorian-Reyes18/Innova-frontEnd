@@ -71,8 +71,8 @@ const VentasPagadas = () => {
               <div className="content-tab">
                 <div className="resultados-filtrados">
                   <span className="count-result">
-                    Tienes {pendingSales.length} venta
-                    {pendingSales.length > 1 ? "s" : ""} Pagada{" "}
+                    {pendingSales.length} resultado
+                    {pendingSales.length > 1 ? "s" : ""} encontrado{" "}
                     {pendingSales.length > 1 ? "s" : ""}
                   </span>
                   <div className="results">

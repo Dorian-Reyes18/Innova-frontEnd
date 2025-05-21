@@ -48,7 +48,7 @@ $font-stack: "Inter", "Segoe UI", sans-serif;
     }
 
     &--keyboard-selected {
-      background-color: lighten($primary-color, 10%);
+      background-color: #9f7aea;
       color: white;
     }
 
@@ -57,7 +57,7 @@ $font-stack: "Inter", "Segoe UI", sans-serif;
     }
 
     &--disabled {
-      color: lighten($text-color, 40%);
+      color: #4c1d95;
       cursor: not-allowed;
     }
   }
@@ -73,7 +73,7 @@ $font-stack: "Inter", "Segoe UI", sans-serif;
       color: $text-color;
 
       &:hover {
-        color: darken($primary-color, 10%);
+        color: #9f7aea;
       }
     }
   }

@@ -86,7 +86,8 @@ const SectionPerSales = () => {
               <>
                 <span className="count-result">
                   {salesFiltered.length}{" "}
-                  {salesFiltered.length === 1 ? "resultado" : "resultados"}
+                  {salesFiltered.length === 1 ? "resultado" : "resultados"} para{" "}
+                  {selectedUser}
                 </span>
 
                 <div className="results">
@@ -98,7 +99,7 @@ const SectionPerSales = () => {
             ) : (
               <>
                 <p className="error-message" style={{ margin: "40px 0" }}>
-                  No hay ventas registradas para este vendedor.
+                  No hay ventas registradas para {selectedUser}.
                 </p>
                 <img src={NoResults} alt="" style={{ width: "250px" }} />
               </>

@@ -48,7 +48,7 @@ const FiltroDeVentas = ({ salesGroup }) => {
               if (ventasFiltradas.length === 0) {
                 return (
                   <p className="error-message" style={{ margin: "30px 0" }}>
-                    No hay ventas que mostrar en esta sección
+                    No hay ventas que mostrar en la sección "{selectedOption}"
                   </p>
                 );
               }

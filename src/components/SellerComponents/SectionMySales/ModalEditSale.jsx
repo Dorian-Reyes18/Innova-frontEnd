@@ -42,7 +42,11 @@ const ModalEditSale = ({ onClose, venta }) => {
           <div className="fila">
             <div className="group-el">
               <span className="label">Ubicación</span>
-              <a className="value">
+              <a
+                className="value"
+                href={venta.detalleCliente?.direccionGps}
+                target="_blank"
+              >
                 {venta.detalleCliente?.direccionGps || "No disponible"}
               </a>
             </div>

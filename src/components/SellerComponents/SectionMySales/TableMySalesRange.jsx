@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import ModalEditSales from "./ModalEditSale";
 
 const TableMySalesRange = ({ sales }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedSale, setSelectedSale] = useState(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -24,6 +28,16 @@ const TableMySalesRange = ({ sales }) => {
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
+  };
+
+  const openModal = (sale) => {
+    setSelectedSale(sale);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setSelectedSale(null);
+    setShowModal(false);
   };
 
   return (
@@ -59,7 +73,11 @@ const TableMySalesRange = ({ sales }) => {
                     </td>
                     <td>{sale?.detalleCliente?.nombre}</td>
                     <td>{sale?.detalleCliente?.telefono}</td>
-                    <td>Editar</td>
+                    <td>
+                      <span className="btn-out" onClick={() => openModal(sale)}>
+                        Ver
+                      </span>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -84,7 +102,14 @@ const TableMySalesRange = ({ sales }) => {
                       </td>
                       <td>{sale?.detalleCliente?.nombre}</td>
                       <td>{sale?.detalleCliente?.telefono}</td>
-                      <td>Editar</td>
+                      <td>
+                        <span
+                          className="btn-out"
+                          onClick={() => openModal(sale)}
+                        >
+                          Ver
+                        </span>
+                      </td>
                     </span>
                   </tr>
                 ))}
@@ -93,6 +118,10 @@ const TableMySalesRange = ({ sales }) => {
           </>
         </table>
       </div>
+      {/* Modal visible si hay una venta seleccionada */}
+      {showModal && selectedSale && (
+        <ModalEditSales venta={selectedSale} onClose={closeModal} />
+      )}
       <div className="total-ventas-abajo">
         {sales.length === 0 ? null : (
           <span>Total de ventas: {sales.length}</span>
@@ -100,6 +129,22 @@ const TableMySalesRange = ({ sales }) => {
       </div>
     </>
   );
+};
+
+TableMySalesRange.propTypes = {
+  sales: PropTypes.arrayOf(
+    PropTypes.shape({
+      createdAt: PropTypes.string.isRequired,
+      estadoVenta: PropTypes.shape({
+        estado: PropTypes.string,
+      }),
+      pago_vendedor: PropTypes.number,
+      detalleCliente: PropTypes.shape({
+        nombre: PropTypes.string,
+        telefono: PropTypes.string,
+      }),
+    })
+  ).isRequired,
 };
 
 export default TableMySalesRange;

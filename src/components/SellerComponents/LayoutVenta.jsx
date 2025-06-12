@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import CashIcon from "../../assets/SalesDatailsIcons/CashIcon.svg";
 import DeliveryIcon from "../../assets/SalesDatailsIcons/DeliveryIcon.svg";
@@ -5,12 +6,13 @@ import DirectionIcon from "../../assets/SalesDatailsIcons/DirectionIcon.svg";
 import LocationIcon from "../../assets/SalesDatailsIcons/LocationIcon.svg";
 import ProductIcon from "../../assets/SalesDatailsIcons/ProductIcon.svg";
 import TimeIcon from "../../assets/SalesDatailsIcons/TimeIcon.svg";
-import { Link } from "react-router-dom";
+import ModalEditSale from "./SectionMySales/ModalEditSale";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 
 const LayoutVenta = ({ venta }) => {
   const objectSale = venta;
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <div className="venta-container">
@@ -110,21 +112,32 @@ const LayoutVenta = ({ venta }) => {
               {format(
                 new Date(objectSale.createdAt),
                 "d 'de' MMMM 'a las' h:mm a",
-                { locale: es }
+                {
+                  locale: es,
+                }
               )}
             </div>
           ) : (
             <div className="create-at">Fecha no disponible</div>
           )}
 
+          {/* Botón para abrir modal */}
           {objectSale?.codigoVenta && (
-            <Link
+            <button
               style={{ margin: "0 auto", marginTop: "20px" }}
               className="btn-pr"
-              to={`/ventas/${objectSale.codigoVenta}`}
+              onClick={() => setShowModal(true)}
             >
               ver detalles
-            </Link>
+            </button>
+          )}
+
+          {/* Renderiza el modal si showModal es true */}
+          {showModal && (
+            <ModalEditSale
+              venta={objectSale}
+              onClose={() => setShowModal(false)}
+            />
           )}
         </div>
       </div>

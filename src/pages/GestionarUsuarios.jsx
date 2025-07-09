@@ -39,16 +39,15 @@ const GestionarUsuarios = () => {
     ],
   };
   const blockedState = [
-    { prop: true, des: "Bloqueado" },
-    { prop: false, des: "Desbloqueado" },
+    { prop: "true", des: "Bloqueado" },
+    { prop: "false", des: "Desbloqueado" },
   ];
   const confirmedState = [
-    { prop: true, des: "Contratado" },
-    { prop: false, des: "Desvinculado" },
+    { prop: "true", des: "Contratado" },
+    { prop: "false", des: "Desvinculado" },
   ];
 
-  // Objetos
-
+  // Estilos bloqueados (puedes mantenerlos igual)
   const blockedStyles = [
     { color: "Red", backgroundColor: "#ffe4e4", fontWeight: "700" },
     { color: "#003b00", backgroundColor: "#d6ffd6", fontWeight: "700" },
@@ -56,7 +55,6 @@ const GestionarUsuarios = () => {
 
   // servicios de fetching
   const fetchUser = async () => {
-    // Obtener el usuario actual
     try {
       setLoadingUser(true);
       const response = await axiosInstance.get(`/users/${id}?populate=*`);
@@ -69,10 +67,25 @@ const GestionarUsuarios = () => {
   };
 
   const putUser = async (values) => {
-    // Actualizar datos del usuario actual
     setPutLoading(true);
     try {
-      const response = await axiosInstance.put(`/users/${id}`, values);
+      // Convertir los valores booleanos desde string a boolean y rol a número
+      const transformedValues = {
+        ...values,
+        blocked: values.blocked === "true",
+        confirmed: values.confirmed === "true",
+        role: parseInt(values.role, 10),
+      };
+
+      // Eliminar la contraseña si está vacía
+      if (!transformedValues.password) {
+        delete transformedValues.password;
+      }
+
+      const response = await axiosInstance.put(
+        `/users/${id}`,
+        transformedValues
+      );
       if (response.status === 200) {
         setConfirmEdit(true);
       }
@@ -83,18 +96,15 @@ const GestionarUsuarios = () => {
     }
   };
 
-  const deleteUser = async (values) => {
-    // Eliminar usuario actual
+  const deleteUser = async () => {
     setDeleteLoading(true);
     try {
-      const response = await axiosInstance.delete(`/users/${id}`, values);
-
-      // console.log(response);
+      const response = await axiosInstance.delete(`/users/${id}`);
       if (response.status === 200) {
         setConfirmDelete(true);
       }
     } catch (error) {
-      console.error("Error el eliminar el usuario:", error);
+      console.error("Error al eliminar el usuario:", error);
     } finally {
       setDeleteLoading(false);
     }
@@ -104,6 +114,20 @@ const GestionarUsuarios = () => {
   useEffect(() => {
     fetchUser();
   }, []);
+
+  // useEffect para cerrar modal Save cuando está cargando la petición PUT
+  useEffect(() => {
+    if (putLoading && showModalSave) {
+      setShowModalSave(false);
+    }
+  }, [putLoading, showModalSave]);
+
+  // useEffect para cerrar modal Delete cuando está cargando la petición DELETE
+  useEffect(() => {
+    if (deleteLoading && showModalDelete) {
+      setShowModalDelete(false);
+    }
+  }, [deleteLoading, showModalDelete]);
 
   return (
     <div className="gestionar-usuarios">
@@ -129,19 +153,19 @@ const GestionarUsuarios = () => {
                       nombreApellido: userData?.nombreApellido || "",
                       telefono: userData?.telefono || "",
                       email: userData?.email || "",
-                      role: userData?.role?.id || "",
+                      role: userData?.role?.id ? String(userData.role.id) : "",
                       sexo: userData?.sexo || "",
                       blocked:
-                        userData?.blocked !== undefined
-                          ? userData?.blocked
-                          : false,
+                        userData && userData.blocked !== undefined
+                          ? String(userData.blocked)
+                          : "false",
                       confirmed:
-                        userData?.confirmed !== undefined
-                          ? userData?.confirmed
-                          : false,
+                        userData && userData.confirmed !== undefined
+                          ? String(userData.confirmed)
+                          : "false",
+                      password: "",
                     }}
                     onSubmit={(values) => {
-                      // console.log(values);
                       if (submitOptions.put) {
                         putUser(values);
                       } else if (submitOptions.delete) {
@@ -149,10 +173,9 @@ const GestionarUsuarios = () => {
                       }
                     }}
                   >
-                    {({ handleSubmit, setFieldValue, submitForm }) => (
+                    {({ handleSubmit, setFieldValue, submitForm, values }) => (
                       <Form onSubmit={handleSubmit}>
-                        {/*  */}
-                        {/* Modal inicial que pregunta si se desea guardar los cambios */}
+                        {/* Modal para guardar cambios */}
                         {showModalSave && (
                           <div className="modal-conatiner">
                             <div className="modal-content">
@@ -179,15 +202,14 @@ const GestionarUsuarios = () => {
                                     submitForm();
                                   }}
                                 >
-                                  {" "}
-                                  Si
+                                  Sí
                                 </div>
                               </div>
                             </div>
                           </div>
                         )}
 
-                        {/* Modal para eliminar el usuario actual */}
+                        {/* Modal para eliminar usuario */}
                         {showModalDelete && (
                           <div className="modal-conatiner">
                             <div className="modal-content">
@@ -213,20 +235,15 @@ const GestionarUsuarios = () => {
                                     submitForm();
                                   }}
                                 >
-                                  {" "}
-                                  Si
+                                  Sí
                                 </div>
                               </div>
                             </div>
                           </div>
                         )}
 
-                        {/* Si hay una confirmación de edición cerramos el modal inicial */}
-                        {putLoading && showModalSave
-                          ? setShowModalSave(false)
-                          : null}
-
-                        {putLoading ? (
+                        {/* Spinner durante PUT */}
+                        {putLoading && (
                           <div className="modal-conatiner">
                             <div className="modal-content">
                               <div className="spin">
@@ -234,13 +251,10 @@ const GestionarUsuarios = () => {
                               </div>
                             </div>
                           </div>
-                        ) : null}
+                        )}
 
-                        {/* Si hay una confirmación de eliminación cerramos el modal inicial */}
-                        {deleteLoading && showModalDelete
-                          ? setShowModalDelete(false)
-                          : null}
-                        {deleteLoading ? (
+                        {/* Spinner durante DELETE */}
+                        {deleteLoading && (
                           <div className="modal-conatiner">
                             <div className="modal-content">
                               <div className="spin">
@@ -248,9 +262,9 @@ const GestionarUsuarios = () => {
                               </div>
                             </div>
                           </div>
-                        ) : null}
+                        )}
 
-                        {/* Modal que confirma la Edición exitosa */}
+                        {/* Confirmación exitosa edición */}
                         {confirmEdit && (
                           <div className="modal-conatiner">
                             <div className="modal-content">
@@ -259,7 +273,7 @@ const GestionarUsuarios = () => {
                                 <span>Operación Exitosa</span>
                               </h5>
                               <span className="body">
-                                Los cambios se aplicarón correctamente
+                                Los cambios se aplicaron correctamente
                               </span>
                               <div className="foot">
                                 <Link to="/usuarios" className="btn-scc">
@@ -270,7 +284,7 @@ const GestionarUsuarios = () => {
                           </div>
                         )}
 
-                        {/* Modal que confirma la eliminación exitosa */}
+                        {/* Confirmación exitosa eliminación */}
                         {confirmDelete && (
                           <div className="modal-conatiner">
                             <div className="modal-content">
@@ -290,7 +304,7 @@ const GestionarUsuarios = () => {
                           </div>
                         )}
 
-                        {/* Campos rellenables del formulario */}
+                        {/* Campos formulario */}
                         <div className="group">
                           <div className="group-form">
                             <label htmlFor="username">Nombre de usuario</label>
@@ -322,7 +336,7 @@ const GestionarUsuarios = () => {
                                 Selecciona...
                               </option>
                               {rolesData.roles.map((rol) => (
-                                <option key={rol.id} value={rol.id}>
+                                <option key={rol.id} value={String(rol.id)}>
                                   {rol.name}
                                 </option>
                               ))}
@@ -355,25 +369,19 @@ const GestionarUsuarios = () => {
                             <label htmlFor="blocked">Bloquear usuario</label>
                             <Field
                               style={
-                                userData?.blocked
+                                values.blocked === "true"
                                   ? blockedStyles[0]
                                   : blockedStyles[1]
                               }
                               as="select"
                               id="blocked"
                               name="blocked"
-                              onChange={(e) => {
-                                setFieldValue(
-                                  "blocked",
-                                  e.target.value === "true"
-                                );
-                              }}
                             >
                               <option value="" disabled>
                                 Selecciona...
                               </option>
                               {blockedState.map((opt, index) => (
-                                <option key={index} value={opt.prop.toString()}>
+                                <option key={index} value={opt.prop}>
                                   {opt.des}
                                 </option>
                               ))}
@@ -382,22 +390,12 @@ const GestionarUsuarios = () => {
 
                           <div className="group-form">
                             <label htmlFor="confirmed">Confirmar usuario</label>
-                            <Field
-                              as="select"
-                              id="confirmed"
-                              name="confirmed"
-                              onChange={(e) => {
-                                setFieldValue(
-                                  "confirmed",
-                                  e.target.value === "true"
-                                );
-                              }}
-                            >
+                            <Field as="select" id="confirmed" name="confirmed">
                               <option value="" disabled>
                                 Selecciona...
                               </option>
                               {confirmedState.map((opt, index) => (
-                                <option key={index} value={opt.prop.toString()}>
+                                <option key={index} value={opt.prop}>
                                   {opt.des}
                                 </option>
                               ))}
@@ -412,6 +410,7 @@ const GestionarUsuarios = () => {
                               type="password"
                               id="password"
                               name="password"
+                              autoComplete="new-password"
                             />
                           </div>
                         </div>

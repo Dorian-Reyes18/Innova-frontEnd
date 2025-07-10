@@ -86,6 +86,25 @@
 
         .inp-group {
           width: 80%;
+
+          .input-password {
+            width: 100%;
+            position: relative;
+
+            img {
+              position: absolute;
+              right: 10px;
+              width: 28px;
+              height: auto;
+              top: 50%;
+              transform: translateY(-50%);
+              cursor: pointer;
+              -webkit-transform: translateY(-50%);
+              -moz-transform: translateY(-50%);
+              -ms-transform: translateY(-50%);
+              -o-transform: translateY(-50%);
+            }
+          }
         }
 
         @include media(mobile) {

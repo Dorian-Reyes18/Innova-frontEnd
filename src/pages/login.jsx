@@ -7,14 +7,24 @@ import KeyIcon from "../assets/Llave.svg";
 import UserIcon from "../assets/User.svg";
 import BolHead from "../assets/bolas-head.svg";
 import BolFoot from "../assets/bolas-foot.svg";
+import Hide from "../assets/Hide.svg";
+import Show from "../assets/Show.svg";
 
 const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const { setUserData } = useUser();
   const navigate = useNavigate();
 
+  const imagePreview = (showPasswrd) => {
+    if (!showPasswrd) {
+      return <img src={Show} alt="mostrar contraseña" title="Mostrar contraseña" />;
+    } else {
+      return <img src={Hide} alt="ocultar contraseña" title="Ocultar contraseña" />;
+    }
+  };
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -93,14 +103,23 @@ const Login = () => {
             <div className="inp-group">
               <img src={KeyIcon} alt="" />
 
-              <input
-                className="form-control inputs"
-                type="password"
-                placeholder="Contraseña"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              <div className="input-password">
+                <input
+                  className="form-control inputs"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Contraseña"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <div
+                  className="eye"
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {imagePreview(showPassword)}
+                </div>
+              </div>
             </div>
             <button className="btn" type="submit">
               Iniciar sesión

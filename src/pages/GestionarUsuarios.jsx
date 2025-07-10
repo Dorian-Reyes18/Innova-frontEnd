@@ -133,8 +133,10 @@ const GestionarUsuarios = () => {
     <div className="gestionar-usuarios">
       <HeaderUsuarios />
 
-      {loadingUser ? (
-        <Spinner />
+      {loadingUser || !userData ? (
+        <div className="gestor-container">
+          <Spinner />
+        </div>
       ) : (
         <>
           <div className="gestor-container">

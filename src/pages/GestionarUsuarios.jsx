@@ -14,7 +14,7 @@ import IconSuccess from "../assets/IconSuccess.svg";
 const GestionarUsuarios = () => {
   // Estados
   const [userData, setUserData] = useState(null);
-  const [loadingUser, setLoadingUser] = useState(false);
+  const [loadingUser, setLoadingUser] = useState();
   const [putLoading, setPutLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [showModalSave, setShowModalSave] = useState(false);
@@ -32,7 +32,7 @@ const GestionarUsuarios = () => {
   // Objetos
   const rolesData = {
     roles: [
-      { id: 1, name: "Administrador" },
+      { id: 3, name: "Administrador" },
       { id: 4, name: "Delivery" },
       { id: 5, name: "Stocker" },
       { id: 6, name: "Vendedor" },

@@ -17,8 +17,10 @@ const CrearProducto = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const myUser = user?.user?.data;
 
+  console.log("myUser", myUser);
+
   const hasRoleAccess = (roles) =>
-    myUser?.role?.id ? roles.includes(myUser.role.id) : false;
+    myUser?.role?.name ? roles.includes(myUser?.role?.name) : false;
 
   const postProduct = async (values) => {
     setPostLoading(true);
@@ -42,7 +44,7 @@ const CrearProducto = () => {
   };
 
   const touchHandler = () => {
-    setTouched(hasRoleAccess([1, 5]));
+    setTouched(hasRoleAccess(["Administrador", "Stocker"]));
   };
 
   useEffect(() => {
@@ -183,7 +185,7 @@ const CrearProducto = () => {
                       disabled={!touched}
                     />
                   </div>
-                  {hasRoleAccess([1, 5]) && (
+                  {hasRoleAccess(["Administrador", "Stocker"]) && (
                     <div className="form-group">
                       <label htmlFor="precioCompra">Precio de compra</label>
                       <Field
@@ -203,7 +205,12 @@ const CrearProducto = () => {
                       disabled={!touched}
                     />
                   </div>
-                  {hasRoleAccess([1, 5, 6, 4]) && (
+                  {hasRoleAccess([
+                    "Administrador",
+                    "Stocker",
+                    "Vendedor",
+                    "Delivery",
+                  ]) && (
                     <div className="form-group">
                       <label htmlFor="precioPromocion">
                         Precio de promoción

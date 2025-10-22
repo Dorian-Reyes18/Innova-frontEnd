@@ -26,7 +26,8 @@ const GestionarProductos = () => {
   });
 
   // Función para verificar permisos por rol
-  const hasRoleAccess = (roles) => roles.includes(myUser?.role?.id);
+  const hasRoleAccess = (roles) => roles.includes(myUser?.role?.name);
+  console.log("myUser", myUser?.role?.name);
 
   // Cargar datos del producto
   const fetchProducts = async () => {
@@ -83,7 +84,7 @@ const GestionarProductos = () => {
 
   // Manejar permisos para edición
   const touchHandler = () => {
-    setTouched(hasRoleAccess([1, 5]));
+    setTouched(hasRoleAccess(["Administrador", "Stocker"]));
   };
 
   // Valores iniciales para Formik
@@ -293,7 +294,7 @@ const GestionarProductos = () => {
                         disabled={!touched}
                       />
                     </div>
-                    {hasRoleAccess([1, 5]) && (
+                    {hasRoleAccess(["Administrador", "Stocker"]) && (
                       <div className="form-group">
                         <label htmlFor="precioCompra">Precio de compra</label>
                         <Field
@@ -313,7 +314,12 @@ const GestionarProductos = () => {
                         disabled={!touched}
                       />
                     </div>
-                    {hasRoleAccess([1, 5, 6, 4]) && (
+                    {hasRoleAccess([
+                      "Administrador",
+                      "Stocker",
+                      "Vendedor",
+                      "Delivery",
+                    ]) && (
                       <div className="form-group">
                         <label htmlFor="precioPromocion">Precio en promo</label>
                         <Field
@@ -330,8 +336,7 @@ const GestionarProductos = () => {
                     <Link to="/productos" className="btn-out">
                       Volver
                     </Link>
-
-                    {hasRoleAccess([1, 5]) && (
+                    {hasRoleAccess(["Administrador"]) && (
                       <div
                         className="btn-pr"
                         onClick={() => setShowModal(true)}
@@ -339,7 +344,7 @@ const GestionarProductos = () => {
                         Guardar
                       </div>
                     )}
-                    {hasRoleAccess([1, 5]) && (
+                    {hasRoleAccess(["Administrador"]) && (
                       <div
                         className="btn-dl"
                         onClick={() => setShowModalDelete(true)}

@@ -26,7 +26,7 @@ const CrearUsuarios = () => {
       { id: 1, name: "Administrador" },
       { id: 4, name: "Delivery" },
       { id: 5, name: "Stocker" },
-      { id: 6, name: "Vendedor" },
+      { id: 3, name: "Vendedor" },
     ],
   };
   const blockedState = [

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Formik, Form, Field, useFormikContext } from "formik";
+import { Formik, Field, useFormikContext } from "formik";
+import PropTypes from "prop-types";
 import LayoutVenta from "../LayoutVenta";
 
 const EstadoWatcher = ({ onChange }) => {
@@ -10,6 +11,10 @@ const EstadoWatcher = ({ onChange }) => {
   }, [values.filtro, onChange]);
 
   return null;
+};
+
+EstadoWatcher.propTypes = {
+  onChange: PropTypes.func.isRequired,
 };
 
 const FiltroDeVentas = ({ salesGroup }) => {
@@ -24,14 +29,15 @@ const FiltroDeVentas = ({ salesGroup }) => {
   return (
     <Formik
       initialValues={{ filtro: "En tramite" }}
-      onSubmit={(values) => console.log(values)}
+      onSubmit={() => {}} // ya no se usa, pero formik lo exige
     >
       {() => (
-        <Form className="filter-selector">
-          {/* Sincronizamos el valor del select de Formik con el estado local */}
+        <div className="filter-selector">
+          {/* Sincroniza el select con Formik → y con estado local */}
           <EstadoWatcher onChange={setSelectedOption} />
 
           <label htmlFor="filtro">Resultados por estado</label>
+
           <Field as="select" name="filtro">
             <option value="En tramite">En tramite</option>
             <option value="Por asignar">Por asignar</option>
@@ -48,7 +54,7 @@ const FiltroDeVentas = ({ salesGroup }) => {
               if (ventasFiltradas.length === 0) {
                 return (
                   <p className="error-message" style={{ margin: "30px 0" }}>
-                    No hay ventas que mostrar en la sección "{selectedOption}"
+                    {`No hay ventas que mostrar en la sección "${selectedOption}"`}
                   </p>
                 );
               }
@@ -59,6 +65,7 @@ const FiltroDeVentas = ({ salesGroup }) => {
                     {ventasFiltradas.length} resultado
                     {ventasFiltradas.length === 1 ? "" : "s"}
                   </span>
+
                   <div className="sales-list">
                     {ventasFiltradas.map((venta) => (
                       <LayoutVenta key={venta.codigoVenta} venta={venta} />
@@ -68,10 +75,25 @@ const FiltroDeVentas = ({ salesGroup }) => {
               );
             })()}
           </div>
-        </Form>
+        </div>
       )}
     </Formik>
   );
+};
+
+FiltroDeVentas.propTypes = {
+  salesGroup: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      sales: PropTypes.arrayOf(
+        PropTypes.shape({
+          // ajusta esto según tu modelo de "venta"
+          codigoVenta: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+            .isRequired,
+        })
+      ).isRequired,
+    })
+  ).isRequired,
 };
 
 export default FiltroDeVentas;

@@ -1,17 +1,32 @@
+import PropTypes from "prop-types";
 import { Formik, Form, Field, FieldArray } from "formik";
 import { useRef } from "react";
-import PropTypes from "prop-types";
+import { useUser } from "../../../context/UserContext";
 
 import SalirIcon from "/src/assets/SalirIcon.svg";
 import CarritoIcon2 from "/src/assets/CarritoIcon2.svg";
 
 //Esquema de validación
 import { VentaSchema } from "../../../modules/schemas/venta.schema";
-import { id } from "date-fns/locale";
+import { es } from "date-fns/locale";
 
 const ModalEditSale = ({ onClose, venta }) => {
   // Hooks
   const formRef = useRef(null);
+
+  // destructuración
+  const { user } = useUser();
+
+  // data
+  const currentUserData = {
+    rolId: user?.user?.data?.role?.id,
+    rolName: user?.user?.data?.role?.name,
+  };
+
+  const estadoVenta = venta?.estadoVenta.estado;
+
+  console.log("Datos del usuario actual:", currentUserData);
+  console.log("Estado de la venta:", estadoVenta);
 
   // Handers y funciones
   const handleFormSubmit = () => {
@@ -20,7 +35,22 @@ const ModalEditSale = ({ onClose, venta }) => {
     console.log({ data: data });
   };
 
-  console.log("Venta recibida para mostrar:", venta);
+  const isEditable = () => {
+    if (currentUserData.rolName === "Administrador") {
+      return false;
+    } else if (
+      currentUserData.rolName !== "Administrador" &&
+      estadoVenta !== "Entregada"
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  console.log("isEditable:", isEditable());
+
+  // console.log("Venta recibida para mostrar:", venta);
 
   const formValues = {
     detalleCliente: {
@@ -105,10 +135,15 @@ const ModalEditSale = ({ onClose, venta }) => {
                   <span>Código: {venta.codigoVenta || "No disponible"}</span>
                 </div>
               </div>
-              <div className="aviso">
-                Está visualizando el detalle de venta, ninguno de los campos
-                mostrados es editable
-              </div>
+
+              {/* Aviso de que la venta ya fue entregada y no puede ser modificada */}
+              {estadoVenta === "Entregada" &&
+                currentUserData.rolName !== "Administrador" && (
+                  <div className="aviso">
+                    La venta ya fue entregada y no puede ser modificada por el
+                    vendedor
+                  </div>
+                )}
             </div>
 
             <button className="modal-close" type="button" onClick={onClose}>
@@ -121,12 +156,20 @@ const ModalEditSale = ({ onClose, venta }) => {
               <div className="fila">
                 <div className="group-el">
                   <label className="label">Nombre</label>
-                  <Field name="detalleCliente.nombre" className="value" />
+                  <Field
+                    name="detalleCliente.nombre"
+                    className="value"
+                    disabled={isEditable()}
+                  />
                 </div>
 
                 <div className="group-el">
                   <label className="label">Teléfono</label>
-                  <Field name="detalleCliente.telefono" className="value" />
+                  <Field
+                    name="detalleCliente.telefono"
+                    className="value"
+                    disabled={isEditable()}
+                  />
                 </div>
               </div>
 
@@ -136,6 +179,7 @@ const ModalEditSale = ({ onClose, venta }) => {
                   <Field
                     name="detalleCliente.direccionGps"
                     className="value "
+                    disabled={isEditable()}
                   />
                 </div>
               </div>
@@ -148,6 +192,7 @@ const ModalEditSale = ({ onClose, venta }) => {
                     className="textarea"
                     as="textarea"
                     rows="3"
+                    disabled={isEditable()}
                   />
                 </div>
               </div>
@@ -168,7 +213,6 @@ const ModalEditSale = ({ onClose, venta }) => {
                             <div className="group-el">
                               <label className="label">Nombre producto</label>
                               <Field
-                                // CORRECCIÓN AQUÍ
                                 name={`detalleDeVenta.${index}.producto_asociado.nombreProducto`}
                                 className="value"
                                 disabled
@@ -179,7 +223,6 @@ const ModalEditSale = ({ onClose, venta }) => {
                               <label className="label">Precio</label>
                               <Field
                                 type="number"
-                                // CORRECCIÓN AQUÍ
                                 name={`detalleDeVenta.${index}.producto_asociado.precioVenta`}
                                 className="value"
                                 disabled
@@ -190,9 +233,9 @@ const ModalEditSale = ({ onClose, venta }) => {
                               <label className="label">Descuento</label>
                               <Field
                                 type="number"
-                                // CORRECCIÓN AQUÍ
                                 name={`detalleDeVenta.${index}.descuento`}
                                 className="value"
+                                disabled={isEditable()}
                               />
                             </div>
 
@@ -200,9 +243,9 @@ const ModalEditSale = ({ onClose, venta }) => {
                               <label className="label">Cantidad</label>
                               <Field
                                 type="number"
-                                // CORRECCIÓN AQUÍ
                                 name={`detalleDeVenta.${index}.cantidad`}
                                 className="value"
+                                disabled={isEditable()}
                               />
                             </div>
                           </div>
@@ -221,7 +264,11 @@ const ModalEditSale = ({ onClose, venta }) => {
               <div className="fila">
                 <div className="group-el">
                   <label className="label">Hora entrega</label>
-                  <Field name="horaEntrega" className="value" />
+                  <Field
+                    name="horaEntrega"
+                    className="value"
+                    disabled={isEditable()}
+                  />
                 </div>
 
                 <div className="group-el pago">
@@ -252,6 +299,7 @@ const ModalEditSale = ({ onClose, venta }) => {
                     name="adicionalDelivery"
                     type="number"
                     className="value"
+                    disabled={isEditable()}
                   />
                 </div>
 
@@ -281,15 +329,34 @@ const ModalEditSale = ({ onClose, venta }) => {
             <div className="footer">
               <div className="factura">Consultar factura</div>
 
-              {/* Si los campos no son editables, el botón 'Guardar' debería ser solo un 'Cerrar' o no existir. 
-                  Lo dejaré por si el 'aviso' es incorrecto. */}
-              <button
-                type="button"
-                className="btn-pr"
-                onClick={handleFormSubmit}
-              >
-                Guardar
-              </button>
+              {/* Si le venta ya fue entregada y no es el administrador no se puede guardar */}
+              {estadoVenta === "Entregada" &&
+                currentUserData.rolName !== "Administrador" &&
+                null}
+
+              {/* Si le venta no fue entregada y no es el administrador se puede guardar */}
+              {estadoVenta !== "Entregada" &&
+                currentUserData.rolName !== "Administrador" && (
+                  <button
+                    type="button"
+                    className="btn-pr"
+                    onClick={handleFormSubmit}
+                  >
+                    Guardar
+                  </button>
+                )}
+
+              {/* Si es el administrador se puede guardar y editar siempre */}
+
+              {currentUserData.rolName === "Administrador" && (
+                <button
+                  type="button"
+                  className="btn-pr"
+                  onClick={handleFormSubmit}
+                >
+                  Guardar
+                </button>
+              )}
 
               <div className="cerrar" onClick={onClose}>
                 Cerrar

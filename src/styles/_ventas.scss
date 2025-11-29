@@ -345,6 +345,8 @@
     @include media(mobile) {
       max-width: 450px;
       margin-bottom: 40px;
+      border: none;
+      box-shadow: none;
     }
     @include media(desktop) {
       height: 515px;
@@ -363,7 +365,7 @@
       position: relative;
 
       @include media(mobile) {
-        padding-top: 60px;
+        padding-top: 80px;
       }
 
       .volver {
@@ -519,6 +521,7 @@
 
         @include media(mobile) {
           padding: 0px;
+          padding-top: 20px;
         }
 
         .contenido-inicial {

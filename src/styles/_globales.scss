@@ -519,6 +519,11 @@ html {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
         -webkit-animation: scaleUp 0.3s ease forwards;
 
+        @include media(mobile) {
+          padding: 15px;
+          padding-top: 38px;
+        }
+
         .modal-close {
           position: absolute;
           top: 10px;
@@ -565,6 +570,10 @@ html {
               background-size: contain;
               background-repeat: no-repeat;
               background-position: center;
+
+              @include media(mobile) {
+                width: 55px;
+              }
             }
           }
         }
@@ -582,6 +591,10 @@ html {
           .fila {
             display: flex;
             gap: 20px;
+
+            @include media(mobile) {
+              flex-direction: column;
+            }
 
             .group-el {
               display: flex;
@@ -671,6 +684,11 @@ html {
           padding-top: 30px;
           margin-top: 20px;
           border-top: 1px solid $color-bordes;
+
+          @include media(mobile) {
+            flex-direction: column;
+            gap: 20px;
+          }
 
           .factura {
             cursor: pointer;

@@ -73,6 +73,7 @@ const LayoutVenta = ({ venta }) => {
                     href={objectSale.detalleCliente.direccionGps}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="valueSort"
                   >
                     {objectSale.detalleCliente.direccionGps}
                   </a>

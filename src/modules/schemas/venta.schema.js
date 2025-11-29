@@ -37,6 +37,8 @@ export const VentaSchema = Yup.object({
 
   horaEntrega: Yup.string().nullable(),
 
+  metodoPago: Yup.string(),
+
   pago_vendedor: Yup.number()
     .typeError("Debe ser un número")
     .nullable()

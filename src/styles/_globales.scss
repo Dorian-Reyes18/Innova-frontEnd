@@ -731,5 +731,11 @@ html {
         }
       }
     }
+    .valueSort {
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* número de líneas */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   }
 }

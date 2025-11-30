@@ -2,7 +2,7 @@
 import PropTypes from "prop-types";
 import { Formik, Form, Field, FieldArray } from "formik";
 import { useRef, useState } from "react";
-import { useUser } from "../../../context/UserContext";
+import { useAppContext } from "../../../context/UseAppContext";
 
 import SalirIcon from "/src/assets/SalirIcon.svg";
 import CarritoIcon2 from "/src/assets/CarritoIcon2.svg";
@@ -13,13 +13,6 @@ import { VentaSchema } from "../../../modules/schemas/venta.schema";
 // ------------------------------------------------------------------------
 
 // COMPONENTES
-const DeleteProduct = ({ id, onClick }) => {
-  return (
-    <div className="delete-product" onClick={onClick}>
-      <img src={SalirIcon} alt="Eliminar producto" />
-    </div>
-  );
-};
 
 const ModalEditSale = ({ onClose, venta }) => {
   // Estados
@@ -33,7 +26,7 @@ const ModalEditSale = ({ onClose, venta }) => {
   const formRef = useRef(null);
 
   // destructuración
-  const { user } = useUser(); // usuario actual
+  const { user } = useAppContext(); // usuario actual
 
   // data
   const currentUserData = {
@@ -89,12 +82,14 @@ const ModalEditSale = ({ onClose, venta }) => {
     detalleDeVenta: (venta.detalleDeVenta || []).map((item) => ({
       cantidad: item.cantidad || 0,
       descuento: item.descuento || 0,
+      isNew: false, // 👈 producto que viene desde la venta original
       producto_asociado: {
         id: item.producto_asociado?.id,
         nombreProducto: item.producto_asociado?.nombreProducto || "",
         precioVenta: item.producto_asociado?.precioVenta || 0,
       },
     })),
+
     horaEntrega: venta.horaEntrega || "",
     pago_vendedor: venta.pago_vendedor || 0,
     pagoDelivery: venta.pagoDelivery || 0,
@@ -230,56 +225,112 @@ const ModalEditSale = ({ onClose, venta }) => {
               <h5 className="title">Información de productos</h5>
               <div className="productos">
                 <FieldArray name="detalleDeVenta">
-                  {() => (
+                  {({ push, remove }) => (
                     <>
-                      {productAsociated.map((producto, index) => (
-                        <div key={index}>
-                          <h6>Producto {index + 1}</h6>
+                      {values.detalleDeVenta.map((producto, index) => {
+                        const isNew = producto.isNew; // 👈 aquí
 
-                          <div className="fila">
-                            <div className="group-el">
-                              <label className="label">Nombre producto</label>
-                              <Field
-                                name={`detalleDeVenta.${index}.producto_asociado.nombreProducto`}
-                                className="value"
-                                disabled
-                              />
+                        return (
+                          <div
+                            key={producto.producto_asociado?.id ?? index}
+                            style={{
+                              background: "#e5e7eb",
+                              padding: "10px",
+                              borderRadius: "8px",
+                            }}
+                          >
+                            <h6>Producto {index + 1}</h6>
+
+                            <div className="fila">
+                              {/* NOMBRE PRODUCTO */}
+                              <div className="group-el">
+                                <label className="label">Nombre producto</label>
+                                <Field
+                                  name={`detalleDeVenta.${index}.producto_asociado.nombreProducto`}
+                                  className="value"
+                                  // Antes: siempre disabled
+                                  // disabled
+                                  // Ahora: si es nuevo -> editable, si no -> deshabilitado
+                                  disabled={!isNew}
+                                />
+                              </div>
+
+                              {/* PRECIO */}
+                              <div className="group-el cant">
+                                <label className="label">Precio</label>
+                                <Field
+                                  type="number"
+                                  name={`detalleDeVenta.${index}.producto_asociado.precioVenta`}
+                                  className="value"
+                                  // Se calcula en base a la información de productos que recibamos
+                                  disabled={!isNew}
+                                />
+                              </div>
+
+                              {/* DESCUENTO */}
+                              <div className="group-el cant">
+                                <label className="label">Descuento</label>
+                                <Field
+                                  type="number"
+                                  name={`detalleDeVenta.${index}.descuento`}
+                                  className="value"
+                                  // Antes: disabled={isEditable()}
+                                  // Ahora: si es nuevo nunca está disabled
+                                  disabled={isNew ? false : isEditable()}
+                                />
+                              </div>
+
+                              {/* CANTIDAD */}
+                              <div className="group-el cant">
+                                <label className="label">Cantidad</label>
+                                <Field
+                                  type="number"
+                                  name={`detalleDeVenta.${index}.cantidad`}
+                                  className="value"
+                                  disabled={isNew ? false : isEditable()}
+                                />
+                              </div>
+
+                              {/* ELIMINAR */}
+                              <button
+                                type="button"
+                                className="delete-product"
+                                onClick={() => {
+                                  if (values.detalleDeVenta.length === 1) {
+                                    alert(
+                                      "No puedes eliminar todos los productos, debe existir al menos uno."
+                                    );
+                                    return;
+                                  }
+                                  remove(index);
+                                }}
+                              >
+                                <img src={SalirIcon} alt="Eliminar producto" />
+                              </button>
                             </div>
-
-                            <div className="group-el cant">
-                              <label className="label">Precio</label>
-                              <Field
-                                type="number"
-                                name={`detalleDeVenta.${index}.producto_asociado.precioVenta`}
-                                className="value"
-                                disabled
-                              />
-                            </div>
-
-                            <div className="group-el cant">
-                              <label className="label">Descuento</label>
-                              <Field
-                                type="number"
-                                name={`detalleDeVenta.${index}.descuento`}
-                                className="value"
-                                disabled={isEditable()}
-                              />
-                            </div>
-
-                            <div className="group-el cant">
-                              <label className="label">Cantidad</label>
-                              <Field
-                                type="number"
-                                name={`detalleDeVenta.${index}.cantidad`}
-                                className="value"
-                                disabled={isEditable()}
-                              />
-                            </div>
-
-                            <DeleteProduct onClick={deleteProduct} id={index} />
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
+
+                      {/* Botón agregar ya modificado con isNew: true */}
+                      <button
+                        type="button"
+                        className="btn-secundario"
+                        onClick={() =>
+                          push({
+                            cantidad: 1,
+                            descuento: 0,
+                            isNew: true,
+                            producto_asociado: {
+                              id: null,
+                              nombreProducto: "",
+                              precioVenta: 0,
+                            },
+                          })
+                        }
+                      >
+                        + Agregar producto
+                      </button>
                     </>
                   )}
                 </FieldArray>

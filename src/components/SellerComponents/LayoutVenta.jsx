@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import CashIcon from "../../assets/SalesDatailsIcons/CashIcon.svg";
 import DeliveryIcon from "../../assets/SalesDatailsIcons/DeliveryIcon.svg";
@@ -35,7 +35,7 @@ const LayoutVenta = ({ venta }) => {
             <div className="group-item">
               {objectSale?.detalleDeVenta?.length > 0 && (
                 <div className="item">
-                  {objectSale.detalleDeVenta.map((venta, index) => (
+                  {objectSale.detalleDeVenta.map((detalle, index) => (
                     <div
                       key={index}
                       style={{ display: "flex", width: "100%", gap: "15px" }}
@@ -43,11 +43,12 @@ const LayoutVenta = ({ venta }) => {
                       <img
                         src={ProductIcon}
                         alt={
-                          venta?.producto_asociado?.nombreProducto || "Producto"
+                          detalle?.producto_asociado?.nombreProducto ||
+                          "Producto"
                         }
                       />
                       <div className="desc">
-                        {venta?.producto_asociado?.nombreProducto ||
+                        {detalle?.producto_asociado?.nombreProducto ||
                           "Nombre no disponible"}
                       </div>
                     </div>
@@ -148,8 +149,12 @@ const LayoutVenta = ({ venta }) => {
 
 LayoutVenta.propTypes = {
   venta: PropTypes.shape({
-    codigoVenta: PropTypes.string,
-    createdAt: PropTypes.string,
+    codigoVenta: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    createdAt: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.instanceOf(Date),
+    ]),
     vendedor_asociado: PropTypes.shape({
       nombreApellido: PropTypes.string,
     }),
@@ -165,8 +170,8 @@ LayoutVenta.propTypes = {
       direccionGps: PropTypes.string,
     }),
     horaEntrega: PropTypes.string,
-    pagoDelivery: PropTypes.number,
-    subtotal: PropTypes.number,
+    pagoDelivery: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    subtotal: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   }).isRequired,
 };
 

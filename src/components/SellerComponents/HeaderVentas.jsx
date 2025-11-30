@@ -3,11 +3,10 @@ import AdminIcon from "../../assets/AdminIconWhite.svg";
 import StockerIcon from "../../assets/StockerIcon.svg";
 import SellerIcon from "../../assets/SellerIcon.svg";
 import DeliveryIcon from "../../assets/DeliveryIcon.svg";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const HeaderVentas = () => {
   const { user } = useUser();
-  const { id } = useParams();
   const myUser = user?.user?.data;
   const roleName = myUser?.role?.name?.toLowerCase(); // Convertimos a minúsculas
 

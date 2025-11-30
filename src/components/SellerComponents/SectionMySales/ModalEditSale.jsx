@@ -1,60 +1,59 @@
 // IMPORTACIONES
 import PropTypes from "prop-types";
 import { Formik, Form, Field, FieldArray } from "formik";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useUser } from "../../../context/UserContext";
 
 import SalirIcon from "/src/assets/SalirIcon.svg";
 import CarritoIcon2 from "/src/assets/CarritoIcon2.svg";
 
-//Esquema de validación
+// Esquema de validación
 import { VentaSchema } from "../../../modules/schemas/venta.schema";
-
 // ------------------------------------------------------------------------
 
-// COMPONENTES
+// HELPER: cálculo de totales
+const calculateTotals = (values) => {
+  const parseNumber = (n) => {
+    const num = Number(n);
+    return Number.isFinite(num) ? num : 0;
+  };
 
+  const items = values.detalleDeVenta || [];
+
+  // Total de productos (precio * cantidad)
+  const totalProductos = items.reduce((acc, item) => {
+    const price = parseNumber(item.producto_asociado?.precioVenta);
+    const cantidad = parseNumber(item.cantidad);
+
+    return acc + price * cantidad;
+  }, 0);
+
+  const pagoDeliveryFijo = parseNumber(values.pagoDelivery);
+
+  // ✅ Nuevo criterio:
+  // Subtotal = solo valor de productos (SIN adicional delivery)
+  const subtotal = totalProductos;
+
+  // Pago tienda = subtotal - pagoDelivery normal
+  // (el delivery normal se le paga al repartidor, no a la tienda)
+  const pagoTienda = subtotal - pagoDeliveryFijo;
+
+  return { subtotal, pagoTienda, totalProductos, pagoDeliveryFijo };
+};
+
+// COMPONENTE
 const ModalEditSale = ({ onClose, venta }) => {
-  // Estados
-  const [productAsociated, setproductAsociated] = useState(
-    venta?.detalleDeVenta
-  );
-
-  console.log("Product:", productAsociated);
-
   // Hooks
   const formRef = useRef(null);
-
-  // destructuración
-  const { user } = useUser(); // usuario actual
+  const { user, allProducts } = useUser(); // usuario actual
 
   // data
   const currentUserData = {
-    rolId: user?.user?.data?.role?.id, // id del rol del usuario
-    rolName: user?.user?.data?.role?.name, // nombre del rol del usuario
+    rolId: user?.user?.data?.role?.id,
+    rolName: user?.user?.data?.role?.name,
   };
 
   const estadoVenta = venta?.estadoVenta.estado; // estado de la venta actual
-
-  // Handers y funciones
-  const handleFormSubmit = () => {
-    const data = formRef.current?.values || {};
-
-    console.log("Data lista para enviar:", { data: data });
-  };
-
-  const deleteProduct = (index) => {
-    const updatedProducts = [...productAsociated];
-
-    if (updatedProducts.length === 1) {
-      return alert(
-        "No puedes eliminar todos los productos tiene que haber al menos un producto asociado"
-      );
-    }
-
-    updatedProducts.splice(index, 1);
-    setproductAsociated(updatedProducts);
-  };
 
   const isEditable = () => {
     // Esta función determina si el formulario es editable basado en el rol del usuario y el estado de la venta
@@ -70,7 +69,8 @@ const ModalEditSale = ({ onClose, venta }) => {
     }
   };
 
-  // console.log("Venta recibida para mostrar:", venta);
+  // LOGS
+  console.log(allProducts);
 
   const formValues = {
     detalleCliente: {
@@ -81,15 +81,13 @@ const ModalEditSale = ({ onClose, venta }) => {
     },
     detalleDeVenta: (venta.detalleDeVenta || []).map((item) => ({
       cantidad: item.cantidad || 0,
-      descuento: item.descuento || 0,
-      isNew: false, // 👈 producto que viene desde la venta original
+      isNew: false, // producto que viene desde la venta original
       producto_asociado: {
         id: item.producto_asociado?.id,
         nombreProducto: item.producto_asociado?.nombreProducto || "",
         precioVenta: item.producto_asociado?.precioVenta || 0,
       },
     })),
-
     horaEntrega: venta.horaEntrega || "",
     pago_vendedor: venta.pago_vendedor || 0,
     pagoDelivery: venta.pagoDelivery || 0,
@@ -106,344 +104,378 @@ const ModalEditSale = ({ onClose, venta }) => {
         enableReinitialize={true}
         validationSchema={VentaSchema}
         onSubmit={(values) => {
+          const { subtotal, pagoTienda } = calculateTotals(values);
+
           const payload = {
             data: {
-              // Asegurando valores por defecto o comprobación
               vendedor_asociado: venta.vendedor_asociado?.id ?? 1,
               detalleCliente: values.detalleCliente,
               metodoPago: venta.metodoPago || "Efectivo",
               comprobante: venta.comprobante?.map((c) => c.id) || [],
+
               detalleDeVenta: values.detalleDeVenta.map((item) => ({
                 cantidad: item.cantidad,
-                descuento: item.descuento,
-                // Usar el precioVenta del producto_asociado si es necesario,
-                // o determinar el precioUnitario real de la venta.
                 precioUnitario: item.producto_asociado?.precioVenta || 0,
+                producto_asociado: item.producto_asociado?.id ?? null,
               })),
+
               codigoVenta: venta.codigoVenta || "",
               estadoVenta: {
                 estado: venta.estadoVenta?.estado || "pendiente",
               },
               ComentarioRechazo: venta.ComentarioRechazo || "",
+
+              // calculados
               pagoDelivery: values.pagoDelivery,
-              subtotal: values.subtotal,
-              pagoTienda: values.pagoTienda,
+              adicionalDelivery: values.adicionalDelivery,
+              subtotal,
+              pagoTienda,
               pago_vendedor: values.pago_vendedor,
               estado_pago_vendedor: venta.estado_pago_vendedor ?? false,
               horaEntrega: values.horaEntrega,
-              adicionalDelivery: values.adicionalDelivery,
             },
           };
 
           console.log("Payload final para Strapi:", payload);
-          // Aquí se realizaría la lógica de API
-          // setSubmitting(false); // Descomentar después de la llamada a la API
+          // aquí llamarías a tu servicio de actualización
         }}
       >
-        {({ values }) => (
-          <Form
-            className="modal"
-            onMouseDown={(e) => e.stopPropagation()} // permite submit correcto
-          >
-            <div className="heading-modal">
-              <div className="tile-container">
-                <img
-                  src={CarritoIcon2}
-                  alt="Icono de Carrito"
-                  className="icon"
-                />
-                <div className="tile">
-                  <h3>Información de Venta</h3>
-                  <span>Código: {venta.codigoVenta || "No disponible"}</span>
-                </div>
-              </div>
+        {({ values, setFieldValue, submitForm }) => {
+          const { subtotal, pagoTienda } = calculateTotals(values);
 
-              {/* Aviso de que la venta ya fue entregada y no puede ser modificada */}
-              {estadoVenta === "Entregada" &&
-                currentUserData.rolName !== "Administrador" && (
-                  <div className="aviso">
-                    La venta ya fue entregada y no puede ser modificada por el
-                    vendedor
+          // 🔹 productos ya seleccionados en cualquier fila
+          const selectedIds = values.detalleDeVenta
+            .map((item) => item.producto_asociado?.id)
+            .filter((id) => id != null);
+
+          return (
+            <Form
+              className="modal"
+              onMouseDown={(e) => e.stopPropagation()} // permite submit correcto
+            >
+              <div className="heading-modal">
+                <div className="tile-container">
+                  <img
+                    src={CarritoIcon2}
+                    alt="Icono de Carrito"
+                    className="icon"
+                  />
+                  <div className="tile">
+                    <h3>Información de Venta</h3>
+                    <span>Código: {venta.codigoVenta || "No disponible"}</span>
                   </div>
-                )}
-            </div>
-
-            <button className="modal-close" type="button" onClick={onClose}>
-              <img src={SalirIcon} alt="Icono de Salir" />
-            </button>
-
-            {/*  INFORMACIÓN DEL CLIENTE */}
-            <div className="block">
-              <h5 className="title">Información del cliente</h5>
-              <div className="fila">
-                <div className="group-el">
-                  <label className="label">Nombre</label>
-                  <Field
-                    name="detalleCliente.nombre"
-                    className="value"
-                    disabled={isEditable()}
-                  />
                 </div>
 
-                <div className="group-el">
-                  <label className="label">Teléfono</label>
-                  <Field
-                    name="detalleCliente.telefono"
-                    className="value"
-                    disabled={isEditable()}
-                  />
-                </div>
-              </div>
-
-              <div className="fila">
-                <div className="group-el">
-                  <label className="label">Ubicación (URL)</label>
-                  <Field
-                    name="detalleCliente.direccionGps"
-                    className="value "
-                    disabled={isEditable()}
-                  />
-                </div>
-              </div>
-
-              <div className="fila">
-                <div className="group-el">
-                  <label className="label">Dirección</label>
-                  <Field
-                    name="detalleCliente.direccion"
-                    className="textarea"
-                    as="textarea"
-                    rows="3"
-                    disabled={isEditable()}
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* INFORMACIÓN DE PRODUCTOS */}
-            <div className="block">
-              <h5 className="title">Información de productos</h5>
-              <div className="productos">
-                <FieldArray name="detalleDeVenta">
-                  {({ push, remove }) => (
-                    <>
-                      {values.detalleDeVenta.map((producto, index) => {
-                        const isNew = producto.isNew; // 👈 aquí
-
-                        return (
-                          <div
-                            key={producto.producto_asociado?.id ?? index}
-                            style={{
-                              background: "#e5e7eb",
-                              padding: "10px",
-                              borderRadius: "8px",
-                            }}
-                          >
-                            <h6>Producto {index + 1}</h6>
-
-                            <div className="fila">
-                              {/* NOMBRE PRODUCTO */}
-                              <div className="group-el">
-                                <label className="label">Nombre producto</label>
-                                <Field
-                                  name={`detalleDeVenta.${index}.producto_asociado.nombreProducto`}
-                                  className="value"
-                                  // Antes: siempre disabled
-                                  // disabled
-                                  // Ahora: si es nuevo -> editable, si no -> deshabilitado
-                                  disabled={!isNew}
-                                />
-                              </div>
-
-                              {/* PRECIO */}
-                              <div className="group-el cant">
-                                <label className="label">Precio</label>
-                                <Field
-                                  type="number"
-                                  name={`detalleDeVenta.${index}.producto_asociado.precioVenta`}
-                                  className="value"
-                                  // Se calcula en base a la información de productos que recibamos
-                                  disabled={!isNew}
-                                />
-                              </div>
-
-                              {/* DESCUENTO */}
-                              <div className="group-el cant">
-                                <label className="label">Descuento</label>
-                                <Field
-                                  type="number"
-                                  name={`detalleDeVenta.${index}.descuento`}
-                                  className="value"
-                                  // Antes: disabled={isEditable()}
-                                  // Ahora: si es nuevo nunca está disabled
-                                  disabled={isNew ? false : isEditable()}
-                                />
-                              </div>
-
-                              {/* CANTIDAD */}
-                              <div className="group-el cant">
-                                <label className="label">Cantidad</label>
-                                <Field
-                                  type="number"
-                                  name={`detalleDeVenta.${index}.cantidad`}
-                                  className="value"
-                                  disabled={isNew ? false : isEditable()}
-                                />
-                              </div>
-
-                              {/* ELIMINAR */}
-                              <button
-                                type="button"
-                                className="delete-product"
-                                onClick={() => {
-                                  if (values.detalleDeVenta.length === 1) {
-                                    alert(
-                                      "No puedes eliminar todos los productos, debe existir al menos uno."
-                                    );
-                                    return;
-                                  }
-                                  remove(index);
-                                }}
-                              >
-                                <img src={SalirIcon} alt="Eliminar producto" />
-                              </button>
-                            </div>
-                          </div>
-                        );
-                      })}
-
-                      {/* Botón agregar ya modificado con isNew: true */}
-                      <button
-                        type="button"
-                        className="btn-secundario"
-                        onClick={() =>
-                          push({
-                            cantidad: 1,
-                            descuento: 0,
-                            isNew: true,
-                            producto_asociado: {
-                              id: null,
-                              nombreProducto: "",
-                              precioVenta: 0,
-                            },
-                          })
-                        }
-                      >
-                        + Agregar producto
-                      </button>
-                    </>
+                {/* Aviso de que la venta ya fue entregada y no puede ser modificada */}
+                {estadoVenta === "Entregada" &&
+                  currentUserData.rolName !== "Administrador" && (
+                    <div className="aviso">
+                      La venta ya fue entregada y no puede ser modificada por el
+                      vendedor
+                    </div>
                   )}
-                </FieldArray>
-              </div>
-            </div>
-
-            {/* DETALLE DE VENTA */}
-            <div className="block">
-              <h5 className="title">Detalle de venta</h5>
-
-              <div className="fila">
-                <div className="group-el">
-                  <label className="label">Hora entrega</label>
-                  <Field
-                    name="horaEntrega"
-                    className="value"
-                    disabled={isEditable()}
-                  />
-                </div>
-
-                <div className="group-el pago">
-                  <label className="label">Pago vendedor</label>
-                  <Field
-                    name="pago_vendedor"
-                    type="number"
-                    className="value"
-                    disabled
-                  />
-                </div>
-
-                <div className="group-el">
-                  <label className="label">Pago delivery</label>
-                  <Field
-                    name="pagoDelivery"
-                    type="number"
-                    className="value"
-                    disabled
-                  />
-                </div>
               </div>
 
-              <div className="fila">
-                <div className="group-el">
-                  <label className="label">Adicional delivery</label>
-                  <Field
-                    name="adicionalDelivery"
-                    type="number"
-                    className="value"
-                    disabled={isEditable()}
-                  />
+              <button className="modal-close" type="button" onClick={onClose}>
+                <img src={SalirIcon} alt="Icono de Salir" />
+              </button>
+
+              {/*  INFORMACIÓN DEL CLIENTE */}
+              <div className="block">
+                <h5 className="title">Información del cliente</h5>
+                <div className="fila">
+                  <div className="group-el">
+                    <label className="label">Nombre</label>
+                    <Field
+                      name="detalleCliente.nombre"
+                      className="value"
+                      disabled={isEditable()}
+                    />
+                  </div>
+
+                  <div className="group-el">
+                    <label className="label">Teléfono</label>
+                    <Field
+                      name="detalleCliente.telefono"
+                      className="value"
+                      disabled={isEditable()}
+                    />
+                  </div>
                 </div>
 
-                <div className="group-el">
-                  <label className="label">Subtotal</label>
-                  <Field
-                    name="subtotal"
-                    type="number"
-                    className="value"
-                    disabled
-                  />
+                <div className="fila">
+                  <div className="group-el">
+                    <label className="label">Ubicación (URL)</label>
+                    <Field
+                      name="detalleCliente.direccionGps"
+                      className="value "
+                      disabled={isEditable()}
+                    />
+                  </div>
                 </div>
 
-                <div className="group-el tienda">
-                  <label className="label">Pago tienda</label>
-                  <Field
-                    name="pagoTienda"
-                    type="number"
-                    className="value"
-                    disabled
-                  />
+                <div className="fila">
+                  <div className="group-el">
+                    <label className="label">Dirección</label>
+                    <Field
+                      name="detalleCliente.direccion"
+                      className="textarea"
+                      as="textarea"
+                      rows="3"
+                      disabled={isEditable()}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* FOOTER */}
-            <div className="footer">
-              <div className="factura">Consultar factura</div>
+              {/* INFORMACIÓN DE PRODUCTOS */}
+              <div className="block">
+                <h5 className="title">Información de productos</h5>
+                <div className="productos">
+                  <FieldArray name="detalleDeVenta">
+                    {({ push, remove }) => (
+                      <>
+                        {values.detalleDeVenta.map((producto, index) => {
+                          const isNew = producto.isNew;
+                          const currentId =
+                            producto.producto_asociado?.id ?? null;
 
-              {/* Si le venta ya fue entregada y no es el administrador no se puede guardar */}
-              {estadoVenta === "Entregada" &&
-                currentUserData.rolName !== "Administrador" &&
-                null}
+                          // 🔹 productos disponibles = todos menos los ya elegidos,
+                          //   pero dejando el que está seleccionado en esta fila
+                          const availableProducts = (allProducts || []).filter(
+                            (prod) =>
+                              !selectedIds.includes(prod.id) ||
+                              prod.id === currentId
+                          );
 
-              {/* Si le venta no fue entregada y no es el administrador se puede guardar */}
-              {estadoVenta !== "Entregada" &&
-                currentUserData.rolName !== "Administrador" && (
-                  <button
-                    type="button"
-                    className="btn-pr"
-                    onClick={handleFormSubmit}
-                  >
+                          return (
+                            <div
+                              key={`${
+                                producto.producto_asociado?.id ?? "new"
+                              }-${index}`}
+                              style={{
+                                background: "#e5e7eb",
+                                padding: "10px",
+                                borderRadius: "8px",
+                              }}
+                            >
+                              <h6>Producto {index + 1}</h6>
+
+                              <div className="fila">
+                                {/* NOMBRE PRODUCTO */}
+                                <div className="group-el">
+                                  <label className="label">
+                                    Nombre producto
+                                  </label>
+                                  <select
+                                    className="select-in"
+                                    value={currentId ?? ""}
+                                    disabled={isEditable()}
+                                    onChange={(e) => {
+                                      const idValue = e.target.value;
+                                      const id = idValue
+                                        ? Number(idValue)
+                                        : null;
+
+                                      const selected =
+                                        allProducts?.find((p) => p.id === id) ||
+                                        null;
+
+                                      setFieldValue(
+                                        `detalleDeVenta.${index}.producto_asociado.id`,
+                                        selected?.id ?? null
+                                      );
+                                      setFieldValue(
+                                        `detalleDeVenta.${index}.producto_asociado.nombreProducto`,
+                                        selected?.nombreProducto ?? ""
+                                      );
+                                      setFieldValue(
+                                        `detalleDeVenta.${index}.producto_asociado.precioVenta`,
+                                        selected?.precioVenta ?? 0
+                                      );
+                                    }}
+                                  >
+                                    <option value="">
+                                      Selecciona un producto
+                                    </option>
+                                    {availableProducts.map((prod) => (
+                                      <option key={prod.id} value={prod.id}>
+                                        {prod.nombreProducto}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+
+                                {/* PRECIO */}
+                                <div className="group-el cant">
+                                  <label className="label">Precio</label>
+                                  <Field
+                                    type="number"
+                                    name={`detalleDeVenta.${index}.producto_asociado.precioVenta`}
+                                    className="value"
+                                    disabled // siempre calculado desde producto
+                                  />
+                                </div>
+
+                                {/* CANTIDAD */}
+                                <div className="group-el cant">
+                                  <label className="label">Cantidad</label>
+                                  <Field
+                                    type="number"
+                                    name={`detalleDeVenta.${index}.cantidad`}
+                                    className="value"
+                                    disabled={isNew ? false : isEditable()}
+                                  />
+                                </div>
+
+                                {/* ELIMINAR */}
+                                <button
+                                  type="button"
+                                  className="delete-product"
+                                  onClick={() => {
+                                    if (values.detalleDeVenta.length === 1) {
+                                      alert(
+                                        "No puedes eliminar todos los productos, debe existir al menos uno."
+                                      );
+                                      return;
+                                    }
+                                    remove(index);
+                                  }}
+                                >
+                                  <img
+                                    src={SalirIcon}
+                                    alt="Eliminar producto"
+                                  />
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })}
+
+                        {/* Botón agregar producto nuevo */}
+                        <button
+                          type="button"
+                          className="btn-secundario"
+                          onClick={() =>
+                            push({
+                              cantidad: 1,
+                              isNew: true,
+                              producto_asociado: {
+                                id: null,
+                                nombreProducto: "",
+                                precioVenta: 0,
+                              },
+                            })
+                          }
+                        >
+                          + Agregar producto
+                        </button>
+                      </>
+                    )}
+                  </FieldArray>
+                </div>
+              </div>
+
+              {/* DETALLE DE VENTA */}
+              <div className="block">
+                <h5 className="title">Detalle de venta</h5>
+
+                <div className="fila">
+                  <div className="group-el">
+                    <label className="label">Hora entrega</label>
+                    <Field
+                      name="horaEntrega"
+                      className="value"
+                      disabled={isEditable()}
+                    />
+                  </div>
+
+                  <div className="group-el pago">
+                    <label className="label">Pago vendedor</label>
+                    <Field
+                      name="pago_vendedor"
+                      type="number"
+                      className="value"
+                      disabled
+                    />
+                  </div>
+
+                  <div className="group-el">
+                    <label className="label">Pago delivery</label>
+                    <Field
+                      name="pagoDelivery"
+                      type="number"
+                      className="value"
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div className="fila">
+                  <div className="group-el">
+                    <label className="label">Adicional delivery</label>
+                    <Field
+                      name="adicionalDelivery"
+                      type="number"
+                      className="value"
+                      disabled={isEditable()}
+                    />
+                  </div>
+
+                  <div className="group-el">
+                    <label className="label">Subtotal</label>
+                    <input
+                      type="number"
+                      className="value"
+                      value={subtotal.toFixed(2)}
+                      disabled
+                      readOnly
+                    />
+                  </div>
+
+                  <div className="group-el tienda">
+                    <label className="label">Pago tienda</label>
+                    <input
+                      type="number"
+                      className="value"
+                      value={pagoTienda.toFixed(2)}
+                      disabled
+                      readOnly
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* FOOTER */}
+              <div className="footer">
+                <div className="factura">Consultar factura</div>
+
+                {/* Si la venta no fue entregada y no es el administrador se puede guardar */}
+                {estadoVenta !== "Entregada" &&
+                  currentUserData.rolName !== "Administrador" && (
+                    <button
+                      type="button"
+                      className="btn-pr"
+                      onClick={submitForm}
+                    >
+                      Guardar
+                    </button>
+                  )}
+
+                {/* Si es el administrador se puede guardar y editar siempre */}
+                {currentUserData.rolName === "Administrador" && (
+                  <button type="button" className="btn-pr" onClick={submitForm}>
                     Guardar
                   </button>
                 )}
 
-              {/* Si es el administrador se puede guardar y editar siempre */}
-
-              {currentUserData.rolName === "Administrador" && (
-                <button
-                  type="button"
-                  className="btn-pr"
-                  onClick={handleFormSubmit}
-                >
-                  Guardar
-                </button>
-              )}
-
-              <div className="cerrar" onClick={onClose}>
-                Cerrar
+                <div className="cerrar" onClick={onClose}>
+                  Cerrar
+                </div>
               </div>
-            </div>
-          </Form>
-        )}
+            </Form>
+          );
+        }}
       </Formik>
     </div>
   );

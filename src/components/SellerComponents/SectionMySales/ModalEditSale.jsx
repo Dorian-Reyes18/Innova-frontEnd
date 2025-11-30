@@ -1,6 +1,7 @@
+// IMPORTACIONES
 import PropTypes from "prop-types";
 import { Formik, Form, Field, FieldArray } from "formik";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useUser } from "../../../context/UserContext";
 
 import SalirIcon from "/src/assets/SalirIcon.svg";
@@ -8,34 +9,62 @@ import CarritoIcon2 from "/src/assets/CarritoIcon2.svg";
 
 //Esquema de validación
 import { VentaSchema } from "../../../modules/schemas/venta.schema";
-import { es } from "date-fns/locale";
+
+// ------------------------------------------------------------------------
+
+// COMPONENTES
+const DeleteProduct = ({ id, onClick }) => {
+  return (
+    <div className="delete-product" onClick={onClick}>
+      <img src={SalirIcon} alt="Eliminar producto" />
+    </div>
+  );
+};
 
 const ModalEditSale = ({ onClose, venta }) => {
+  // Estados
+  const [productAsociated, setproductAsociated] = useState(
+    venta?.detalleDeVenta
+  );
+
+  console.log("Product:", productAsociated);
+
   // Hooks
   const formRef = useRef(null);
 
   // destructuración
-  const { user } = useUser();
+  const { user } = useUser(); // usuario actual
 
   // data
   const currentUserData = {
-    rolId: user?.user?.data?.role?.id,
-    rolName: user?.user?.data?.role?.name,
+    rolId: user?.user?.data?.role?.id, // id del rol del usuario
+    rolName: user?.user?.data?.role?.name, // nombre del rol del usuario
   };
 
-  const estadoVenta = venta?.estadoVenta.estado;
-
-  console.log("Datos del usuario actual:", currentUserData);
-  console.log("Estado de la venta:", estadoVenta);
+  const estadoVenta = venta?.estadoVenta.estado; // estado de la venta actual
 
   // Handers y funciones
   const handleFormSubmit = () => {
     const data = formRef.current?.values || {};
 
-    console.log({ data: data });
+    console.log("Data lista para enviar:", { data: data });
+  };
+
+  const deleteProduct = (index) => {
+    const updatedProducts = [...productAsociated];
+
+    if (updatedProducts.length === 1) {
+      return alert(
+        "No puedes eliminar todos los productos tiene que haber al menos un producto asociado"
+      );
+    }
+
+    updatedProducts.splice(index, 1);
+    setproductAsociated(updatedProducts);
   };
 
   const isEditable = () => {
+    // Esta función determina si el formulario es editable basado en el rol del usuario y el estado de la venta
     if (currentUserData.rolName === "Administrador") {
       return false;
     } else if (
@@ -47,8 +76,6 @@ const ModalEditSale = ({ onClose, venta }) => {
       return true;
     }
   };
-
-  console.log("isEditable:", isEditable());
 
   // console.log("Venta recibida para mostrar:", venta);
 
@@ -83,7 +110,7 @@ const ModalEditSale = ({ onClose, venta }) => {
         initialValues={formValues}
         enableReinitialize={true}
         validationSchema={VentaSchema}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={(values) => {
           const payload = {
             data: {
               // Asegurando valores por defecto o comprobación
@@ -150,7 +177,7 @@ const ModalEditSale = ({ onClose, venta }) => {
               <img src={SalirIcon} alt="Icono de Salir" />
             </button>
 
-            {/* INFORMACIÓN DEL CLIENTE */}
+            {/*  INFORMACIÓN DEL CLIENTE */}
             <div className="block">
               <h5 className="title">Información del cliente</h5>
               <div className="fila">
@@ -205,7 +232,7 @@ const ModalEditSale = ({ onClose, venta }) => {
                 <FieldArray name="detalleDeVenta">
                   {() => (
                     <>
-                      {values.detalleDeVenta?.map((producto, index) => (
+                      {productAsociated.map((producto, index) => (
                         <div key={index}>
                           <h6>Producto {index + 1}</h6>
 
@@ -248,6 +275,8 @@ const ModalEditSale = ({ onClose, venta }) => {
                                 disabled={isEditable()}
                               />
                             </div>
+
+                            <DeleteProduct onClick={deleteProduct} id={index} />
                           </div>
                         </div>
                       ))}

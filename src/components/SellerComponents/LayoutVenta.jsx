@@ -11,7 +11,19 @@ import { format } from "date-fns";
 import { es } from "date-fns/locale";
 
 const LayoutVenta = ({ venta }) => {
-  const objectSale = venta;
+  // Limpia la estructura de datos en la venta
+  const objectSale = {
+    ...venta,
+    detalleDeVenta: venta.detalleDeVenta.map((detalle) => ({
+      ...detalle,
+      producto_asociado: {
+        ...detalle.producto_asociado,
+        id: detalle.producto_asociado.id,
+        nombreProducto: detalle.producto_asociado.nombreProducto,
+        cantidad: detalle.producto_asociado.cantidad,
+      },
+    })),
+  };
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -34,7 +46,7 @@ const LayoutVenta = ({ venta }) => {
           <div className="content">
             <div className="group-item">
               {objectSale?.detalleDeVenta?.length > 0 && (
-                <div className="item">
+                <div className="item" style={{ flexDirection: "column" }}>
                   {objectSale.detalleDeVenta.map((detalle, index) => (
                     <div
                       key={index}

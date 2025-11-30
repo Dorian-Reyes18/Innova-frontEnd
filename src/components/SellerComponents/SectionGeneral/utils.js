@@ -11,11 +11,19 @@ import axiosInstance from "../../../axios";
 
 export const getCurrentWeekDateRange = () => {
   const hoy = new Date();
-  const primerDiaSemana = new Date(hoy);
-  primerDiaSemana.setDate(hoy.getDate() - hoy.getDay());
 
+  // Día de la semana (0 = domingo)
+  const day = hoy.getDay();
+
+  // Crear fecha del domingo (primer día de la semana)
+  const primerDiaSemana = new Date(hoy);
+  primerDiaSemana.setDate(hoy.getDate() - day);
+  primerDiaSemana.setHours(0, 0, 0, 0); // inicio del domingo en hora local
+
+  // Último día (sábado)
   const ultimoDiaSemana = new Date(primerDiaSemana);
   ultimoDiaSemana.setDate(primerDiaSemana.getDate() + 6);
+  ultimoDiaSemana.setHours(23, 59, 59, 999); // fin del sábado en hora local
 
   return {
     startDate: primerDiaSemana.toISOString(),

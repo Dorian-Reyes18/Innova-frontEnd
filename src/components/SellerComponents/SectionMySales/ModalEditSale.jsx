@@ -2,7 +2,7 @@
 import PropTypes from "prop-types";
 import { Formik, Form, Field, FieldArray } from "formik";
 import { useRef, useState } from "react";
-import { useAppContext } from "../../../context/UseAppContext";
+import { useUser } from "../../../context/UserContext";
 
 import SalirIcon from "/src/assets/SalirIcon.svg";
 import CarritoIcon2 from "/src/assets/CarritoIcon2.svg";
@@ -26,7 +26,7 @@ const ModalEditSale = ({ onClose, venta }) => {
   const formRef = useRef(null);
 
   // destructuración
-  const { user } = useAppContext(); // usuario actual
+  const { user } = useUser(); // usuario actual
 
   // data
   const currentUserData = {

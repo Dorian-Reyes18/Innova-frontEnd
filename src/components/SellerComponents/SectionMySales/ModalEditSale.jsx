@@ -30,7 +30,6 @@ const calculateTotals = (values) => {
 
   const pagoDeliveryFijo = parseNumber(values.pagoDelivery);
 
-  // ✅ Nuevo criterio:
   // Subtotal = solo valor de productos (SIN adicional delivery)
   const subtotal = totalProductos;
 
@@ -42,7 +41,7 @@ const calculateTotals = (values) => {
 };
 
 // COMPONENTE
-const ModalEditSale = ({ onClose, venta }) => {
+const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
   // Hooks
   const formRef = useRef(null);
   const { user, allProducts } = useUser(); // usuario actual
@@ -115,8 +114,9 @@ const ModalEditSale = ({ onClose, venta }) => {
 
               detalleDeVenta: values.detalleDeVenta.map((item) => ({
                 cantidad: item.cantidad,
-                precioUnitario: item.producto_asociado?.precioVenta || 0,
-                producto_asociado: item.producto_asociado?.id ?? null,
+                producto_asociado: {
+                  id: item.producto_asociado?.id ?? null,
+                },
               })),
 
               codigoVenta: venta.codigoVenta || "",
@@ -143,7 +143,7 @@ const ModalEditSale = ({ onClose, venta }) => {
         {({ values, setFieldValue, submitForm }) => {
           const { subtotal, pagoTienda } = calculateTotals(values);
 
-          // 🔹 productos ya seleccionados en cualquier fila
+          // productos ya seleccionados en cualquier fila
           const selectedIds = values.detalleDeVenta
             .map((item) => item.producto_asociado?.id)
             .filter((id) => id != null);
@@ -155,14 +155,22 @@ const ModalEditSale = ({ onClose, venta }) => {
             >
               <div className="heading-modal">
                 <div className="tile-container">
-                  <img
+                  {/* <img
                     src={CarritoIcon2}
                     alt="Icono de Carrito"
                     className="icon"
-                  />
+                  /> */}
                   <div className="tile">
                     <h3>Información de Venta</h3>
-                    <span>Código: {venta.codigoVenta || "No disponible"}</span>
+                    <div>
+                      <span>
+                        Codigo:{" "}
+                        <strong> {venta.codigoVenta || "No disponible"}</strong>{" "}
+                      </span>
+                    </div>
+                    <strong style={{ fontSize: 11 }}>
+                      Creada el {fechaCreated}
+                    </strong>
                   </div>
                 </div>
 
@@ -221,7 +229,7 @@ const ModalEditSale = ({ onClose, venta }) => {
                       name="detalleCliente.direccion"
                       className="textarea"
                       as="textarea"
-                      rows="3"
+                      rows="4"
                       disabled={isEditable()}
                     />
                   </div>
@@ -240,7 +248,7 @@ const ModalEditSale = ({ onClose, venta }) => {
                           const currentId =
                             producto.producto_asociado?.id ?? null;
 
-                          // 🔹 productos disponibles = todos menos los ya elegidos,
+                          // productos disponibles = todos menos los ya elegidos,
                           //   pero dejando el que está seleccionado en esta fila
                           const availableProducts = (allProducts || []).filter(
                             (prod) =>
@@ -259,7 +267,7 @@ const ModalEditSale = ({ onClose, venta }) => {
                                 borderRadius: "8px",
                               }}
                             >
-                              <h6>Producto {index + 1}</h6>
+                              <h4>Producto {index + 1}</h4>
 
                               <div className="fila">
                                 {/* NOMBRE PRODUCTO */}
@@ -448,11 +456,25 @@ const ModalEditSale = ({ onClose, venta }) => {
 
               {/* FOOTER */}
               <div className="footer">
-                <div className="factura">Consultar factura</div>
+                <div className="actions-group">
+                  <div className="btn-out" onClick={onClose}>
+                    Cerrar
+                  </div>
 
-                {/* Si la venta no fue entregada y no es el administrador se puede guardar */}
-                {estadoVenta !== "Entregada" &&
-                  currentUserData.rolName !== "Administrador" && (
+                  {/* Si la venta no fue entregada y no es el administrador se puede guardar */}
+                  {estadoVenta !== "Entregada" &&
+                    currentUserData.rolName !== "Administrador" && (
+                      <button
+                        type="button"
+                        className="btn-pr"
+                        onClick={submitForm}
+                      >
+                        Guardar
+                      </button>
+                    )}
+
+                  {/* Si es el administrador se puede guardar y editar siempre */}
+                  {currentUserData.rolName === "Administrador" && (
                     <button
                       type="button"
                       className="btn-pr"
@@ -461,16 +483,12 @@ const ModalEditSale = ({ onClose, venta }) => {
                       Guardar
                     </button>
                   )}
-
-                {/* Si es el administrador se puede guardar y editar siempre */}
-                {currentUserData.rolName === "Administrador" && (
-                  <button type="button" className="btn-pr" onClick={submitForm}>
-                    Guardar
-                  </button>
-                )}
-
-                <div className="cerrar" onClick={onClose}>
-                  Cerrar
+                </div>
+                <div className="actions-group">
+                  {/* Imprime la factura */}
+                  <div className="actions"></div>
+                  {/* Manda en un mensaje los datos de la venta por whatsapp */}
+                  <div className="actions-w actions"></div>
                 </div>
               </div>
             </Form>

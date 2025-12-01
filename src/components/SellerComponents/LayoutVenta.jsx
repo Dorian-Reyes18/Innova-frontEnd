@@ -26,6 +26,15 @@ const LayoutVenta = ({ venta }) => {
   };
   const [showModal, setShowModal] = useState(false);
 
+  // formatear fecha
+  const formattedDate = format(
+    new Date(objectSale.createdAt),
+    "d 'de' MMMM 'a las' h:mm a",
+    {
+      locale: es,
+    }
+  );
+
   return (
     <div className="venta-container">
       <div className="venta">
@@ -121,16 +130,7 @@ const LayoutVenta = ({ venta }) => {
           </div>
 
           {objectSale?.createdAt ? (
-            <div className="create-at">
-              Creada el{" "}
-              {format(
-                new Date(objectSale.createdAt),
-                "d 'de' MMMM 'a las' h:mm a",
-                {
-                  locale: es,
-                }
-              )}
-            </div>
+            <div className="create-at">Creada el {formattedDate}</div>
           ) : (
             <div className="create-at">Fecha no disponible</div>
           )}
@@ -151,6 +151,7 @@ const LayoutVenta = ({ venta }) => {
             <ModalEditSale
               venta={objectSale}
               onClose={() => setShowModal(false)}
+              fechaCreated={formattedDate}
             />
           )}
         </div>

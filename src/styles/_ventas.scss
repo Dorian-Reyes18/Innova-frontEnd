@@ -93,7 +93,7 @@
 
               .desc {
                 display: -webkit-box;
-                -webkit-line-clamp: 3; 
+                -webkit-line-clamp: 3;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
               }
@@ -509,6 +509,54 @@
                 text-align: start;
                 font-size: 13px;
                 font-family: $montserrat-regular;
+              }
+
+              @include media(mobile) {
+                /* Contenedor principal */
+                .react-datepicker {
+                  font-size: 1rem !important; /* +25% */
+                  width: 100% !important;
+                }
+
+                /* Header del calendario */
+                .react-datepicker__header {
+                  padding: 5px 0 !important;
+                  font-size: 0.5rem !important;
+                }
+
+                /* Nombres de días (L M M J V S D) */
+                .react-datepicker__day-name {
+                  width: 1.8rem !important;
+                  line-height: 3rem !important;
+                  font-size: 1rem !important;
+                }
+
+                /* Días del calendario */
+                .react-datepicker__day,
+                .react-datepicker__day--selected {
+                  width: 2.5rem !important;
+                  line-height: 3rem !important;
+                  height: 3rem !important;
+                  font-size: 1.2rem !important;
+                }
+
+                /* Flechas de meses */
+                .react-datepicker__navigation {
+                  top: 18px !important;
+                  scale: 1.4 !important; /* agranda flechas */
+                }
+
+                /* Input de fecha */
+                .react-datepicker-wrapper,
+                .react-datepicker__input-container input {
+                  font-size: 1.3rem !important;
+                  padding: 12px !important;
+                }
+
+                /* Calendario flotante */
+                .react-datepicker-popper {
+                  z-index: 9999 !important;
+                }
               }
             }
           }

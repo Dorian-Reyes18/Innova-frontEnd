@@ -119,6 +119,7 @@ const VentasAnteriores = () => {
                       <div className="form-group">
                         <label>Fecha final:</label>
                         <DatePicker
+                          className="calendario"
                           selected={values.endDate}
                           onChange={(date) => setFieldValue("endDate", date)}
                           selectsEnd

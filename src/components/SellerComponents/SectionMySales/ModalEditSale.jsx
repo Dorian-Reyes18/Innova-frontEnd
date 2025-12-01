@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import { Formik, Form, Field, FieldArray } from "formik";
 import { useRef } from "react";
 import { useUser } from "../../../context/UserContext";
+import AddIcon from "/src/assets/SalesDatailsIcons/AddIcon.svg";
+import DeleteSell from "/src/assets/SalesDatailsIcons/DeleteSell.svg";
 
 import SalirIcon from "/src/assets/SalirIcon.svg";
-import CarritoIcon2 from "/src/assets/CarritoIcon2.svg";
 
 // Esquema de validación
 import { VentaSchema } from "../../../modules/schemas/venta.schema";
@@ -357,7 +358,12 @@ const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
                                 </div>
 
                                 {/* ELIMINAR */}
-                                <button
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
                                   type="button"
                                   className="delete-product"
                                   onClick={() => {
@@ -371,19 +377,19 @@ const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
                                   }}
                                 >
                                   <img
-                                    src={SalirIcon}
+                                    src={DeleteSell}
                                     alt="Eliminar producto"
                                   />
-                                </button>
+                                </div>
                               </div>
                             </div>
                           );
                         })}
 
                         {/* Botón agregar producto nuevo */}
-                        <button
+                        <div
                           type="button"
-                          className="btn-secundario"
+                          className="add-product"
                           onClick={() =>
                             push({
                               cantidad: 1,
@@ -396,8 +402,8 @@ const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
                             })
                           }
                         >
-                          + Agregar producto
-                        </button>
+                          <img src={AddIcon} alt="" /> Agregar producto
+                        </div>
                       </>
                     )}
                   </FieldArray>
@@ -540,6 +546,7 @@ const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
 ModalEditSale.propTypes = {
   onClose: PropTypes.func.isRequired,
   venta: PropTypes.object.isRequired,
+  fechaCreated: PropTypes.string,
 };
 
 export default ModalEditSale;

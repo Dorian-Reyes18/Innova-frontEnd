@@ -665,6 +665,28 @@ html {
               border-top: 1px solid $color-bordes;
             }
           }
+
+          .add-product {
+            margin: 0 auto;
+            padding: 8px 13px;
+            width: fit-content;
+            text-align: center;
+            background: $color-azul-v2;
+            color: white;
+            gap: 10px;
+            display: flex;
+            justify-content: center;
+            border-radius: 6px;
+            -webkit-border-radius: 6px;
+            -moz-border-radius: 6px;
+            -ms-border-radius: 6px;
+            -o-border-radius: 6px;
+
+            &:hover {
+              // aclarar con lighting el color azul al pasar el mouse usando la variable $color-azul-v2
+              background-color: lighten($color-azul-v2, 10%);
+            }
+          }
         }
 
         .footer {

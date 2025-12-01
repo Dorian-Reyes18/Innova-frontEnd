@@ -11,7 +11,7 @@ import CarritoIcon2 from "/src/assets/CarritoIcon2.svg";
 import { VentaSchema } from "../../../modules/schemas/venta.schema";
 // ------------------------------------------------------------------------
 
-// HELPER: cálculo de totales
+// Helpers: cálculo de totales
 const calculateTotals = (values) => {
   const parseNumber = (n) => {
     const num = Number(n);
@@ -40,20 +40,39 @@ const calculateTotals = (values) => {
   return { subtotal, pagoTienda, totalProductos, pagoDeliveryFijo };
 };
 
-// COMPONENTE
+// COMPONENTES
 const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
-  // Hooks
+  // HOOKS
   const formRef = useRef(null);
   const { user, allProducts } = useUser(); // usuario actual
 
-  // data
+  // DATA
   const currentUserData = {
     rolId: user?.user?.data?.role?.id,
     rolName: user?.user?.data?.role?.name,
   };
 
+  // OJBETOS
+  const estadosVenta = [
+    "En tramite",
+    "Por asignar",
+    "Asignada",
+    "En ruta",
+    "Rechazada",
+    "Entregada",
+  ];
+
+  // VARIABLES
   const estadoVenta = venta?.estadoVenta.estado; // estado de la venta actual
 
+  // Filtrar estados según rol
+  let estadosPermitidos = estadosVenta;
+
+  if (currentUserData.rolName !== "Administrador") {
+    estadosPermitidos = ["En tramite", "Por asignar"];
+  }
+
+  // FUNCIONES
   const isEditable = () => {
     // Esta función determina si el formulario es editable basado en el rol del usuario y el estado de la venta
     if (currentUserData.rolName === "Administrador") {
@@ -93,6 +112,7 @@ const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
     adicionalDelivery: venta.adicionalDelivery || 0,
     subtotal: venta.subtotal || 0,
     pagoTienda: venta.pagoTienda || 0,
+    estadoVenta: (venta.estadoVenta || {}).estado || "pendiente",
   };
 
   return (
@@ -121,7 +141,7 @@ const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
 
               codigoVenta: venta.codigoVenta || "",
               estadoVenta: {
-                estado: venta.estadoVenta?.estado || "pendiente",
+                estado: values.estadoVenta,
               },
               ComentarioRechazo: venta.ComentarioRechazo || "",
 
@@ -262,7 +282,7 @@ const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
                                 producto.producto_asociado?.id ?? "new"
                               }-${index}`}
                               style={{
-                                background: "#e5e7eb",
+                                background: "#dde5e6",
                                 padding: "10px",
                                 borderRadius: "8px",
                               }}
@@ -450,6 +470,24 @@ const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
                       disabled
                       readOnly
                     />
+                  </div>
+                </div>
+                <div className="fila">
+                  <div className="group-el">
+                    {/* Estado de venta */}
+                    <label className="label">Estado de venta</label>
+                    <Field
+                      as="select"
+                      name="estadoVenta"
+                      className="value"
+                      disabled={isEditable()}
+                    >
+                      {estadosPermitidos.map((estado) => (
+                        <option key={estado} value={estado}>
+                          {estado}
+                        </option>
+                      ))}
+                    </Field>
                   </div>
                 </div>
               </div>

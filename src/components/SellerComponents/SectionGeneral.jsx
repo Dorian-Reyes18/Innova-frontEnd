@@ -15,7 +15,7 @@ const SectionGeneral = () => {
     { name: "Por asignar", sales: [] },
     { name: "Asignadas", sales: [] },
     { name: "En ruta", sales: [] },
-    { name: "Entregadas", sales: [] },
+    { name: "Entregada", sales: [] },
     { name: "Rechazada", sales: [] },
   ]);
 

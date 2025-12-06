@@ -45,6 +45,7 @@ const calculateTotals = (values) => {
 const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
   // HOOKS
   const formRef = useRef(null);
+
   const { user, allProducts } = useUser(); // usuario actual
 
   // DATA
@@ -358,52 +359,56 @@ const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
                                 </div>
 
                                 {/* ELIMINAR */}
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                  }}
-                                  type="button"
-                                  className="delete-product"
-                                  onClick={() => {
-                                    if (values.detalleDeVenta.length === 1) {
-                                      alert(
-                                        "No puedes eliminar todos los productos, debe existir al menos uno."
-                                      );
-                                      return;
-                                    }
-                                    remove(index);
-                                  }}
-                                >
-                                  <img
-                                    src={DeleteSell}
-                                    alt="Eliminar producto"
-                                  />
-                                </div>
+                                {!isEditable() && (
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                    }}
+                                    type="button"
+                                    className="delete-product"
+                                    onClick={() => {
+                                      if (values.detalleDeVenta.length === 1) {
+                                        alert(
+                                          "No puedes eliminar todos los productos, debe existir al menos uno."
+                                        );
+                                        return;
+                                      }
+                                      remove(index);
+                                    }}
+                                  >
+                                    <img
+                                      src={DeleteSell}
+                                      alt="Eliminar producto"
+                                    />
+                                  </div>
+                                )}
                               </div>
                             </div>
                           );
                         })}
 
                         {/* Botón agregar producto nuevo */}
-                        <div
-                          type="button"
-                          className="add-product"
-                          onClick={() =>
-                            push({
-                              cantidad: 1,
-                              isNew: true,
-                              producto_asociado: {
-                                id: null,
-                                nombreProducto: "",
-                                precioVenta: 0,
-                              },
-                            })
-                          }
-                        >
-                          <img src={AddIcon} alt="" /> Agregar producto
-                        </div>
+                        {!isEditable() && (
+                          <div
+                            type="button"
+                            className="add-product"
+                            onClick={() =>
+                              push({
+                                cantidad: 1,
+                                isNew: true,
+                                producto_asociado: {
+                                  id: null,
+                                  nombreProducto: "",
+                                  precioVenta: 0,
+                                },
+                              })
+                            }
+                          >
+                            <img src={AddIcon} alt="" /> Agregar producto
+                          </div>
+                        )}
                       </>
                     )}
                   </FieldArray>
@@ -511,7 +516,13 @@ const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
                       <button
                         type="button"
                         className="btn-pr"
-                        onClick={submitForm}
+                        onClick={() => {
+                          console.log(
+                            "VALORES POR formRef:",
+                            formRef.current?.values
+                          );
+                          submitForm();
+                        }}
                       >
                         Guardar
                       </button>
@@ -522,7 +533,13 @@ const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
                     <button
                       type="button"
                       className="btn-pr"
-                      onClick={submitForm}
+                      onClick={() => {
+                        console.log(
+                          "VALORES POR formRef:",
+                          formRef.current?.values
+                        );
+                        submitForm();
+                      }}
                     >
                       Guardar
                     </button>

@@ -89,6 +89,39 @@ const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
     }
   };
 
+  const handleWspSend = () => {
+    const mensaje = `*Codigo:* ${venta.codigoVenta}
+
+    *Producto/s:* ${venta.detalleDeVenta
+      .map((item) => item.producto_asociado?.nombreProducto)
+      .join(", ")}
+
+    *Cliente:* ${venta.detalleCliente?.nombre} 
+
+    *Telefono:* ${venta.detalleCliente?.telefono} 
+
+    *Direccion:* ${venta.detalleCliente?.direccion} 
+    
+    *Costo:* C$ ${venta.subtotal} 
+
+    *Delivery:* C$ ${venta.pagoDelivery} 
+
+    *Delivery adicional:* C$ ${
+      venta.adicionalDelivery !== null ? venta.adicionalDelivery : 0
+    } 
+    
+    *Total:* C$ ${venta.subtotal} + ${
+      venta.pagoDelivery + venta.adicionalDelivery
+    } = C$${venta.subtotal + venta.pagoDelivery + venta.adicionalDelivery}  
+
+
+    *Venta de:* ${user?.user?.data.nombreApellido} 
+    `;
+
+    console.log(mensaje);
+    window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, "_blank");
+  };
+
   // LOGS
   console.log(allProducts);
 
@@ -549,7 +582,10 @@ const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
                   {/* Imprime la factura */}
                   <div className="actions"></div>
                   {/* Manda en un mensaje los datos de la venta por whatsapp */}
-                  <div className="actions-w actions"></div>
+                  <div
+                    className="actions-w actions"
+                    onClick={handleWspSend}
+                  ></div>
                 </div>
               </div>
             </Form>

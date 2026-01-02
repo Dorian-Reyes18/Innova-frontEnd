@@ -7,7 +7,6 @@ import Spinner from "../Spiner";
 const SectionGeneral = () => {
   // Estados
   const [loadingSales, setLoadingSales] = useState(true);
-  const [dateRange, setDateRange] = useState(getCurrentWeekDateRange());
   const [sales, setSales] = useState([]);
   const [salesGroup, setSalesGroup] = useState([
     { name: "En tramite", sales: [] },
@@ -22,7 +21,6 @@ const SectionGeneral = () => {
   // Efecto: fetch de ventas
   useEffect(() => {
     const { startDate, endDate } = getCurrentWeekDateRange();
-    setDateRange({ startDate, endDate });
     setLoadingSales(true);
 
     // fetchSales maneja setSales y setLoadingSales internamente

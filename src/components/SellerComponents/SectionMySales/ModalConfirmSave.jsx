@@ -4,6 +4,7 @@ import { useState } from "react";
 import Spinner from "../../Spiner";
 import { useNavigate } from "react-router-dom";
 import IconSuccess from "../../../assets/IconSuccess.svg";
+import IconErrorFetch from "../../../assets/IconErrorFetch.svg";
 
 function ModalConfirmSave({
   setShowModal, // Propiedad para actualizar la visibilidad del modal principal
@@ -11,7 +12,7 @@ function ModalConfirmSave({
   finalDataSend, // Datos a enviar en el modal de confirmación
   onClose,
   saleId,
-  children,
+  mode,
   setReAmount,
 }) {
   // ?DESTRUCTURACION
@@ -35,15 +36,14 @@ function ModalConfirmSave({
       const response = await axiosInstance.put(`/ventas/${id}`, finalDataSend);
 
       if (response.status === 200) {
-        console.log("Venta actualizada exitosamente", response.data);
-        console.log("Status recibido", response.status);
+        setStatus(response.status);
         setrenderingState(2);
         setLoading(false);
       }
     } catch (error) {
       setrenderingState(2);
       console.error("Error al actualizar la venta:", error);
-      setStatus(error.response.status);
+      setStatus(error.response.status || 500);
       console.log(error);
     } finally {
       setLoading(false);
@@ -74,10 +74,10 @@ function ModalConfirmSave({
           </button> */}
               <h5 className="title-confirm">
                 {/* 1 significa crear venta, 2 significa edicion de venta */}
-                {children == 1 ? "Crear venta" : "Guardar edición"}
+                {mode == "create" ? "Crear venta" : "Guardar edición"}
               </h5>
               <span className="body-text">
-                {children == 1
+                {mode == "create"
                   ? "¿Está seguro que desea crear la venta?"
                   : "¿Está seguro que desea guardar los cambios realizados en la venta?"}
               </span>
@@ -110,13 +110,25 @@ function ModalConfirmSave({
                   {renderingState === 2 && (
                     <>
                       <h5 className="title-confirm">
-                        <img src={IconSuccess} alt="Icono de exito" />
-                        Operación exitosa
+                        {status !== 200 ? (
+                          <img src={IconErrorFetch} alt="Icono de error" />
+                        ) : (
+                          <img src={IconSuccess} alt="Icono de exito" />
+                        )}
+                        {status !== 200
+                          ? "Error en la operación"
+                          : "Operación exitosa"}
                       </h5>
                       <span className="body-text" style={{ width: "100%" }}>
-                        {children == 1
-                          ? "La venta se ha creado exitosamente"
-                          : "Los cambios se aplicaron correctamente"}
+                        {status !== 200 ? (
+                          "Error al realizar la operación. ocurrio un error inesperado, por favor intente nuevamente mas tarde"
+                        ) : (
+                          <>
+                            {mode == "create"
+                              ? "La venta se ha creado exitosamente"
+                              : "Los cambios se aplicaron correctamente"}
+                          </>
+                        )}
                       </span>
                       <div
                         className="footer"
@@ -158,6 +170,7 @@ ModalConfirmSave.propTypes = {
   saleId: PropTypes.number.isRequired,
   children: PropTypes.number.isRequired,
   setReAmount: PropTypes.func.isRequired,
+  mode: PropTypes.string,
 };
 
 export default ModalConfirmSave;

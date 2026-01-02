@@ -36,7 +36,6 @@ const LayoutVenta = ({ venta, setReAmount }) => {
   const saleId = objectSale?.documentId;
 
   // ? FUNCIONES
-
   // formatear fecha
   const formattedDate = format(
     new Date(objectSale.createdAt),
@@ -178,6 +177,7 @@ const LayoutVenta = ({ venta, setReAmount }) => {
               finalDataSend={finalDataSend}
               saleId={saleId}
               setReAmount={setReAmount}
+              mode="edit"
               onClose={() => {
                 setShowModalConfirm(false);
                 // console.log("Modal de confirmación cerrado");
@@ -219,6 +219,7 @@ LayoutVenta.propTypes = {
     pagoDelivery: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     subtotal: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   }).isRequired,
+  setReAmount: PropTypes.func.isRequired,
 };
 
 export default LayoutVenta;

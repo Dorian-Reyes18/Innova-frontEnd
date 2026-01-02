@@ -8,6 +8,9 @@ import DeleteSell from "/src/assets/SalesDatailsIcons/DeleteSell.svg";
 
 import SalirIcon from "/src/assets/SalirIcon.svg";
 
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
+
 // Esquema de validación
 import { VentaSchema } from "../../../modules/schemas/venta.schema";
 // ------------------------------------------------------------------------
@@ -56,6 +59,8 @@ const ModalEditSale = ({
   const formRef = useRef(null);
 
   const { user, allProducts } = useUser(); // usuario actual
+
+  console.log(venta);
 
   // DATA
   const currentUserData = {
@@ -135,6 +140,15 @@ const ModalEditSale = ({
     setFinalDataSend(payload);
     setShowModalConfirm(true);
   };
+
+  // Formatear la fecha de creación de la venta
+  const formattedDate = format(
+    new Date(venta?.createdAt),
+    "d 'de' MMMM 'a las' h:mm a",
+    {
+      locale: es,
+    }
+  );
 
   // LOGS
   // console.log(allProducts);
@@ -243,7 +257,7 @@ const ModalEditSale = ({
                       </span>
                     </div>
                     <strong style={{ fontSize: 11 }}>
-                      Creada el {fechaCreated}
+                      Creada el {formattedDate}
                     </strong>
                   </div>
                 </div>
@@ -271,6 +285,7 @@ const ModalEditSale = ({
                     <Field
                       name="detalleCliente.nombre"
                       className="value"
+                      placeholder="Escriba el nombre del cliente"
                       disabled={isEditable()}
                     />
                   </div>
@@ -280,17 +295,7 @@ const ModalEditSale = ({
                     <Field
                       name="detalleCliente.telefono"
                       className="value"
-                      disabled={isEditable()}
-                    />
-                  </div>
-                </div>
-
-                <div className="fila">
-                  <div className="group-el">
-                    <label className="label">Ubicación (URL)</label>
-                    <Field
-                      name="detalleCliente.direccionGps"
-                      className="value "
+                      placeholder="Escriba el teléfono del cliente"
                       disabled={isEditable()}
                     />
                   </div>
@@ -302,8 +307,21 @@ const ModalEditSale = ({
                     <Field
                       name="detalleCliente.direccion"
                       className="textarea"
+                      placeholder="Escriba la dirección del cliente (domicilio)"
                       as="textarea"
                       rows="4"
+                      disabled={isEditable()}
+                    />
+                  </div>
+                </div>
+
+                <div className="fila">
+                  <div className="group-el">
+                    <label className="label">Ubicación (URL)</label>
+                    <Field
+                      name="detalleCliente.direccionGps"
+                      className="value "
+                      placeholder="Ubicación actual (GPS)"
                       disabled={isEditable()}
                     />
                   </div>
@@ -478,6 +496,7 @@ const ModalEditSale = ({
                       name="horaEntrega"
                       className="value"
                       disabled={isEditable()}
+                      placeholder="00:00 AM/PM"
                     />
                   </div>
 

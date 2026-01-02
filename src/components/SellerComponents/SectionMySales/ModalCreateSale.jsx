@@ -141,7 +141,7 @@ const ModalCreateSale = ({
             },
           };
 
-          console.log("Payload final para crear venta:", payload);
+          //   console.log("Payload final para crear venta:", payload);
           handleSave(payload);
         }}
       >
@@ -169,7 +169,11 @@ const ModalCreateSale = ({
                   <div className="group-el">
                     <label className="label">Nombre</label>{" "}
                     <div>
-                      <Field name="detalleCliente.nombre" className="value" />{" "}
+                      <Field
+                        name="detalleCliente.nombre"
+                        className="value"
+                        placeholder="Escriba el nombre del cliente"
+                      />{" "}
                       <ErrorMessage
                         name="detalleCliente.nombre"
                         component="div"
@@ -180,9 +184,33 @@ const ModalCreateSale = ({
                   <div className="group-el">
                     <label className="label">Teléfono</label>
                     <div>
-                      <Field name="detalleCliente.telefono" className="value" />
+                      <Field
+                        name="detalleCliente.telefono"
+                        className="value"
+                        placeholder="Escriba el telefono del cliente"
+                      />
                       <ErrorMessage
                         name="detalleCliente.telefono"
+                        component="div"
+                        className="error-message-forms"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="fila">
+                  <div className="group-el">
+                    <label className="label">Dirección</label>
+                    <div style={{ width: "100%" }}>
+                      <Field
+                        name="detalleCliente.direccion"
+                        as="textarea"
+                        className="textarea"
+                        placeholder="Escriba la direccion del cliente (domicilio)"
+                        rows="4"
+                        style={{ width: "100%", resize: "none" }}
+                      />
+                      <ErrorMessage
+                        name="detalleCliente.direccion"
                         component="div"
                         className="error-message-forms"
                       />
@@ -195,26 +223,8 @@ const ModalCreateSale = ({
                     <Field
                       name="detalleCliente.direccionGps"
                       className="value"
+                      placeholder="Ubicacion en tiempo real (GPS)"
                     />
-                  </div>
-                </div>
-                <div className="fila">
-                  <div className="group-el">
-                    <label className="label">Dirección</label>
-                    <div style={{ width: "100%" }}>
-                      <Field
-                        name="detalleCliente.direccion"
-                        as="textarea"
-                        className="textarea"
-                        rows="4"
-                        style={{ width: "100%", resize: "none" }}
-                      />
-                      <ErrorMessage
-                        name="detalleCliente.direccion"
-                        component="div"
-                        className="error-message-forms"
-                      />
-                    </div>
                   </div>
                 </div>
               </div>
@@ -345,7 +355,11 @@ const ModalCreateSale = ({
                 <div className="fila">
                   <div className="group-el">
                     <label className="label">Hora entrega</label>
-                    <Field name="horaEntrega" className="value" />
+                    <Field
+                      name="horaEntrega"
+                      className="value"
+                      placeholder="00:00 AM/PM"
+                    />
                   </div>
                   <div className="group-el pago">
                     <label className="label">Pago vendedor</label>
@@ -353,6 +367,7 @@ const ModalCreateSale = ({
                       name="pago_vendedor"
                       type="number"
                       className="value"
+                      disabled
                     />
                   </div>
                   <div className="group-el">

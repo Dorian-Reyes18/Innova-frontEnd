@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import ModalEditSales from "./ModalEditSale";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 
 const TableMySalesRange = ({ sales }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -15,6 +17,7 @@ const TableMySalesRange = ({ sales }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // ?FUNCIONES
   // ordenar las ventas por fecha de creación primero la mas reciente y luego la mas antigua
   sales = sales.sort((a, b) => {
     const dateA = new Date(a.createdAt);

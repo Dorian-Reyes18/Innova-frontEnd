@@ -175,7 +175,7 @@ const GestionarUsuarios = () => {
                       }
                     }}
                   >
-                    {({ handleSubmit, setFieldValue, submitForm, values }) => (
+                    {({ handleSubmit, submitForm, values }) => (
                       <Form onSubmit={handleSubmit}>
                         {/* Modal para guardar cambios */}
                         {showModalSave && (

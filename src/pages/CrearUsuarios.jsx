@@ -86,7 +86,7 @@ const CrearUsuarios = () => {
                       confirmed: true,
                     }}
                     onSubmit={(values) => {
-                      console.log(values);
+                      // console.log(values);
                       if (submitOptions) {
                         postUser(values);
                       }
@@ -187,7 +187,14 @@ const CrearUsuarios = () => {
                           {/* Select de Rol */}
                           <div className="group-form">
                             <label htmlFor="role">rol de usuario</label>
-                            <Field as="select" id="role" name="role">
+                            <Field
+                              as="select"
+                              id="role"
+                              name="role"
+                              onChange={(e) => {
+                                setFieldValue("role", Number(e.target.value));
+                              }}
+                            >
                               <option value="" disabled>
                                 Selecciona...
                               </option>

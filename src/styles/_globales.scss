@@ -334,6 +334,12 @@ html {
       width: 100%;
       text-align: center;
     }
+    .error-message-forms {
+      color: red;
+      font-size: 12px;
+      font-family: $montserrat-bold;
+      width: 100%;
+    }
 
     .warning-message {
       color: $warning-color;
@@ -597,6 +603,7 @@ html {
           .fila {
             display: flex;
             gap: 20px;
+            align-items: flex-start;
 
             @include media(mobile) {
               flex-direction: column;

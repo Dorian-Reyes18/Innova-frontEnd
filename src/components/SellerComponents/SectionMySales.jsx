@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import ModalCreateSale from "./SectionMySales/ModalCreateSale";
+import ModalConfirmSave from "./SectionMySales/ModalConfirmSave";
 import TagIcon from "../../assets/MySalesIcons/TagIcon.svg";
 import PendingIcon from "../../assets/MySalesIcons/PendingIcon.svg";
 import CashIcon from "../../assets/MySalesIcons/CashIcon.svg";
@@ -13,6 +14,9 @@ import AsignarIcono from "../../assets/MySalesIcons/AssignIcon.svg";
 const SectionMySales = () => {
   // ?ESTADOS
   const [showModal, setShowModal] = useState(false);
+  const [finalDataSend, setFinalDataSend] = useState({});
+  const [showModalConfirm, setShowModalConfirm] = useState(false);
+
   return (
     <div className="my-sales-container">
       <div className="link-option" onClick={() => setShowModal(true)}>
@@ -75,7 +79,19 @@ const SectionMySales = () => {
       {showModal && (
         <ModalCreateSale
           setShowModal={setShowModal}
+          setShowModalConfirm={setShowModalConfirm}
+          setFinalDataSend={setFinalDataSend}
           onClose={() => setShowModal(false)}
+        />
+      )}
+      {showModalConfirm && (
+        <ModalConfirmSave
+          setShowModal={setShowModal}
+          setShowModalConfirm={setShowModalConfirm}
+          finalDataSend={finalDataSend}
+          setFinalDataSend={setFinalDataSend}
+          onClose={() => setShowModal(false)}
+          mode="create"
         />
       )}
     </div>

@@ -1,6 +1,6 @@
 // IMPORTACIONES
 import PropTypes from "prop-types";
-import { Formik, Form, Field, FieldArray } from "formik";
+import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import { useRef } from "react";
 import { useUser } from "../../../context/UserContext";
 import AddIcon from "/src/assets/SalesDatailsIcons/AddIcon.svg";
@@ -33,7 +33,11 @@ const calculateTotals = (values) => {
   return { subtotal, pagoTienda, totalProductos, pagoDeliveryFijo };
 };
 
-// COMPONENTE PRINCIPAL
+// Generar codigo unico de 8 digitos
+const uniqueCodeSale = () =>
+  Math.floor(10000000 + Math.random() * 90000000).toString();
+
+//todo COMPONENTE PRINCIPAL
 const ModalCreateSale = ({
   onClose,
   setFinalDataSend,
@@ -79,6 +83,7 @@ const ModalCreateSale = ({
     adicionalDelivery: 0,
     subtotal: 0,
     pagoTienda: 0,
+    codigoVenta: 0,
     estadoVenta: { estado: "En tramite" },
   };
 
@@ -115,6 +120,7 @@ const ModalCreateSale = ({
             data: {
               vendedor_asociado: user?.user?.data?.id ?? 1,
               detalleCliente: values.detalleCliente,
+              codigoVenta: uniqueCodeSale(),
               metodoPago: "Efectivo",
               comprobante: [],
 
@@ -141,9 +147,6 @@ const ModalCreateSale = ({
       >
         {({ values, setFieldValue, submitForm }) => {
           const { subtotal, pagoTienda } = calculateTotals(values);
-          const selectedIds = values.detalleDeVenta
-            .map((item) => item.producto_asociado?.id)
-            .filter((id) => id != null);
 
           return (
             <Form className="modal" onMouseDown={(e) => e.stopPropagation()}>
@@ -164,12 +167,26 @@ const ModalCreateSale = ({
                 <h5 className="title">Información del cliente</h5>
                 <div className="fila">
                   <div className="group-el">
-                    <label className="label">Nombre</label>
-                    <Field name="detalleCliente.nombre" className="value" />
+                    <label className="label">Nombre</label>{" "}
+                    <div>
+                      <Field name="detalleCliente.nombre" className="value" />{" "}
+                      <ErrorMessage
+                        name="detalleCliente.nombre"
+                        component="div"
+                        className="error-message-forms"
+                      />
+                    </div>
                   </div>
                   <div className="group-el">
                     <label className="label">Teléfono</label>
-                    <Field name="detalleCliente.telefono" className="value" />
+                    <div>
+                      <Field name="detalleCliente.telefono" className="value" />
+                      <ErrorMessage
+                        name="detalleCliente.telefono"
+                        component="div"
+                        className="error-message-forms"
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className="fila">
@@ -184,12 +201,20 @@ const ModalCreateSale = ({
                 <div className="fila">
                   <div className="group-el">
                     <label className="label">Dirección</label>
-                    <Field
-                      name="detalleCliente.direccion"
-                      as="textarea"
-                      className="textarea"
-                      rows="4"
-                    />
+                    <div style={{ width: "100%" }}>
+                      <Field
+                        name="detalleCliente.direccion"
+                        as="textarea"
+                        className="textarea"
+                        rows="4"
+                        style={{ width: "100%", resize: "none" }}
+                      />
+                      <ErrorMessage
+                        name="detalleCliente.direccion"
+                        component="div"
+                        className="error-message-forms"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -201,12 +226,14 @@ const ModalCreateSale = ({
                   {({ push, remove }) => (
                     <>
                       {values.detalleDeVenta.map((producto, index) => {
-                        const currentId =
-                          producto.producto_asociado?.id ?? null;
+                        const currentProduct = producto.producto_asociado || {};
+                        const currentId = currentProduct.id ?? null;
+
                         const availableProducts = (allProducts || []).filter(
                           (prod) =>
-                            !selectedIds.includes(prod.id) ||
-                            prod.id === currentId
+                            !values.detalleDeVenta
+                              .map((p) => p.producto_asociado?.id)
+                              .includes(prod.id) || prod.id === currentId
                         );
 
                         return (
@@ -216,6 +243,7 @@ const ModalCreateSale = ({
                               background: "#dde5e6",
                               padding: "10px",
                               borderRadius: "8px",
+                              marginBottom: "10px",
                             }}
                           >
                             <h4>Producto {index + 1}</h4>
@@ -230,19 +258,11 @@ const ModalCreateSale = ({
                                       ? Number(e.target.value)
                                       : null;
                                     const selected =
-                                      allProducts?.find((p) => p.id === id) ||
-                                      null;
+                                      allProducts.find((p) => p.id === id) ||
+                                      {};
                                     setFieldValue(
-                                      `detalleDeVenta.${index}.producto_asociado.id`,
-                                      selected?.id ?? null
-                                    );
-                                    setFieldValue(
-                                      `detalleDeVenta.${index}.producto_asociado.nombreProducto`,
-                                      selected?.nombreProducto ?? ""
-                                    );
-                                    setFieldValue(
-                                      `detalleDeVenta.${index}.producto_asociado.precioVenta`,
-                                      selected?.precioVenta ?? 0
+                                      `detalleDeVenta.${index}.producto_asociado`,
+                                      selected
                                     );
                                   }}
                                   style={{ width: "100%", maxWidth: "500px" }}
@@ -266,6 +286,7 @@ const ModalCreateSale = ({
                                   className="value"
                                   style={{ background: "white" }}
                                   disabled
+                                  value={currentProduct.precioVenta ?? 0}
                                 />
                               </div>
 
@@ -275,6 +296,7 @@ const ModalCreateSale = ({
                                   type="number"
                                   name={`detalleDeVenta.${index}.cantidad`}
                                   className="value"
+                                  value={producto.cantidad}
                                 />
                               </div>
 
@@ -300,12 +322,7 @@ const ModalCreateSale = ({
                         onClick={() =>
                           push({
                             cantidad: 1,
-                            isNew: true,
-                            producto_asociado: {
-                              id: null,
-                              nombreProducto: "",
-                              precioVenta: 0,
-                            },
+                            producto_asociado: {},
                           })
                         }
                       >
@@ -314,6 +331,12 @@ const ModalCreateSale = ({
                     </>
                   )}
                 </FieldArray>
+
+                <ErrorMessage
+                  name="detalleDeVenta"
+                  component="div"
+                  className="error-message"
+                />
               </div>
 
               {/* DETALLES DE VENTA */}

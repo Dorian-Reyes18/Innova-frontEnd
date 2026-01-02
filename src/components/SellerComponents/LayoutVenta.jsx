@@ -182,10 +182,7 @@ const LayoutVenta = ({ venta, setReAmount }) => {
                 setShowModalConfirm(false);
                 // console.log("Modal de confirmación cerrado");
               }}
-            >
-              {/* EL children que se pasa por prop: 1 significa crear venta, 2 significa edicion de venta */}
-              2
-            </ModalConfirmSave>
+            />
           )}
         </div>
       </div>

@@ -2,28 +2,28 @@ import * as Yup from "yup";
 
 export const VentaSchema = Yup.object({
   detalleCliente: Yup.object({
-    nombre: Yup.string().required("Nombre requerido"),
-    telefono: Yup.string().required("Teléfono requerido"),
+    nombre: Yup.string().required("* El nombre es requerido"),
+    telefono: Yup.string().required("* El telefono es requerido"),
     direccionGps: Yup.string(),
-    direccion: Yup.string(),
+    direccion: Yup.string().required("* La direccion es requerida") ,
   }),
 
   detalleDeVenta: Yup.array()
     .of(
       Yup.object({
         cantidad: Yup.number()
-          .typeError("Debe ser un número")
-          .required("Cantidad requerida")
-          .min(1, "Debe ser al menos 1"),
+          .typeError("* Debe ser un número")
+          .required("* Cantidad es requerida")
+          .min(1, "* Debe ser al menos 1"),
 
         descuento: Yup.number()
           .nullable()
           .transform((v) => (isNaN(v) ? 0 : v))
-          .min(0, "No puede ser negativo"),
+          .min(0, "* No puede ser negativo"),
 
         producto_asociado: Yup.object({
           nombreProducto: Yup.string().required(
-            "Nombre del producto requerido"
+            "* Nombre del producto requerido"
           ),
           precioVenta: Yup.number()
             .typeError("Debe ser un número")
@@ -32,7 +32,7 @@ export const VentaSchema = Yup.object({
         }).required(),
       })
     )
-    .min(1, "Debe haber al menos un producto")
+    .min(1, "*Debe haber al menos un producto")
     .required(),
 
   horaEntrega: Yup.string().nullable(),

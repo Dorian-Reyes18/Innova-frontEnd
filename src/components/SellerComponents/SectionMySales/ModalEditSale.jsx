@@ -10,7 +10,6 @@ import SalirIcon from "/src/assets/SalirIcon.svg";
 
 // Esquema de validación
 import { VentaSchema } from "../../../modules/schemas/venta.schema";
-import { es } from "date-fns/locale";
 // ------------------------------------------------------------------------
 
 // FUNCIONES
@@ -629,6 +628,8 @@ ModalEditSale.propTypes = {
   onClose: PropTypes.func.isRequired,
   venta: PropTypes.object.isRequired,
   fechaCreated: PropTypes.string,
+  setFinalDataSend: PropTypes.func.isRequired,
+  setShowModalConfirm: PropTypes.func.isRequired,
 };
 
 export default ModalEditSale;

@@ -58,7 +58,7 @@ const SearchDeVentas = ({ onSearch, cleanFilter }) => {
         <div className="search-block">
           <input
             className="search-user"
-            type="text"
+            type="number"
             placeholder="Buscar por código de venta..."
             value={searchTerm}
             onChange={handleChange}

@@ -137,13 +137,12 @@ const LayoutVenta = ({ venta, setReAmount }) => {
                 </div>
               )}
             </div>
+            {objectSale?.createdAt ? (
+              <div className="create-at">Creada el {formattedDate}</div>
+            ) : (
+              <div className="create-at">Fecha no disponible</div>
+            )}
           </div>
-
-          {objectSale?.createdAt ? (
-            <div className="create-at">Creada el {formattedDate}</div>
-          ) : (
-            <div className="create-at">Fecha no disponible</div>
-          )}
 
           {/* Botón para abrir modal */}
           {objectSale?.codigoVenta && (

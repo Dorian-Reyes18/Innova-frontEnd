@@ -51,7 +51,6 @@ const calculateTotals = (values) => {
 const ModalEditSale = ({
   onClose,
   venta,
-  fechaCreated,
   setFinalDataSend,
   setShowModalConfirm,
 }) => {
@@ -59,8 +58,6 @@ const ModalEditSale = ({
   const formRef = useRef(null);
 
   const { user, allProducts } = useUser(); // usuario actual
-
-  console.log(venta);
 
   // DATA
   const currentUserData = {
@@ -394,6 +391,7 @@ const ModalEditSale = ({
                                         selected?.precioVenta ?? 0
                                       );
                                     }}
+                                    style={{ width: "100%", maxWidth: "500px" }}
                                   >
                                     <option value="">
                                       Selecciona un producto

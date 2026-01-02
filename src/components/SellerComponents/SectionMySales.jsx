@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import ModalCreateSale from "./SectionMySales/ModalCreateSale";
 import TagIcon from "../../assets/MySalesIcons/TagIcon.svg";
 import PendingIcon from "../../assets/MySalesIcons/PendingIcon.svg";
 import CashIcon from "../../assets/MySalesIcons/CashIcon.svg";
@@ -9,15 +11,17 @@ import HistoryIcon from "../../assets/MySalesIcons/HistoryIcon.svg";
 import AsignarIcono from "../../assets/MySalesIcons/AssignIcon.svg";
 
 const SectionMySales = () => {
+  // ?ESTADOS
+  const [showModal, setShowModal] = useState(false);
   return (
     <div className="my-sales-container">
-      <Link to="#" className="link-option">
+      <div className="link-option" onClick={() => setShowModal(true)}>
         <img className="icon" src={TagIcon} alt="" />
         <div className="info">
           <h6>Nueva venta</h6>
           <span>Crear un nuevo registro de venta.</span>
         </div>
-      </Link>
+      </div>
       <Link to="ventas-pendientes" className="link-option">
         <img className="icon" src={PendingIcon} alt="" />
         <div className="info">
@@ -67,6 +71,13 @@ const SectionMySales = () => {
           <span>Ventas por semanas anteriores.</span>
         </div>
       </Link>
+
+      {showModal && (
+        <ModalCreateSale
+          setShowModal={setShowModal}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </div>
   );
 };

@@ -75,7 +75,7 @@ const ModalCreateSale = ({
     horaEntrega: "",
     pago_vendedor: 0,
     ComentarioRechazo: "",
-    pagoDelivery: 0,
+    pagoDelivery: 70,
     adicionalDelivery: 0,
     subtotal: 0,
     pagoTienda: 0,
@@ -245,6 +245,7 @@ const ModalCreateSale = ({
                                       selected?.precioVenta ?? 0
                                     );
                                   }}
+                                  style={{ width: "100%", maxWidth: "500px" }}
                                 >
                                   <option value="">
                                     Selecciona un producto
@@ -263,6 +264,7 @@ const ModalCreateSale = ({
                                   type="number"
                                   name={`detalleDeVenta.${index}.producto_asociado.precioVenta`}
                                   className="value"
+                                  style={{ background: "white" }}
                                   disabled
                                 />
                               </div>
@@ -336,6 +338,7 @@ const ModalCreateSale = ({
                       name="pagoDelivery"
                       type="number"
                       className="value"
+                      disabled
                     />
                   </div>
                 </div>

@@ -28,6 +28,26 @@ function ModalConfirmSave({
   const navigate = useNavigate();
 
   // ?FUNCIONES
+  const postSale = async () => {
+    setLoading(true);
+    setrenderingState(1);
+    try {
+      const response = await axiosInstance.post("/ventas", finalDataSend);
+      if (response.status === 200) {
+        setStatus(response.status);
+        setrenderingState(2);
+        setLoading(false);
+      }
+    } catch (error) {
+      setrenderingState(2);
+      console.error("Error al crear la venta:", error);
+      setStatus(error.response.status || 500);
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const putSale = async (id) => {
     setLoading(true);
     setrenderingState(1);
@@ -93,6 +113,7 @@ function ModalConfirmSave({
                     type="button"
                     className="btn-pr"
                     onClick={() => {
+                      mode == "create" ? postSale() :
                       putSale(saleId);
                     }}
                   >

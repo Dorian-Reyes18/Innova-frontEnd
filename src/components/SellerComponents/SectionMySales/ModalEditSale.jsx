@@ -208,7 +208,7 @@ const ModalEditSale = ({
             },
           };
 
-          console.log("Payload final para Strapi:", payload);
+          // console.log("Payload final para Strapi:", payload);
 
           // Llamada fetch
           handleSave(payload);

@@ -3,11 +3,10 @@ import axiosInstance from "../../../axios";
 import { useState } from "react";
 import Spinner from "../../Spiner";
 import { useNavigate } from "react-router-dom";
+import IconSuccess from "../../../assets/IconSuccess.svg";
 
 function ModalConfirmSave({
-  showModal, // Propiedad para controlar la visibilidad del modal principal
   setShowModal, // Propiedad para actualizar la visibilidad del modal principal
-  showModalConfirm, // Propiedad para controlar la visibilidad del modal de confirmación
   setShowModalConfirm, // Propiedad para actualizar la visibilidad del modal de confirmación
   finalDataSend, // Datos a enviar en el modal de confirmación
   onClose,
@@ -74,6 +73,7 @@ function ModalConfirmSave({
             <img src={SalirIcon} alt="Icono de Salir" />
           </button> */}
               <h5 className="title-confirm">
+                {/* 1 significa crear venta, 2 significa edicion de venta */}
                 {children == 1 ? "Crear venta" : "Guardar edición"}
               </h5>
               <span className="body-text">
@@ -109,9 +109,14 @@ function ModalConfirmSave({
                 <>
                   {renderingState === 2 && (
                     <>
-                      <h5 className="title-confirm">Operación exitosa</h5>
+                      <h5 className="title-confirm">
+                        <img src={IconSuccess} alt="Icono de exito" />
+                        Operación exitosa
+                      </h5>
                       <span className="body-text" style={{ width: "100%" }}>
-                        Datos actualizados correctamente
+                        {children == 1
+                          ? "La venta se ha creado exitosamente"
+                          : "Los cambios se aplicaron correctamente"}
                       </span>
                       <div
                         className="footer"

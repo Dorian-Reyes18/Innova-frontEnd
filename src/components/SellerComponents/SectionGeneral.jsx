@@ -28,7 +28,7 @@ const SectionGeneral = () => {
   }, [reAmount]);
 
   useEffect(() => {
-    console.log("amont fue cambiado", reAmount);
+    // console.log("amont fue cambiado", reAmount);
   }, [reAmount]);
 
   // Clasificar las ventas en los grupos correspondientes

@@ -7,10 +7,18 @@ import LocationIcon from "../../assets/SalesDatailsIcons/LocationIcon.svg";
 import ProductIcon from "../../assets/SalesDatailsIcons/ProductIcon.svg";
 import TimeIcon from "../../assets/SalesDatailsIcons/TimeIcon.svg";
 import ModalEditSale from "./SectionMySales/ModalEditSale";
+import ModalConfirmSave from "./SectionMySales/ModalConfirmSave";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 
-const LayoutVenta = ({ venta }) => {
+const LayoutVenta = ({ venta, setReAmount }) => {
+  //? ESTADOS
+  // Mostrar u ocultar modal
+  const [showModal, setShowModal] = useState(false); // Modal para editar (modal padre) este estado gestiona si se muestra el modal o no
+  const [showModalConfirm, setShowModalConfirm] = useState(false); //Modal para confirmar la edición (modal hermano)
+  const [finalDataSend, setFinalDataSend] = useState({}); //Datos que vamos a enviar en el modal de confirmar edición
+
+  // ? VARIABLES
   // Limpia la estructura de datos en la venta
   const objectSale = {
     ...venta,
@@ -24,7 +32,10 @@ const LayoutVenta = ({ venta }) => {
       },
     })),
   };
-  const [showModal, setShowModal] = useState(false);
+
+  const saleId = objectSale?.documentId;
+
+  // ? FUNCIONES
 
   // formatear fecha
   const formattedDate = format(
@@ -152,7 +163,28 @@ const LayoutVenta = ({ venta }) => {
               venta={objectSale}
               onClose={() => setShowModal(false)}
               fechaCreated={formattedDate}
+              setFinalDataSend={setFinalDataSend}
+              setShowModalConfirm={setShowModalConfirm}
             />
+          )}
+
+          {/* Renderiza el modal de confirmar edición si showModalConfirm es true */}
+          {showModalConfirm && (
+            <ModalConfirmSave
+              showModalConfirm={showModalConfirm}
+              setShowModalConfirm={setShowModalConfirm}
+              showModal={showModal}
+              setShowModal={setShowModal}
+              finalDataSend={finalDataSend}
+              saleId={saleId}
+              setReAmount={setReAmount}
+              onClose={() => {
+                setShowModalConfirm(false);
+                // console.log("Modal de confirmación cerrado");
+              }}
+            >
+              2
+            </ModalConfirmSave>
           )}
         </div>
       </div>

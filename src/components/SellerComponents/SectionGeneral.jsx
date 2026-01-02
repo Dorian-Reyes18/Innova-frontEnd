@@ -18,13 +18,18 @@ const SectionGeneral = () => {
     { name: "Entregada", sales: [] },
     { name: "Rechazada", sales: [] },
   ]);
+  const [reAmount, setReAmount] = useState(0);
 
   // Efectos
   useEffect(() => {
     const { startDate, endDate } = getCurrentWeekDateRange();
     setDateRange({ startDate, endDate });
     fetchSales(startDate, endDate, setLoadingSales, setSales);
-  }, []);
+  }, [reAmount]);
+
+  useEffect(() => {
+    console.log("amont fue cambiado", reAmount);
+  }, [reAmount]);
 
   // Clasificar las ventas en los grupos correspondientes
   useEffect(() => {
@@ -76,7 +81,11 @@ const SectionGeneral = () => {
               Los vendedores no han realizado ventas esta semana
             </span>
           ) : (
-            <SalesBaseFilter sales={sales} salesGroup={salesGroup} />
+            <SalesBaseFilter
+              sales={sales}
+              salesGroup={salesGroup}
+              setReAmount={setReAmount}
+            />
           )}
         </div>
       )}

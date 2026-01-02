@@ -12,6 +12,8 @@ import SalirIcon from "/src/assets/SalirIcon.svg";
 import { VentaSchema } from "../../../modules/schemas/venta.schema";
 // ------------------------------------------------------------------------
 
+// FUNCIONES
+
 // Helpers: cálculo de totales
 const calculateTotals = (values) => {
   const parseNumber = (n) => {
@@ -19,10 +21,11 @@ const calculateTotals = (values) => {
     return Number.isFinite(num) ? num : 0;
   };
 
-  const items = values.detalleDeVenta || [];
+  // array de productos asociados
+  const prdAsociados = values.detalleDeVenta || [];
 
   // Total de productos (precio * cantidad)
-  const totalProductos = items.reduce((acc, item) => {
+  const totalProductos = prdAsociados.reduce((acc, item) => {
     const price = parseNumber(item.producto_asociado?.precioVenta);
     const cantidad = parseNumber(item.cantidad);
 
@@ -41,8 +44,14 @@ const calculateTotals = (values) => {
   return { subtotal, pagoTienda, totalProductos, pagoDeliveryFijo };
 };
 
-// COMPONENTES
-const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
+// todo COMPONENTE PRINCIPAL
+const ModalEditSale = ({
+  onClose,
+  venta,
+  fechaCreated,
+  setFinalDataSend,
+  setShowModalConfirm,
+}) => {
   // HOOKS
   const formRef = useRef(null);
 
@@ -118,12 +127,17 @@ const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
     *Venta de:* ${user?.user?.data.nombreApellido} 
     `;
 
-    console.log(mensaje);
     window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, "_blank");
   };
 
+  // * HandleSave
+  const handleSave = (payload) => {
+    setFinalDataSend(payload);
+    setShowModalConfirm(true);
+  };
+
   // LOGS
-  console.log(allProducts);
+  // console.log(allProducts);
 
   const formValues = {
     detalleCliente: {
@@ -160,6 +174,7 @@ const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
         onSubmit={(values) => {
           const { subtotal, pagoTienda } = calculateTotals(values);
 
+          // Estructura del payload para los datos que se van a enviar
           const payload = {
             data: {
               vendedor_asociado: venta.vendedor_asociado?.id ?? 1,
@@ -191,8 +206,10 @@ const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
             },
           };
 
-          console.log("Payload final para Strapi:", payload);
-          // aquí llamarías a tu servicio de actualización
+          // console.log("Payload final para Strapi:", payload);
+
+          // Llamada fetch
+          handleSave(payload);
         }}
       >
         {({ values, setFieldValue, submitForm }) => {
@@ -550,10 +567,6 @@ const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
                         type="button"
                         className="btn-pr"
                         onClick={() => {
-                          console.log(
-                            "VALORES POR formRef:",
-                            formRef.current?.values
-                          );
                           submitForm();
                         }}
                       >
@@ -567,10 +580,6 @@ const ModalEditSale = ({ onClose, venta, fechaCreated }) => {
                       type="button"
                       className="btn-pr"
                       onClick={() => {
-                        console.log(
-                          "VALORES POR formRef:",
-                          formRef.current?.values
-                        );
                         submitForm();
                       }}
                     >

@@ -3,7 +3,7 @@ import SearchDeVentas from "./SearchDeVentas";
 import LayoutVenta from "../LayoutVenta";
 import FiltroDeVentas from "./FiltroDeVentas";
 
-const SalesBaseFilter = ({ sales, salesGroup }) => {
+const SalesBaseFilter = ({ sales, salesGroup, setReAmount }) => {
   const [filteredSales, setFilteredSales] = useState([]);
   const [stateRendering, setStateRendering] = useState(false);
 
@@ -44,11 +44,11 @@ const SalesBaseFilter = ({ sales, salesGroup }) => {
               No hay resultados para la búsqueda
             </div>
           ) : (
-            <LayoutVenta venta={filteredSales[0]} />
+            <LayoutVenta venta={filteredSales[0]} setReAmount={setReAmount} />
           )}
         </div>
       ) : (
-        <FiltroDeVentas salesGroup={salesGroup} />
+        <FiltroDeVentas salesGroup={salesGroup}  setReAmount={setReAmount}/>
       )}
     </div>
   );

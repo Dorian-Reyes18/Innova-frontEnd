@@ -27,7 +27,7 @@ const GestionarProductos = () => {
 
   // Función para verificar permisos por rol
   const hasRoleAccess = (roles) => roles.includes(myUser?.role?.name);
-  console.log("myUser", myUser?.role?.name);
+  // console.log("myUser", myUser?.role?.name);
 
   // Cargar datos del producto
   const fetchProducts = async () => {
@@ -71,7 +71,7 @@ const GestionarProductos = () => {
         values
       );
 
-      console.log(response);
+      // console.log(response);
       if (response.status === 204) {
         setConfirmDelete(true);
       }

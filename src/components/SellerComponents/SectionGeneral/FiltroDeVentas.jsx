@@ -17,7 +17,7 @@ EstadoWatcher.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-const FiltroDeVentas = ({ salesGroup }) => {
+const FiltroDeVentas = ({ salesGroup, setReAmount }) => {
   const [selectedOption, setSelectedOption] = useState("En tramite");
 
   // Función para obtener las ventas según el estado seleccionado
@@ -68,7 +68,11 @@ const FiltroDeVentas = ({ salesGroup }) => {
 
                   <div className="sales-list">
                     {ventasFiltradas.map((venta) => (
-                      <LayoutVenta key={venta.codigoVenta} venta={venta} />
+                      <LayoutVenta
+                        key={venta.codigoVenta}
+                        venta={venta}
+                        setReAmount={setReAmount}
+                      />
                     ))}
                   </div>
                 </>

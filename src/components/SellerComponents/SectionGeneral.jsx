@@ -1,10 +1,9 @@
-// importaciones
+// SectionGeneral.jsx
 import { useState, useEffect } from "react";
 import { getCurrentWeekDateRange, fetchSales } from "./SectionGeneral/utils";
 import SalesBaseFilter from "./SectionGeneral/SalesBaseFilter";
 import Spinner from "../Spiner";
 
-// Componente
 const SectionGeneral = () => {
   // Estados
   const [loadingSales, setLoadingSales] = useState(true);
@@ -20,46 +19,51 @@ const SectionGeneral = () => {
   ]);
   const [reAmount, setReAmount] = useState(0);
 
-  // Efectos
+  // Efecto: fetch de ventas
   useEffect(() => {
     const { startDate, endDate } = getCurrentWeekDateRange();
     setDateRange({ startDate, endDate });
+    setLoadingSales(true);
+
+    // fetchSales maneja setSales y setLoadingSales internamente
     fetchSales(startDate, endDate, setLoadingSales, setSales);
-  }, [reAmount]);
+  }, [reAmount]); // si reAmount cambia, volvemos a fetch
 
+  // Efecto: agrupar ventas por estado
   useEffect(() => {
-    // console.log("amont fue cambiado", reAmount);
-  }, [reAmount]);
-
-  // Clasificar las ventas en los grupos correspondientes
-  useEffect(() => {
-    if (sales.length > 0) {
-      const sortedSales = [...sales].sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
-
-      const groupedSales = sortedSales.reduce((acc, sale) => {
-        const saleStatus = sale.estadoVenta.estado;
-        const group = acc.find((group) => group.name === saleStatus);
-
-        if (group) {
-          group.sales.push(sale);
-        } else {
-          acc.push({ name: saleStatus, sales: [sale] });
-        }
-
-        return acc;
-      }, []);
-
-      const allGroupsWithSales = salesGroup.map((group) => {
-        const matchedGroup = groupedSales.find((g) => g.name === group.name);
-        return matchedGroup ? matchedGroup : group;
-      });
-
-      setSalesGroup(allGroupsWithSales);
-    } else {
+    if (!sales || sales.length === 0) {
+      // no hay ventas, mantener los grupos vacíos
       setSalesGroup((prevGroup) => prevGroup);
+      return;
     }
+
+    // Ordenar por fecha descendente
+    const sortedSales = [...sales].sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
+    // Agrupar ventas por estado
+    const initialGroups = [
+      { name: "En tramite", sales: [] },
+      { name: "Por asignar", sales: [] },
+      { name: "Asignadas", sales: [] },
+      { name: "En ruta", sales: [] },
+      { name: "Entregada", sales: [] },
+      { name: "Rechazada", sales: [] },
+    ];
+
+    const groupedSales = sortedSales.reduce((acc, sale) => {
+      const saleStatus = sale.estadoVenta.estado;
+      const group = acc.find((g) => g.name === saleStatus);
+      if (group) {
+        group.sales.push(sale);
+      } else {
+        acc.push({ name: saleStatus, sales: [sale] });
+      }
+      return acc;
+    }, initialGroups);
+
+    setSalesGroup(groupedSales);
   }, [sales]);
 
   return (
@@ -84,7 +88,7 @@ const SectionGeneral = () => {
             <SalesBaseFilter
               sales={sales}
               salesGroup={salesGroup}
-              setReAmount={setReAmount}
+              setReAmount={setReAmount} // cuando cambie, refresca
             />
           )}
         </div>

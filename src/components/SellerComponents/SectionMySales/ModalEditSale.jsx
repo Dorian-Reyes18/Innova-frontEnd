@@ -10,6 +10,7 @@ import SalirIcon from "/src/assets/SalirIcon.svg";
 
 // Esquema de validación
 import { VentaSchema } from "../../../modules/schemas/venta.schema";
+import { es } from "date-fns/locale";
 // ------------------------------------------------------------------------
 
 // FUNCIONES
@@ -157,11 +158,14 @@ const ModalEditSale = ({
     })),
     horaEntrega: venta.horaEntrega || "",
     pago_vendedor: venta.pago_vendedor || 0,
+    ComentarioRechazo: venta.ComentarioRechazo || "",
     pagoDelivery: venta.pagoDelivery || 0,
     adicionalDelivery: venta.adicionalDelivery || 0,
     subtotal: venta.subtotal || 0,
     pagoTienda: venta.pagoTienda || 0,
-    estadoVenta: (venta.estadoVenta || {}).estado || "pendiente",
+    estadoVenta: {
+      estado: venta.estadoVenta?.estado || "pendiente",
+    },
   };
 
   return (
@@ -190,23 +194,22 @@ const ModalEditSale = ({
               })),
 
               codigoVenta: venta.codigoVenta || "",
-              estadoVenta: {
-                estado: values.estadoVenta,
-              },
-              ComentarioRechazo: venta.ComentarioRechazo || "",
+              estadoVenta: values.estadoVenta,
+
+              ComentarioRechazo: values?.ComentarioRechazo || "",
 
               // calculados
               pagoDelivery: values.pagoDelivery,
               adicionalDelivery: values.adicionalDelivery,
               subtotal,
               pagoTienda,
-              pago_vendedor: values.pago_vendedor,
+              pago_vendedor: values.pago_vendedor || 0,
               estado_pago_vendedor: venta.estado_pago_vendedor ?? false,
-              horaEntrega: values.horaEntrega,
+              horaEntrega: values.horaEntrega || "",
             },
           };
 
-          // console.log("Payload final para Strapi:", payload);
+          console.log("Payload final para Strapi:", payload);
 
           // Llamada fetch
           handleSave(payload);
@@ -321,7 +324,7 @@ const ModalEditSale = ({
                             producto.producto_asociado?.id ?? null;
 
                           // productos disponibles = todos menos los ya elegidos,
-                          //   pero dejando el que está seleccionado en esta fila
+                          // pero dejando el que está seleccionado en esta fila
                           const availableProducts = (allProducts || []).filter(
                             (prod) =>
                               !selectedIds.includes(prod.id) ||
@@ -539,7 +542,7 @@ const ModalEditSale = ({
                     <label className="label">Estado de venta</label>
                     <Field
                       as="select"
-                      name="estadoVenta"
+                      name="estadoVenta.estado" // <- usar la propiedad 'estado'
                       className="value"
                       disabled={isEditable()}
                     >
@@ -551,6 +554,23 @@ const ModalEditSale = ({
                     </Field>
                   </div>
                 </div>
+
+                {/* Comentario de rechazo */}
+                {values.estadoVenta.estado === "Rechazada" && (
+                  <div className="fila">
+                    <div className="group-el">
+                      <label className="label">Comentario de rechazo</label>
+                      <Field
+                        as="textarea"
+                        rows="3"
+                        name="ComentarioRechazo"
+                        className="textarea"
+                        placeholder="Explique al vendedor el motivo del rechazo..."
+                        disabled={isEditable()}
+                      ></Field>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* FOOTER */}

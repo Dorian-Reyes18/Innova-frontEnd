@@ -4,8 +4,8 @@ export const VentaSchema = Yup.object({
   detalleCliente: Yup.object({
     nombre: Yup.string().required("Nombre requerido"),
     telefono: Yup.string().required("Teléfono requerido"),
-    direccionGps: Yup.string().required("URL requerida"),
-    direccion: Yup.string().required("Dirección requerida"),
+    direccionGps: Yup.string(),
+    direccion: Yup.string(),
   }),
 
   detalleDeVenta: Yup.array()
@@ -38,6 +38,7 @@ export const VentaSchema = Yup.object({
   horaEntrega: Yup.string().nullable(),
 
   metodoPago: Yup.string(),
+  ComentarioRechazo: Yup.string(),
 
   pago_vendedor: Yup.number()
     .typeError("Debe ser un número")

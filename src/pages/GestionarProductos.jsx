@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 import { useParams, Link } from "react-router-dom";
-import { useUser } from "../context/userContext";
+import { useUser } from "../context/UserContext";
 import axiosInstance from "../axios";
 import HeaderProductos from "../components/ProductosComponent/HeaderProductos";
 import ProductPlaceholder from "../assets/ProductPlaceholder.svg";
@@ -109,6 +109,18 @@ const GestionarProductos = () => {
     }
   }, [myUser]);
 
+  useEffect(() => {
+    if (putLoading && showModal) {
+      setShowModal(false);
+    }
+  }, [putLoading, showModal]);
+
+  useEffect(() => {
+    if (deleteLoading && showModalDelete) {
+      setShowModalDelete(false);
+    }
+  }, [deleteLoading, showModalDelete]);
+
   return (
     <div className="gestion-productos">
       <HeaderProductos />
@@ -190,7 +202,6 @@ const GestionarProductos = () => {
                       </div>
                     </div>
                   )}
-                  {putLoading && showModal ? setShowModal(false) : null}
                   {putLoading ? (
                     <div className="modal-conatiner">
                       <div className="modal-content">
@@ -200,9 +211,6 @@ const GestionarProductos = () => {
                       </div>
                     </div>
                   ) : null}
-                  {deleteLoading && showModalDelete
-                    ? setShowModalDelete(false)
-                    : null}
                   {deleteLoading ? (
                     <div className="modal-conatiner">
                       <div className="modal-content">

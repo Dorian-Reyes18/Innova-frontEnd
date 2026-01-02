@@ -5,7 +5,7 @@ import { useUser } from "../../context/UserContext";
 
 const CierreLink = () => {
   const { user } = useUser();
-  const roleName = user?.user?.data?.role?.name?.toLowerCase(); 
+  const roleName = user?.user?.data?.role?.name?.toLowerCase();
 
   // Definimos los roles permitidos
   const rolesPermitidos = ["administrador", "stocker"];

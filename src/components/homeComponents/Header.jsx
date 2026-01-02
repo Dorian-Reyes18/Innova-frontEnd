@@ -1,4 +1,4 @@
-import { useUser } from "../../context/userContext";
+import { useUser } from "../../context/UserContext";
 import { useEffect, useState } from "react";
 import AdminIcon from "../../assets/AdminIconWhite.svg";
 import StockerIcon from "../../assets/StockerIcon.svg";

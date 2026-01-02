@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import * as Yup from "yup";
 import HeaderVentas from "../components/SellerComponents/HeaderVentas";
 import { Link } from "react-router-dom";
-import { useUser } from "../context/userContext";
+import { useUser } from "../context/UserContext";
 import { getSalesByUser } from "../components/SellerComponents/SectionGeneral/utils";
 import TableMySalesRange from "../components/SellerComponents/SectionMySales/TableMySalesRange";
 import { registerLocale } from "react-datepicker";

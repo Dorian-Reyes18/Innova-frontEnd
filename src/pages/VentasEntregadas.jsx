@@ -1,6 +1,6 @@
 import HeaderVentas from "../components/SellerComponents/HeaderVentas";
 import { Link } from "react-router-dom";
-import { useUser } from "../context/userContext";
+import { useUser } from "../context/UserContext";
 import { useState, useEffect } from "react";
 import Spinner from "../components/Spiner";
 import LayoutVenta from "../components/SellerComponents/LayoutVenta";

@@ -20,9 +20,13 @@ const Login = () => {
 
   const imagePreview = (showPasswrd) => {
     if (!showPasswrd) {
-      return <img src={Show} alt="mostrar contraseña" title="Mostrar contraseña" />;
+      return (
+        <img src={Show} alt="mostrar contraseña" title="Mostrar contraseña" />
+      );
     } else {
-      return <img src={Hide} alt="ocultar contraseña" title="Ocultar contraseña" />;
+      return (
+        <img src={Hide} alt="ocultar contraseña" title="Ocultar contraseña" />
+      );
     }
   };
   const handleLogin = async (e) => {

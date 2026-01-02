@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useUser } from "../../context/userContext";
+import { useUser } from "../../context/UserContext";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { useUser } from "../context/userContext";
+import { useUser } from "../context/UserContext";
 import axiosInstance from "../axios";
 import HeaderProductos from "../components/ProductosComponent/HeaderProductos";
 import ProductPlaceholder from "../assets/ProductPlaceholder.svg";

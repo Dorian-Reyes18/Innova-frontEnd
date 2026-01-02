@@ -1,5 +1,5 @@
 // Dependencias
-import { UserProvider } from "./context/userContext";
+import { UserProvider } from "./context/UserContext";
 import { Routes, Route, Navigate } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -118,7 +118,8 @@ function App() {
 
         {/* Ruta Panel de ventas y subpaginas */}
         <Route
-          path="/panel-de-ventas"p
+          path="/panel-de-ventas"
+          p
           element={
             <PrivateRoute>
               <div style={{ display: "flex", height: "100vh" }}>

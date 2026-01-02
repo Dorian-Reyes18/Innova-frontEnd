@@ -1,13 +1,13 @@
 import { useState } from "react";
 import InnovaStockIcon from "../../assets/InnovaStock.svg";
 import { Link } from "react-router-dom";
-import { useUser } from "../../context/userContext";
+import { useUser } from "../../context/UserContext";
 import PropTypes from "prop-types";
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const { user } = useUser();
-  const role = user?.user?.data?.role?.name?.toLowerCase(); 
+  const role = user?.user?.data?.role?.name?.toLowerCase();
 
   const handleSearch = () => {
     onSearch(searchTerm);

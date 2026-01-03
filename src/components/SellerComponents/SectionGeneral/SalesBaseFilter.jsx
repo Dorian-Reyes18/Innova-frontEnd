@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import SearchDeVentas from "./SearchDeVentas";
 import LayoutVenta from "../LayoutVenta";
 import FiltroDeVentas from "./FiltroDeVentas";
+import NoResults from "../NoResults";
 import PropTypes from "prop-types";
 
 const SalesBaseFilter = ({ sales, salesGroup, setReAmount }) => {
@@ -41,9 +42,16 @@ const SalesBaseFilter = ({ sales, salesGroup, setReAmount }) => {
       {stateRendering ? (
         <div className="sales-list">
           {filteredSales.length === 0 ? (
-            <div className="error-message" style={{ margin: "0 auto" }}>
-              No hay resultados para la búsqueda
-            </div>
+            <>
+              <span className="count-result">0 resultados</span>
+
+              <NoResults
+                message="Sin resultados para mostrar"
+                submessage={
+                  "Escribe un código de venta válido  o de una venta que exista."
+                }
+              />
+            </>
           ) : (
             <LayoutVenta venta={filteredSales[0]} setReAmount={setReAmount} />
           )}

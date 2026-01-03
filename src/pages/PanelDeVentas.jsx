@@ -54,7 +54,7 @@ const PanelDeVentas = () => {
                     className={`tab ${activeTab === "tab3" ? "active" : ""}`}
                     onClick={() => setActiveTab("tab3")}
                   >
-                    Mis ventas
+                    personal
                   </div>
                 </div>
               </>

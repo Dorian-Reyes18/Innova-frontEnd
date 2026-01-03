@@ -461,8 +461,8 @@ html {
         font-weight: bold;
         cursor: pointer;
         background: $color-blanco;
-        border: 1px solid $color-tab1;
-        box-shadow: 0 4px 2px rgba(205, 151, 255, 0.25);
+        border: 1px solid $color-bordes;
+        box-shadow: 0 4px 2px rgba(173, 173, 173, 0.25);
         border-radius: 6px;
         transition: background 0.3s ease-in-out, color 0.3s ease-in-out,
           opacity 0.3s;
@@ -809,6 +809,33 @@ html {
       -webkit-line-clamp: 2; /* número de líneas */
       -webkit-box-orient: vertical;
       overflow: hidden;
+    }
+
+    .no-results-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 30px;
+      background: $color-blanco;
+      align-items: center;
+      border: 1px solid $color-bordes;
+      gap: 30px;
+      text-align: center;
+      border-radius: 8px;
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      -ms-border-radius: 8px;
+      -o-border-radius: 8px;
+
+      .message {
+        font-weight: bold;
+      }
+
+      .submessage {
+        color: $color-letra-secundaria;
+        font-size: 14px;
+      }
     }
   }
 }

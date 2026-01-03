@@ -59,12 +59,9 @@ const VentasPorAsignar = () => {
                 <div className="resultados-filtrados">
                   <span className="count-result">
                     {pendingSales.length} venta
-                    {pendingSales.length > 1 ? "s" : " "}
-                    {""}
-                    se encuentra
-                    {pendingSales.length > 1 ? "n" : " "}
-                    pendiente por
-                    {pendingSales.length > 1 ? "n" : ""} asignar
+                    {pendingSales.length > 1 ? "s" : " "} se encuentra
+                    {pendingSales.length > 1 ? "n" : " "} pendiente
+                    {pendingSales.length > 1 ? "s" : " "} por asignar
                   </span>
                   <div className="results">
                     {pendingSales.map((sale) => (

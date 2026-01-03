@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import NoResults from "../NoResults";
 
 const SearchDeVentas = ({ onSearch, cleanFilter }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -73,12 +74,14 @@ const SearchDeVentas = ({ onSearch, cleanFilter }) => {
         <button onClick={handleSearch}>Buscar</button>
       </div>
       {errorMessage && (
-        <div
-          className="error-message"
-          style={{ color: "red", marginTop: "10px" }}
-        >
-          {errorMessage}
-        </div>
+        <>
+          <div
+            className="error-message"
+            style={{ color: "red", marginTop: "10px" }}
+          >
+            {errorMessage}
+          </div>
+        </>
       )}
     </div>
   );
@@ -90,4 +93,3 @@ SearchDeVentas.propTypes = {
 };
 
 export default SearchDeVentas;
-

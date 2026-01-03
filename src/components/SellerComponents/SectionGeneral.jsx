@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { getCurrentWeekDateRange, fetchSales } from "./SectionGeneral/utils";
 import SalesBaseFilter from "./SectionGeneral/SalesBaseFilter";
 import Spinner from "../Spiner";
+import NoResults from "../../assets/memes/NohayResultados.png";
 
 const SectionGeneral = () => {
   // Estados
@@ -80,7 +81,10 @@ const SectionGeneral = () => {
                 justifyContent: "center",
               }}
             >
-              Los vendedores no han realizado ventas esta semana
+              <NoResults
+                message="No hay ventas registradas en esta semana"
+                submessage="Pidele a los vendedores que hagan ventas"
+              />
             </span>
           ) : (
             <SalesBaseFilter

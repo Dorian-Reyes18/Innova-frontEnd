@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Formik, Field, useFormikContext } from "formik";
 import PropTypes from "prop-types";
 import LayoutVenta from "../LayoutVenta";
+import NoResults from "../NoResults";
 
 const EstadoWatcher = ({ onChange }) => {
   const { values } = useFormikContext();
@@ -63,9 +64,15 @@ const FiltroDeVentas = ({ salesGroup, setReAmount }) => {
 
               if (ventasFiltradas.length === 0) {
                 return (
-                  <p className="error-message" style={{ margin: "30px 0" }}>
-                    {`No hay ventas que mostrar en la sección "${selectedOption}"`}
-                  </p>
+                  <>
+                    <span className="count-result">0 resultados</span>
+                    <NoResults
+                      message={`No se encontraron ventas en la sección "${selectedOption}"`}
+                      submessage={
+                        "Intenta cambiar los filtros o el termino de búsqueda"
+                      }
+                    />
+                  </>
                 );
               }
 

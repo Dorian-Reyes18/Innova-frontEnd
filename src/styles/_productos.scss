@@ -1,6 +1,7 @@
 .header-products {
   display: flex;
   position: relative;
+  background: $color-blanco;
   width: 100%;
   display: flex;
   z-index: 2;
@@ -240,10 +241,6 @@
         flex-direction: column;
         gap: 5px;
 
-        label {
-          font-size: 14px;
-          font-family: $montserrat-bold;
-        }
         .imagen {
           width: 150px;
           height: auto;

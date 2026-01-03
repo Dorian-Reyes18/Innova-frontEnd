@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Formik, Form, ErrorMessage } from "formik";
 import DatePicker from "react-datepicker";
 import * as Yup from "yup";
-import HeaderVentas from "../components/SellerComponents/HeaderVentas";
+// import HeaderVentas from "../components/SellerComponents/HeaderVentas";
 import { Link } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { getSalesByUser } from "../components/SellerComponents/SectionGeneral/utils";
@@ -61,7 +61,7 @@ const VentasAnteriores = () => {
 
   return (
     <>
-      <HeaderVentas style={{ marginBottom: "0" }} />
+      {/* <HeaderVentas style={{ marginBottom: "0" }} /> */}
       <div className="container-general-ventas" style={{ marginBottom: "0" }}>
         <div className="block-history">
           <div className="title-history">
@@ -153,7 +153,7 @@ const VentasAnteriores = () => {
                       </button>
                       <button
                         type="submit"
-                        className="btn-out"
+                        className="btn-pr"
                         disabled={loading}
                       >
                         Buscar

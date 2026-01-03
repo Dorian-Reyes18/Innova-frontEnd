@@ -32,6 +32,8 @@ const Header = () => {
     },
   ];
 
+  // console.log(myUser?.role);
+
   useEffect(() => {
     if (user !== null) {
       setMyUser(user?.user?.data);
@@ -45,7 +47,7 @@ const Header = () => {
         {
           // buscar el icono
           roles.map((role) => {
-            if (role.id === myUser?.role?.id) {
+            if (role?.name === myUser?.role?.name) {
               return <img src={role.icon} alt={role.name} key={role.id} />;
             }
             return null;

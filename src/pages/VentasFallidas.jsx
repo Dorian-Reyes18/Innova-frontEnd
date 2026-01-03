@@ -57,11 +57,24 @@ const VentasFallidas = () => {
             <div className="container-content">
               <div className="content-tab">
                 <div className="resultados-filtrados">
-                  <span className="count-result">
-                    Tienes {pendingSales.length} venta
-                    {pendingSales.length > 1 ? "s" : ""} entregada
-                    {pendingSales.length > 1 ? "s" : ""}
-                  </span>
+                  <div>
+                    <span className="count-result">
+                      Tienes {pendingSales.length} venta
+                      {pendingSales.length > 1 ? "s" : ""} rechazada
+                      {pendingSales.length > 1 ? "s" : ""}
+                      <br />
+                      <span
+                        style={{
+                          fontFamily: "montserrat-regular",
+                          marginTop: "10px",
+                          fontSize: "14px",
+                        }}
+                      >
+                        Revisa por que motivo tu venta fue rechazada en el panel
+                        y vuelve moverla de estado
+                      </span>
+                    </span>
+                  </div>
                   <div className="results">
                     {pendingSales.map((sale) => (
                       <LayoutVenta venta={sale} key={sale.id} />

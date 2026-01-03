@@ -1,9 +1,9 @@
 .container-general-ventas {
-  padding: 20px;
+  padding: 20px 40px;
   display: flex;
+  align-items: center;
   gap: 35px;
   flex-direction: column;
-  align-items: center;
   margin-bottom: 40px;
 
   @include media(mobile) {
@@ -17,7 +17,7 @@
   .venta-container {
     width: 100%;
     max-width: 320px;
-
+    box-shadow: 0 15px 8px rgba(80, 80, 80, 0.25);
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -35,7 +35,6 @@
       max-width: 900px;
       width: 100%;
       height: 100%;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
       word-break: break-word;
       border-radius: 0 0 8px 8px;
       -webkit-border-radius: 0 0 8px 8px;
@@ -73,21 +72,27 @@
       }
 
       .card-body {
-        padding: 20px;
+        padding: 15px;
         height: 86%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        background: $color-blanco;
+        border-radius: 0 0 8px 8px;
+        -webkit-border-radius: 0 0 8px 8px;
+        -moz-border-radius: 0 0 8px 8px;
+        -ms-border-radius: 0 0 8px 8px;
+        -o-border-radius: 0 0 8px 8px;
 
         .content {
           font-size: 14px;
           display: grid;
-          gap: 15px;
+          gap: 12px;
           width: 100%;
 
           .group-item {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             flex-direction: column;
 
             .item {
@@ -118,6 +123,8 @@
           display: flex;
           justify-content: center;
           margin-top: 10px;
+          border-top: 1px solid $color-bordes;
+          padding-top: 10px;
           font-size: 13px;
         }
       }
@@ -155,11 +162,10 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-bottom: 35px;
+        margin-bottom: 15px;
 
         .search-bar {
           width: 100%;
-          max-width: 500px;
 
           .search-block {
             width: 100%;
@@ -188,14 +194,7 @@
         align-items: center;
         gap: 10px;
 
-        label {
-          max-width: 500px;
-          width: 100%;
-          text-align: left;
-        }
-
         select {
-          max-width: 500px;
           width: 100%;
         }
 
@@ -208,7 +207,7 @@
         flex-direction: row;
         flex-wrap: wrap;
         gap: 25px;
-        justify-content: center;
+        justify-content: left;
       }
 
       // Estilos correspondientes a la sección por vendedor
@@ -219,14 +218,8 @@
         justify-content: center;
         align-items: center;
 
-        label {
-          width: 100%;
-          max-width: 500px;
-        }
-
         .select {
           width: 100%;
-          max-width: 500px;
         }
       }
 
@@ -337,6 +330,7 @@
     width: 100%;
     display: flex;
     overflow: hidden;
+    margin-top: 30px;
     flex-direction: column;
     max-width: 1450px;
     box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.3);
@@ -354,10 +348,10 @@
       box-shadow: none;
     }
     @include media(desktop) {
-      height: 515px;
+      height: 85vh;
     }
     @include media(desktopXXL) {
-      height: 750px;
+      height: 88vh;
     }
 
     .title-history {
@@ -540,7 +534,7 @@
                 .react-datepicker__day,
                 .react-datepicker__day--selected {
                   width: 2.5rem !important;
-                  line-height: 3rem !important;
+                  line-height: rem !important;
                   height: 3rem !important;
                   font-size: 1.2rem !important;
                 }

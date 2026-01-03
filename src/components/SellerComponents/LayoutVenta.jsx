@@ -96,37 +96,44 @@ const LayoutVenta = ({ venta, setReAmount }) => {
                 </div>
               )}
             </div>
-
-            <div className="group-item">
-              {objectSale?.detalleCliente?.direccionGps && (
-                <div className="item">
-                  <img src={LocationIcon} alt="icono ubicación" />
-                  <a
-                    href={objectSale.detalleCliente.direccionGps}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="valueSort"
-                  >
-                    {objectSale.detalleCliente.direccionGps}
-                  </a>
-                </div>
-              )}
-
-              {objectSale?.horaEntrega && (
-                <div className="item">
-                  <img src={TimeIcon} alt="icono hora entrega" />
-                  <div className="desc">
-                    Entrega a las {objectSale.horaEntrega}
+            {/* 
+            {objectSale?.detalleCliente?.direccionGps && (
+              <div className="group-item">
+                {objectSale?.detalleCliente?.direccionGps && (
+                  <div className="item">
+                    <img src={LocationIcon} alt="icono ubicación" />
+                    <a
+                      href={objectSale.detalleCliente.direccionGps}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="valueSort"
+                    >
+                      {objectSale.detalleCliente.direccionGps}
+                    </a>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+
+                {objectSale?.horaEntrega && (
+                  <div className="item">
+                    <img src={TimeIcon} alt="icono hora entrega" />
+                    <div className="desc">
+                      Entrega a las {objectSale.horaEntrega}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )} */}
 
             <div className="group-item">
               {objectSale?.pagoDelivery !== undefined && (
                 <div className="item">
                   <img src={DeliveryIcon} alt="icono de delivery" />
-                  <div className="desc">C$ {objectSale.pagoDelivery}</div>
+                  <div className="desc">
+                    C$ {objectSale.pagoDelivery}
+                    {objectSale?.adicionalDelivery > 0
+                      ? ` + C$ ${objectSale?.adicionalDelivery}`
+                      : " "}
+                  </div>
                 </div>
               )}
 
@@ -148,10 +155,10 @@ const LayoutVenta = ({ venta, setReAmount }) => {
           {objectSale?.codigoVenta && (
             <button
               style={{ margin: "0 auto", marginTop: "20px" }}
-              className="btn-pr"
+              className="btn-out"
               onClick={() => setShowModal(true)}
             >
-              ver detalles
+              Mas información
             </button>
           )}
 

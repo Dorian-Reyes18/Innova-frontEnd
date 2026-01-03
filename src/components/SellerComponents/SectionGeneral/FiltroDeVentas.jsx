@@ -36,16 +36,26 @@ const FiltroDeVentas = ({ salesGroup, setReAmount }) => {
           {/* Sincroniza el select con Formik → y con estado local */}
           <EstadoWatcher onChange={setSelectedOption} />
 
-          <label htmlFor="filtro">Resultados por estado</label>
-
-          <Field as="select" name="filtro">
-            <option value="En tramite">En tramite</option>
-            <option value="Por asignar">Por asignar</option>
-            <option value="Asignadas">Asignadas</option>
-            <option value="En ruta">En ruta</option>
-            <option value="Rechazada">Rechazada</option>
-            <option value="Entregada">Entregada</option>
-          </Field>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              gap: "10px",
+              alignItems: "center",
+            }}
+          >
+            <div className="label" style={{ width: "max-content" }}>
+              Resultados por estado
+            </div>
+            <Field as="select" name="filtro">
+              <option value="En tramite">En tramite</option>
+              <option value="Por asignar">Por asignar</option>
+              <option value="Asignadas">Asignadas</option>
+              <option value="En ruta">En ruta</option>
+              <option value="Rechazada">Rechazada</option>
+              <option value="Entregada">Entregada</option>
+            </Field>
+          </div>
 
           <div className="content-result">
             {(() => {
@@ -98,6 +108,7 @@ FiltroDeVentas.propTypes = {
       ).isRequired,
     })
   ).isRequired,
+  setReAmount: PropTypes.func.isRequired,
 };
 
 export default FiltroDeVentas;

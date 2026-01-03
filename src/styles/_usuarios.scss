@@ -221,7 +221,6 @@
       .label {
         width: 30%;
         text-align: start;
-        font-family: $montserrat-bold;
         display: none;
 
         @include media(mobile) {
@@ -338,11 +337,6 @@
                 gap: 5px;
                 flex-grow: 1;
                 min-width: 0;
-
-                label {
-                  font-family: $montserrat-bold;
-                  font-size: 14px;
-                }
 
                 input {
                   width: 100%;

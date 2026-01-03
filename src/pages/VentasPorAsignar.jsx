@@ -19,7 +19,6 @@ const VentasPorAsignar = () => {
   const [pendingSales, setPendingSales] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sales, setSales] = useState([]);
-  const [finalLoading, setFinalLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +40,6 @@ const VentasPorAsignar = () => {
 
     // Fin del proceso de carga (aunque sea 0 resultados, ya procesamos todo)
     setLoading(false);
-    setFinalLoading(true);
   }, [sales]);
 
   return (
@@ -61,8 +59,12 @@ const VentasPorAsignar = () => {
                 <div className="resultados-filtrados">
                   <span className="count-result">
                     {pendingSales.length} venta
-                    {pendingSales.length > 1 ? "s" : ""} no se ha{" "}
-                    {pendingSales.length > 1 ? "n" : null} asignado
+                    {pendingSales.length > 1 ? "s" : " "}
+                    {""}
+                    se encuentra
+                    {pendingSales.length > 1 ? "n" : " "}
+                    pendiente por
+                    {pendingSales.length > 1 ? "n" : ""} asignar
                   </span>
                   <div className="results">
                     {pendingSales.map((sale) => (

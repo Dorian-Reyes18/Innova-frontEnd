@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import SearchDeVentas from "./SearchDeVentas";
 import LayoutVenta from "../LayoutVenta";
 import FiltroDeVentas from "./FiltroDeVentas";
+import PropTypes from "prop-types";
 
 const SalesBaseFilter = ({ sales, salesGroup, setReAmount }) => {
   const [filteredSales, setFilteredSales] = useState([]);
@@ -48,10 +49,16 @@ const SalesBaseFilter = ({ sales, salesGroup, setReAmount }) => {
           )}
         </div>
       ) : (
-        <FiltroDeVentas salesGroup={salesGroup}  setReAmount={setReAmount}/>
+        <FiltroDeVentas salesGroup={salesGroup} setReAmount={setReAmount} />
       )}
     </div>
   );
+};
+
+SalesBaseFilter.propTypes = {
+  sales: PropTypes.array.isRequired,
+  salesGroup: PropTypes.array.isRequired,
+  setReAmount: PropTypes.func.isRequired,
 };
 
 export default SalesBaseFilter;

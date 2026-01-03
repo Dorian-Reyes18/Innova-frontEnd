@@ -615,6 +615,7 @@ const ModalEditSale = ({
                     <button
                       type="button"
                       className="btn-pr"
+                      style={{minWidth: "103px"}}
                       onClick={() => {
                         submitForm();
                       }}

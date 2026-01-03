@@ -48,11 +48,11 @@ html {
       border: 1px solid $color-morado;
       display: flex;
       padding: 0 0 0 8px;
-      border-radius: 8px;
-      -webkit-border-radius: 8px;
-      -moz-border-radius: 8px;
-      -ms-border-radius: 8px;
-      -o-border-radius: 8px;
+      border-radius: 4px;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      -o-border-radius: 4px;
       background: $color-blanco;
 
       img {
@@ -74,14 +74,15 @@ html {
       outline: none;
       text-decoration: none;
       border: none;
+      word-break: auto-phrase;
       padding: 8px 18px;
       background: $color-morado;
       color: $color-blanco;
-      border-radius: 8px;
-      -webkit-border-radius: 8px;
-      -moz-border-radius: 8px;
-      -ms-border-radius: 8px;
-      -o-border-radius: 8px;
+      border-radius: 4px;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      -o-border-radius: 4px;
 
       &:hover {
         background: $color-morado-hover;
@@ -107,14 +108,15 @@ html {
       background: $color-blanco;
       color: $color-morado;
       border: 1px solid $color-morado;
-      border-radius: 8px;
-      -webkit-border-radius: 8px;
-      -moz-border-radius: 8px;
-      -ms-border-radius: 8px;
-      -o-border-radius: 8px;
+      border-radius: 4px;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      -o-border-radius: 4px;
 
       &:hover {
-        background: $color-morado-opaco;
+        background: $color-morado;
+        color: $color-blanco;
       }
 
       &:active {
@@ -133,11 +135,11 @@ html {
       background: $color-blanco;
       color: $color-succes;
       border: 1px solid $color-succes;
-      border-radius: 8px;
-      -webkit-border-radius: 8px;
-      -moz-border-radius: 8px;
-      -ms-border-radius: 8px;
-      -o-border-radius: 8px;
+      border-radius: 4px;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      -o-border-radius: 4px;
 
       &:hover {
         background: $color-succes-opaco;
@@ -159,11 +161,11 @@ html {
       background: $color-rojo;
       color: $color-blanco;
       border: 1px solid $color-rojo;
-      border-radius: 8px;
-      -webkit-border-radius: 8px;
-      -moz-border-radius: 8px;
-      -ms-border-radius: 8px;
-      -o-border-radius: 8px;
+      border-radius: 4px;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      -o-border-radius: 4px;
 
       &:hover {
         background: $color-rojo-oscuro;
@@ -261,11 +263,11 @@ html {
       color: $color-blanco;
       background: $color-morado;
       font-family: $montserrat-bold;
-      border-radius: 23px;
-      -webkit-border-radius: 23px;
-      -moz-border-radius: 23px;
-      -ms-border-radius: 23px;
-      -o-border-radius: 23px;
+      border-radius: 4px;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      -o-border-radius: 4px;
 
       &:hover {
         background: $color-morado-hover;
@@ -413,11 +415,11 @@ html {
         width: fit-content;
         border-radius: 4px;
         cursor: pointer;
-        border-radius: 8px;
-        -webkit-border-radius: 8px;
-        -moz-border-radius: 8px;
-        -ms-border-radius: 8px;
-        -o-border-radius: 8px;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        -ms-border-radius: 4px;
+        -o-border-radius: 4px;
 
         &:hover {
           background-color: #460d64;
@@ -444,6 +446,10 @@ html {
       width: 100%;
       max-width: 1400px;
 
+      @include media(mobile) {
+        justify-content: center;
+      }
+
       .tab {
         display: flex;
         justify-content: center;
@@ -452,11 +458,11 @@ html {
         align-items: center;
         width: fit-content;
         padding: 8px 18px;
+        font-weight: bold;
         cursor: pointer;
         background: $color-blanco;
         border: 1px solid $color-tab1;
         box-shadow: 0 4px 2px rgba(205, 151, 255, 0.25);
-        color: $color-morado;
         border-radius: 6px;
         transition: background 0.3s ease-in-out, color 0.3s ease-in-out,
           opacity 0.3s;
@@ -471,7 +477,6 @@ html {
 
         @include media(mobile) {
           padding: 8px 12px;
-          border-radius: 18px;
 
           span {
             font-size: 14px;
@@ -503,9 +508,9 @@ html {
     }
 
     .count-result {
-      font-family: $montserrat-bold;
       display: block;
       text-align: center;
+      font-weight: bold;
       margin: 25px 0;
       width: 100%;
     }
@@ -675,11 +680,11 @@ html {
             width: 100%;
             gap: 15px;
             padding: 12px;
-            border-radius: 8px;
-            -webkit-border-radius: 8px;
-            -moz-border-radius: 8px;
-            -ms-border-radius: 8px;
-            -o-border-radius: 8px;
+            border-radius: 4px;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            -ms-border-radius: 4px;
+            -o-border-radius: 4px;
 
             .fila {
               padding-bottom: 15px;

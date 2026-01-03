@@ -44,7 +44,7 @@ const FiltroDeVentas = ({ salesGroup, setReAmount }) => {
               alignItems: "center",
             }}
           >
-            <div className="label" style={{ width: "max-content" }}>
+            <div className="label" style={{ width: "200px" }}>
               Resultados por estado
             </div>
             <Field as="select" name="filtro">

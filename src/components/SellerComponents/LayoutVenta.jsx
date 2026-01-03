@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import CashIcon from "../../assets/SalesDatailsIcons/CashIcon.svg";
 import DeliveryIcon from "../../assets/SalesDatailsIcons/DeliveryIcon.svg";
 import DirectionIcon from "../../assets/SalesDatailsIcons/DirectionIcon.svg";
-import LocationIcon from "../../assets/SalesDatailsIcons/LocationIcon.svg";
+// import LocationIcon from "../../assets/SalesDatailsIcons/LocationIcon.svg";
+// import TimeIcon from "../../assets/SalesDatailsIcons/TimeIcon.svg";
 import ProductIcon from "../../assets/SalesDatailsIcons/ProductIcon.svg";
-import TimeIcon from "../../assets/SalesDatailsIcons/TimeIcon.svg";
 import ModalEditSale from "./SectionMySales/ModalEditSale";
 import ModalConfirmSave from "./SectionMySales/ModalConfirmSave";
 import { format } from "date-fns";
@@ -153,11 +153,7 @@ const LayoutVenta = ({ venta, setReAmount }) => {
 
           {/* Botón para abrir modal */}
           {objectSale?.codigoVenta && (
-            <button
-              style={{ margin: "0 auto", marginTop: "20px" }}
-              className="btn-out"
-              onClick={() => setShowModal(true)}
-            >
+            <button className="btn-out" onClick={() => setShowModal(true)} style={{marginTop: 30}}>
               Mas información
             </button>
           )}

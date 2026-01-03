@@ -77,6 +77,7 @@
         }
         .code {
           font-family: $montserrat-bold;
+          font-size: 13px;
         }
       }
 
@@ -305,22 +306,21 @@
       // Estilos correspondientes a la sección mis ventas
       .my-sales-container {
         display: flex;
-        gap: 25px;
+        gap: 16px;
         flex-wrap: wrap;
-        justify-content: center;
 
         .link-option {
+          display: flex;
+          flex-direction: column;
           cursor: pointer;
           padding: 18px;
-          gap: 25px;
-          border: 1.5px solid $color-morado;
+          gap: 30px;
+          border: 1px solid $color-bordes;
+          justify-content: space-between;
           text-decoration: none;
-          color: $color-morado;
-          align-items: center;
+          color: $color-gris;
           width: 100%;
-          box-shadow: 0 0 8px rgba(0, 0, 0, 0.35);
-          display: flex;
-          max-width: 315px;
+          box-shadow: 0 0 8px rgba(167, 167, 167, 0.35);
           border-radius: 8px;
           -webkit-border-radius: 8px;
           -moz-border-radius: 8px;
@@ -333,6 +333,8 @@
           -o-transition: all 0.2s ease-in-out;
 
           &:hover {
+            border: 1px solid $color-morado;
+            box-shadow: 0 4px 8px rgba(151, 151, 151, 0.35);
             transform: scale(1.03);
             -webkit-transform: scale(1.05);
             -moz-transform: scale(1.03);
@@ -344,16 +346,62 @@
             max-width: 350px;
           }
 
-          .icon {
-            width: 66px;
-            height: 66px;
+          .head {
+            display: flex;
+            justify-content: space-between;
+
+            .icon {
+              width: 42px;
+              height: 42px;
+
+              img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+
+            .length {
+              font-size: 11px;
+              background: $gris-clarito;
+              padding: 3px;
+              width: fit-content;
+              height: fit-content;
+              font-weight: bold;
+              border-radius: 3px;
+              -webkit-border-radius: 3px;
+              -moz-border-radius: 3px;
+              -ms-border-radius: 3px;
+              -o-border-radius: 3px;
+            }
           }
-          .info {
-            display: grid;
+
+          .body {
+            display: flex;
+            flex-direction: column;
             gap: 5px;
-            font-size: 14px;
+
+            span {
+              font-size: 14px;
+            }
+          }
+
+          .foot {
+            font-size: 18px;
+            font-family: $montserrat-bold;
           }
         }
+      }
+
+      .sm {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        gap: 16px;
+      }
+
+      .lg {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        gap: 16px;
       }
     }
   }

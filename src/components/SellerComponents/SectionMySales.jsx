@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import ModalCreateSale from "./SectionMySales/ModalCreateSale";
 import ModalConfirmSave from "./SectionMySales/ModalConfirmSave";
 import TagIcon from "../../assets/MySalesIcons/TagIcon.svg";
@@ -16,63 +16,127 @@ const SectionMySales = () => {
   const [showModal, setShowModal] = useState(false);
   const [finalDataSend, setFinalDataSend] = useState({});
   const [showModalConfirm, setShowModalConfirm] = useState(false);
+  const boxRef = useRef(null);
+  const [sizeClass, setSizeClass] = useState("sm");
+
+  // ?FUNCIONES
+
+  // ?EFECTOS
+  useEffect(() => {
+    const element = boxRef.current;
+    if (!element) return;
+
+    const observer = new ResizeObserver((entries) => {
+      const { width } = entries[0].contentRect;
+
+      setSizeClass((prev) => {
+        if (width < 928 && prev !== "sm") return "sm";
+        if (width >= 928 && prev !== "lg") return "lg";
+        return prev;
+      });
+    });
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div className="my-sales-container">
+    <div className={`my-sales-container ${sizeClass}`} ref={boxRef}>
       <div className="link-option" onClick={() => setShowModal(true)}>
-        <img className="icon" src={TagIcon} alt="" />
-        <div className="info">
+        <div className="head">
+          <div className="icon">
+            <img src={TagIcon} alt="Icono de nueva venta" />
+          </div>
+          <div className="length">12</div>
+        </div>
+        <div className="body">
           <h6>Nueva venta</h6>
           <span>Crear un nuevo registro de venta.</span>
         </div>
       </div>
       <Link to="ventas-pendientes" className="link-option">
-        <img className="icon" src={PendingIcon} alt="" />
-        <div className="info">
-          <h6>Ventas en trámite</h6>
-          <span>Vea las ventas pendientes por finalizar.</span>
+        <div className="head">
+          <div className="icon">
+            <img src={PendingIcon} alt="icono de ventas en tramite" />
+          </div>
+          <div className="length">12</div>
+        </div>
+        <div className="body">
+          <h6>Ventas en tramite</h6>
+          <span>Vea las ventas pendientes por finalizar</span>
         </div>
       </Link>
       <Link to="ventas-por-asignar" className="link-option">
-        <img className="icon" src={AsignarIcono} alt="" />
-        <div className="info">
+        <div className="head">
+          <div className="icon">
+            <img src={AsignarIcono} alt="Icono de ventas por asignar" />
+          </div>
+          <div className="length">12</div>
+        </div>
+        <div className="body">
           <h6>Ventas por asignar</h6>
           <span>Vea las ventas listas para dar al delivery</span>
         </div>
       </Link>
       <Link to="ventas-pagadas" className="link-option">
-        <img className="icon" src={CashIcon} alt="" />
-        <div className="info">
+        <div className="head">
+          <div className="icon">
+            <img src={CashIcon} alt="Icono de ventas pagadas" />
+          </div>
+          <div className="length">12</div>
+        </div>
+        <div className="body">
           <h6>Ventas pagadas</h6>
-          <span>Vea las ventas que ya han sido pagadas.</span>
+          <span>Vea las ventas que ya han sido pagadas</span>
         </div>
       </Link>
       <Link to="ventas-en-ruta" className="link-option">
-        <img className="icon" src={DeliverIcon} alt="" />
-        <div className="info">
+        <div className="head">
+          <div className="icon">
+            <img src={DeliverIcon} alt="Icono de ventas en ruta" />
+          </div>
+          <div className="length">12</div>
+        </div>
+        <div className="body">
           <h6>Ventas en ruta</h6>
-          <span>Vea las ventas que ya están en ruta de entrega.</span>
+          <span>Vea las ventas que ya estan en ruta de entrega</span>
         </div>
       </Link>
       <Link to="ventas-entregadas" className="link-option">
-        <img className="icon" src={CheckIcon} alt="" />
-        <div className="info">
-          <h6>Ventas entregadas </h6>
-          <span>Vea todas las ventas entregadas esta semana.</span>
+        <div className="head">
+          <div className="icon">
+            <img src={CheckIcon} alt="Icono de venta entregada" />
+          </div>
+          <div className="length">12</div>
+        </div>
+        <div className="body">
+          <h6>Ventas entregadas</h6>
+          <span>Vea las ventas entregadas con exito al cliente</span>
         </div>
       </Link>
       <Link to="ventas-rechazadas" className="link-option">
-        <img className="icon" src={FailIcon} alt="" />
-        <div className="info">
+        <div className="head">
+          <div className="icon">
+            <img src={FailIcon} alt="Icono de venta rechazada" />
+          </div>
+          <div className="length">12</div>
+        </div>
+        <div className="body">
           <h6>Ventas rechazadas</h6>
-          <span>Vea todas las ventas caídas en esta semana.</span>
+          <span>Revise el motivo de las ventas rechazadas</span>
         </div>
       </Link>
       <Link to="ventas-anteriores" className="link-option">
-        <img className="icon" src={HistoryIcon} alt="" />
-        <div className="info">
-          <h6>Ventas anteriores </h6>
-          <span>Ventas por semanas anteriores.</span>
+        <div className="head">
+          <div className="icon">
+            <img src={HistoryIcon} alt="Icono de ventas anteriores" />
+          </div>
+          <div className="length">12</div>
+        </div>
+        <div className="body">
+          <h6>Ventas anteriores</h6>
+          <span>Vea las ventas anteriores realizadas por usted</span>
         </div>
       </Link>
 

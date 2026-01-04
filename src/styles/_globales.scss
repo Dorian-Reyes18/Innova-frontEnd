@@ -837,6 +837,18 @@ html {
         color: $color-letra-secundaria;
         font-size: 14px;
       }
+
+      .lg {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 16px;
+      }
+
+      .xxl {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 16px;
+      }
     }
   }
 }

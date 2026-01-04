@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { getCurrentWeekDateRange, fetchSales } from "./SectionGeneral/utils";
 import SalesBaseFilter from "./SectionGeneral/SalesBaseFilter";
 import Spinner from "../Spiner";
-import NoResults from "../../assets/memes/NohayResultados.png";
+import NoResults from "./NoResults";
 
 const SectionGeneral = () => {
   // Estados
@@ -72,20 +72,10 @@ const SectionGeneral = () => {
       ) : (
         <div>
           {sales.length === 0 ? (
-            <span
-              className="error-message"
-              style={{
-                margin: "0 auto",
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <NoResults
-                message="No hay ventas registradas en esta semana"
-                submessage="Pidele a los vendedores que hagan ventas"
-              />
-            </span>
+            <NoResults
+              message="No hay ventas registradas en esta semana"
+              submessage="Pidele a los vendedores que hagan ventas"
+            />
           ) : (
             <SalesBaseFilter
               sales={sales}

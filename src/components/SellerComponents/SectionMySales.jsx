@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
 import ModalCreateSale from "./SectionMySales/ModalCreateSale";
 import ModalConfirmSave from "./SectionMySales/ModalConfirmSave";
 import TagIcon from "../../assets/MySalesIcons/TagIcon.svg";
@@ -10,36 +9,16 @@ import CheckIcon from "../../assets/MySalesIcons/CheckIcon.svg";
 import FailIcon from "../../assets/MySalesIcons/FailIcon.svg";
 import HistoryIcon from "../../assets/MySalesIcons/HistoryIcon.svg";
 import AsignarIcono from "../../assets/MySalesIcons/AssignIcon.svg";
+import { useState } from "react";
+import useResizeClass from "../../hooks/UseResizeClass";
 
 const SectionMySales = () => {
   // ?ESTADOS
   const [showModal, setShowModal] = useState(false);
   const [finalDataSend, setFinalDataSend] = useState({});
   const [showModalConfirm, setShowModalConfirm] = useState(false);
-  const boxRef = useRef(null);
-  const [sizeClass, setSizeClass] = useState("sm");
 
-  // ?FUNCIONES
-
-  // ?EFECTOS
-  useEffect(() => {
-    const element = boxRef.current;
-    if (!element) return;
-
-    const observer = new ResizeObserver((entries) => {
-      const { width } = entries[0].contentRect;
-
-      setSizeClass((prev) => {
-        if (width < 928 && prev !== "sm") return "sm";
-        if (width >= 928 && prev !== "lg") return "lg";
-        return prev;
-      });
-    });
-
-    observer.observe(element);
-
-    return () => observer.disconnect();
-  }, []);
+  const { ref: boxRef, sizeClass } = useResizeClass();
 
   return (
     <div className={`my-sales-container ${sizeClass}`} ref={boxRef}>

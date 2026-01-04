@@ -3,6 +3,7 @@ import { Formik, Field, useFormikContext } from "formik";
 import PropTypes from "prop-types";
 import LayoutVenta from "../LayoutVenta";
 import NoResults from "../NoResults";
+import UseResizeClass from "../../../hooks/UseResizeClass";
 
 const EstadoWatcher = ({ onChange }) => {
   const { values } = useFormikContext();
@@ -20,6 +21,8 @@ EstadoWatcher.propTypes = {
 
 const FiltroDeVentas = ({ salesGroup, setReAmount }) => {
   const [selectedOption, setSelectedOption] = useState("En tramite");
+
+  const { ref: boxRef, sizeClass } = UseResizeClass();
 
   // Función para obtener las ventas según el estado seleccionado
   const obtenerVentasPorEstado = (estado) => {
@@ -58,7 +61,7 @@ const FiltroDeVentas = ({ salesGroup, setReAmount }) => {
             </Field>
           </div>
 
-          <div className="content-result">
+          <div className="content-result" ref={boxRef}>
             {(() => {
               const ventasFiltradas = obtenerVentasPorEstado(selectedOption);
 
@@ -83,7 +86,7 @@ const FiltroDeVentas = ({ salesGroup, setReAmount }) => {
                     {ventasFiltradas.length === 1 ? "" : "s"}
                   </span>
 
-                  <div className="sales-list">
+                  <div className={`sales-list ${sizeClass}`}>
                     {ventasFiltradas.map((venta) => (
                       <LayoutVenta
                         key={venta.codigoVenta}

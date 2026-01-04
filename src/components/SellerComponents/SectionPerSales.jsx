@@ -5,6 +5,7 @@ import { getCurrentWeekDateRange, fetchSales } from "./SectionGeneral/utils";
 import LayoutVenta from "./LayoutVenta";
 import Spinner from "../Spiner";
 import NoResults from "./NoResults";
+import UseResizeClass from "../../hooks/UseResizeClass";
 
 const SectionPerSales = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -12,6 +13,8 @@ const SectionPerSales = () => {
   const [loadingSales, setLoadingSales] = useState(true);
   const [sales, setSales] = useState([]);
   const [salesFiltered, setSalesFiltered] = useState([]);
+
+  const { ref: boxRef, sizeClass } = UseResizeClass();
 
   // * Funciones
   const handleChange = (e) => {
@@ -27,7 +30,7 @@ const SectionPerSales = () => {
   };
 
   // * Funciones de fetch
-  // TODO: Obtenemos los usuarios
+  // todo: Obtenemos los usuarios
   const fetchUsers = async () => {
     try {
       const response = await axiosInstance.get("users?populate=*");
@@ -45,7 +48,7 @@ const SectionPerSales = () => {
   };
 
   // * Efectos
-  // TODO: Obtenemos todas las ventas de la semana actual
+  // todo: Obtenemos todas las ventas de la semana actual
   useEffect(() => {
     const { startDate, endDate } = getCurrentWeekDateRange();
     fetchUsers();
@@ -59,7 +62,7 @@ const SectionPerSales = () => {
   }, [selectedUser, sales]);
 
   return (
-    <>
+    <div ref={boxRef}>
       {loadingSales ? (
         <Spinner />
       ) : (
@@ -90,7 +93,7 @@ const SectionPerSales = () => {
                   {selectedUser}
                 </span>
 
-                <div className="results">
+                <div className={`results ${sizeClass}`}>
                   {salesFiltered.map((sale) => (
                     <LayoutVenta key={sale.id} venta={sale}></LayoutVenta>
                   ))}
@@ -109,7 +112,7 @@ const SectionPerSales = () => {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 };
 

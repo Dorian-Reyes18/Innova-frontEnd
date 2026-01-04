@@ -504,7 +504,7 @@ const ModalEditSale = ({
                       name="pago_vendedor"
                       type="number"
                       className="value"
-                      disabled
+                      disabled={isEditable()}
                     />
                   </div>
 
@@ -615,7 +615,7 @@ const ModalEditSale = ({
                     <button
                       type="button"
                       className="btn-pr"
-                      style={{minWidth: "103px"}}
+                      style={{ minWidth: "103px" }}
                       onClick={() => {
                         submitForm();
                       }}

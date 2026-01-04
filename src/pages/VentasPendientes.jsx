@@ -10,6 +10,8 @@ import {
 } from "../components/SellerComponents/SectionGeneral/utils";
 import Proceess from "../assets/memes/process.svg";
 
+import UseResizeClass from "../hooks/UseResizeClass";
+
 const VentasPendientes = () => {
   const { user } = useUser();
   const myUserId = user?.user?.data?.id;
@@ -19,6 +21,8 @@ const VentasPendientes = () => {
   const [pendingSales, setPendingSales] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sales, setSales] = useState([]);
+
+  const { ref: boxRef, sizeClass } = UseResizeClass();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,7 +50,7 @@ const VentasPendientes = () => {
     <>
       <HeaderVentas />
 
-      <div className="container-general-ventas">
+      <div className="container-general-ventas" ref={boxRef}>
         {loading ? (
           <Spinner />
         ) : !loading && pendingSales.length > 0 ? (
@@ -61,7 +65,7 @@ const VentasPendientes = () => {
                     Tienes {pendingSales.length} venta
                     {pendingSales.length > 1 ? "s" : ""} en tramite
                   </span>
-                  <div className="results">
+                  <div className={`results ${sizeClass}`} >
                     {pendingSales.map((sale) => (
                       <LayoutVenta venta={sale} key={sale.id} />
                     ))}

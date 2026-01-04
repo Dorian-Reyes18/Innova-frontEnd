@@ -10,6 +10,8 @@ import {
 } from "../components/SellerComponents/SectionGeneral/utils";
 import DeliveryImg from "../assets/memes/DeliveryIMG.png";
 
+import UseResizeClass from "../hooks/UseResizeClass";
+
 const VentasEnRuta = () => {
   const { user } = useUser();
   const myUserId = user?.user?.data?.id;
@@ -19,6 +21,8 @@ const VentasEnRuta = () => {
   const [pendingSales, setPendingSales] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sales, setSales] = useState([]);
+
+  const { ref: boxRef, sizeClass } = UseResizeClass();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,7 +50,7 @@ const VentasEnRuta = () => {
     <>
       <HeaderVentas />
 
-      <div className="container-general-ventas">
+      <div className="container-general-ventas" ref={boxRef}>
         {loading ? (
           <Spinner />
         ) : !loading && pendingSales.length > 0 ? (
@@ -61,7 +65,7 @@ const VentasEnRuta = () => {
                     Tienes {pendingSales.length} venta
                     {pendingSales.length > 1 ? "s" : ""} en ruta
                   </span>
-                  <div className="results">
+                  <div className={`results ${sizeClass}`}>
                     {pendingSales.map((sale) => (
                       <LayoutVenta venta={sale} key={sale.id} />
                     ))}

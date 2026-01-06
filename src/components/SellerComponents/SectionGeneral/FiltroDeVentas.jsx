@@ -32,7 +32,7 @@ const FiltroDeVentas = ({ salesGroup, setReAmount }) => {
 
   return (
     <Formik
-      initialValues={{ filtro: "En tramite" }}
+      initialValues={{ filtro: "Por asignar" }}
       onSubmit={() => {}} // ya no se usa, pero formik lo exige
     >
       {() => (
@@ -52,12 +52,12 @@ const FiltroDeVentas = ({ salesGroup, setReAmount }) => {
               Resultados por estado
             </div>
             <Field as="select" name="filtro">
-              <option value="En tramite">En tramite</option>
               <option value="Por asignar">Por asignar</option>
               <option value="Asignadas">Asignadas</option>
               <option value="En ruta">En ruta</option>
               <option value="Rechazada">Rechazada</option>
               <option value="Entregada">Entregada</option>
+              <option value="En tramite">En tramite</option>
             </Field>
           </div>
 

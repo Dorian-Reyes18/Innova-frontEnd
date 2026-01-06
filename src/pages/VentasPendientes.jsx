@@ -65,7 +65,7 @@ const VentasPendientes = () => {
                     Tienes {pendingSales.length} venta
                     {pendingSales.length > 1 ? "s" : ""} en tramite
                   </span>
-                  <div className={`results ${sizeClass}`} >
+                  <div className={`results ${sizeClass}`}>
                     {pendingSales.map((sale) => (
                       <LayoutVenta venta={sale} key={sale.id} />
                     ))}

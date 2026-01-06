@@ -25,7 +25,7 @@
     box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.5);
     gap: 0;
   }
-  
+
   @include media(tablet) {
     width: 350px;
     position: fixed;
@@ -118,7 +118,6 @@
         gap: 5px;
 
         li {
-          padding: 10px 20px;
           border-radius: 23px;
           -webkit-border-radius: 23px;
           -moz-border-radius: 23px;
@@ -141,6 +140,7 @@
           }
 
           a {
+            padding: 10px 20px;
             display: flex;
             gap: 20px;
             color: $color-blanco;
@@ -203,6 +203,7 @@
       padding: 0;
       ul {
         li {
+          height: 38px;
           a {
             justify-content: center;
           }

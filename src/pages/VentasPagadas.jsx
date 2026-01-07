@@ -68,7 +68,7 @@ const VentasPagadas = () => {
                 Ventas pagadas: {""} <strong>{pendingSales.length}</strong>{" "}
               </span>
               <span className="volver">
-                <Link to="/panel-de-ventas">Volver al panel</Link>
+                <Link to="/panel-de-ventas" >Volver al panel</Link>
               </span>
             </div>
             <div className="container-content">
@@ -92,7 +92,7 @@ const VentasPagadas = () => {
           <>
             {!loading && pendingSales.length === 0 && (
               <>
-                <Link to="/panel-de-ventas" className="btn-pr">
+                <Link to="/panel-de-ventas" className="btn-return">
                   Volver al panel
                 </Link>
                 <div className="container-content">

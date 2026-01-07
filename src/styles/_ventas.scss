@@ -4,10 +4,27 @@
 .container-general-ventas {
   padding: 20px 25px;
   display: flex;
-  align-items: center;
   gap: 35px;
   flex-direction: column;
   margin-bottom: 40px;
+
+  .btn-return {
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    &::before {
+      content: "";
+      display: flex;
+      width: 15px;
+      background-image: url('data:image/svg+xml,<svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.58089 3.56627L4.36979 0.777378C4.54762 0.599542 4.54762 0.311213 4.36979 0.133377C4.19195 -0.044459 3.90362 -0.044459 3.72579 0.133377L0.292893 3.56627C-0.0976307 3.9568 -0.0976313 4.58996 0.292893 4.98048L3.72579 8.41338C3.90362 8.59121 4.19195 8.59121 4.36979 8.41338C4.54762 8.23554 4.54762 7.94721 4.36979 7.76938L1.58089 4.98048C1.50627 4.90586 1.44591 4.82238 1.3998 4.73342L7.58978 4.73342C7.84384 4.73342 8.04978 4.52748 8.04978 4.27342C8.04978 4.01937 7.84384 3.81342 7.58978 3.81342L1.39975 3.81342C1.44586 3.72443 1.50624 3.64092 1.58089 3.56627Z" fill="%236B21A8"/></svg>');
+      height: 15px;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  }
 
   @include media(mobile) {
     padding: 20px;

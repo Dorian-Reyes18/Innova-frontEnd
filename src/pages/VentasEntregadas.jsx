@@ -55,7 +55,7 @@ const VentasEntregadas = () => {
           <Spinner />
         ) : !loading && pendingSales.length > 0 ? (
           <>
-            <Link to="/panel-de-ventas" className="btn-pr">
+            <Link to="/panel-de-ventas" className="btn-return">
               Volver al panel
             </Link>
             <div className="container-content">
@@ -79,7 +79,7 @@ const VentasEntregadas = () => {
           <>
             {!loading && pendingSales.length === 0 && (
               <>
-                <Link to="/panel-de-ventas" className="btn-pr">
+                <Link to="/panel-de-ventas" className="btn-return">
                   Volver al panel
                 </Link>
                 <div className="container-content">

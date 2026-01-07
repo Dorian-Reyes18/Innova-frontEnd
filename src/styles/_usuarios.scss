@@ -1,3 +1,6 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
 .all-users-container {
   padding: 20px;
   display: flex;

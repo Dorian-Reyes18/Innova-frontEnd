@@ -1,3 +1,5 @@
+@use "./variables" as *;
+
 @mixin media($media) {
   @if $media == mobile {
     @media (max-width: $breakpoint-fin-mobile) {

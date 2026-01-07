@@ -1,3 +1,9 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+@use "./fonts" as *;
+
+@use "sass:color";
+
 html {
   body {
     font-family: $montserrat-regular;
@@ -718,7 +724,7 @@ html {
 
             &:hover {
               // aclarar con lighting el color azul al pasar el mouse usando la variable $color-azul-v2
-              background-color: lighten($color-azul-v2, 10%);
+              background-color: color.scale($color-azul-v2, $lightness: 20%);
             }
           }
         }

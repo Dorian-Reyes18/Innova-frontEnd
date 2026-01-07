@@ -1,4 +1,10 @@
-// Paleta de colores pastel en gama morada
+
+// Variables y Mixins
+@use "./variables" as *; // Trae todas las variables directamente
+@use "./mixins" as *; // Trae todos los mixins directamente
+@use "sass:color" as *; // Trae funciones de Sass para manipular colores
+
+// Paleta de colores pastel
 $primary-color: #9f7aea; // morado suave
 $secondary-color: #f3e8ff; // lavanda claro
 $hover-color: #d6bcfa; // morado pastel para hover
@@ -9,7 +15,7 @@ $border-color: #e9d8fd; // bordes suaves
 // Fuente
 $font-stack: "Inter", "Segoe UI", sans-serif;
 
-// ----------- Personalización del calendario -----------
+// Personalización del calendario
 .react-datepicker {
   font-family: $font-stack;
   background-color: $accent-color;
@@ -48,7 +54,7 @@ $font-stack: "Inter", "Segoe UI", sans-serif;
     }
 
     &--keyboard-selected {
-      background-color: #9f7aea;
+      background-color: $primary-color;
       color: white;
     }
 
@@ -57,7 +63,7 @@ $font-stack: "Inter", "Segoe UI", sans-serif;
     }
 
     &--disabled {
-      color: #4c1d95;
+      color: $text-color;
       cursor: not-allowed;
     }
   }
@@ -73,7 +79,7 @@ $font-stack: "Inter", "Segoe UI", sans-serif;
       color: $text-color;
 
       &:hover {
-        color: #9f7aea;
+        color: $primary-color;
       }
     }
   }
@@ -106,12 +112,14 @@ $font-stack: "Inter", "Segoe UI", sans-serif;
       border-color: $text-color;
     }
   }
+
   .react-datepicker__navigation-icon--previous {
     &::before {
       border-color: $text-color;
     }
   }
 }
+
 .react-datepicker-popper {
   z-index: 2;
 }

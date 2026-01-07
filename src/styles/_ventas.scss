@@ -1,3 +1,6 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
 .container-general-ventas {
   padding: 20px 25px;
   display: flex;

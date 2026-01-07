@@ -1,14 +1,20 @@
-@import "./variables";
-@import "./fonts";
-@import "./mixins";
-@import "./globales";
-@import "./login";
-@import "./sidebar";
-@import "./header";
-@import "./helloMessage";
-@import "./homeLinks";
-@import "./productos";
-@import "./searchbar";
-@import "./usuarios";
-@import "./ventas";
-@import "./datepicker";
+@use "sass:color";            // Funciones de color
+@use "sass:math";             // Funciones matemáticas si las necesitas
+
+// Primero variables y mixins
+@use "./variables" as *;      // Variables accesibles sin prefijo
+@use "./fonts" as *;          // Tipografías y fuentes
+@use "./mixins" as *;         // Mixins
+
+// Archivos que usan variables o mixins
+@use "./globales" as g;
+@use "./login" as l;
+@use "./sidebar" as s;
+@use "./header" as h;
+@use "./helloMessage" as hm;
+@use "./homeLinks" as hl;
+@use "./productos" as p;
+@use "./searchbar" as sb;
+@use "./usuarios" as u;
+@use "./ventas" as v;
+@use "./datepicker" as dp;

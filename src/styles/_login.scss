@@ -1,3 +1,6 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
 .login-container {
   display: flex;
   justify-content: space-between;

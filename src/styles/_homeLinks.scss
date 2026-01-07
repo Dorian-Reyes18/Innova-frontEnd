@@ -1,3 +1,6 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
 .link-card {
   display: flex;
   justify-content: center;
@@ -20,7 +23,7 @@
   -moz-transition: all 0.2s ease-in-out;
   -ms-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
-  
+
   .blanca {
     display: none;
   }

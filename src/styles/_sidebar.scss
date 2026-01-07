@@ -1,3 +1,6 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
 .sidebar {
   width: 240px;
   color: $color-blanco;
@@ -39,7 +42,7 @@
   .sidebar-header-collapsed {
     display: flex;
     justify-content: center;
-    padding: 20px;
+
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 
     @include media(mobile) {
@@ -54,6 +57,7 @@
     }
 
     .toggle-btn {
+      padding: 20px;
       background-color: transparent;
       color: $color-blanco;
       border: none;
@@ -76,6 +80,7 @@
     }
 
     .toggle-btn {
+      padding: 20px;
       background-color: transparent;
       color: $color-blanco;
       border: none;

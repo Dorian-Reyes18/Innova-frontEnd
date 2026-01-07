@@ -1,3 +1,6 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
 .block-container {
   .header-container {
     padding: 20px;

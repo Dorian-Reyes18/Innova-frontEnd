@@ -1,3 +1,6 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
 /* SearchBar.module.css */
 .search-container {
   margin-bottom: 60px;
